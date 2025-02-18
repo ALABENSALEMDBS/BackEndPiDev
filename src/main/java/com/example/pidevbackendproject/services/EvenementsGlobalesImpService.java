@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.EvenementsGlobales;
 import com.example.pidevbackendproject.repositories.EvenementsGlobalesRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class EvenementsGlobalesImpService implements IEvenementsGlobalesService {
     EvenementsGlobalesRepo evenementsGlobalesRepo;
 

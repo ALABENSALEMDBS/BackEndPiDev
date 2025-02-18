@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Joueurs;
 import com.example.pidevbackendproject.repositories.JoueursRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class JoueursImpService implements IJoueursService {
     JoueursRepo joueursRepo;
     public Joueurs addJoueurs(Joueurs joueur) {

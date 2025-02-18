@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Messages;
 import com.example.pidevbackendproject.repositories.MessagesRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class MessagesImpService implements IMessagesService {
     MessagesRepo messagesRepo;
     public Messages addMessages(Messages message) {

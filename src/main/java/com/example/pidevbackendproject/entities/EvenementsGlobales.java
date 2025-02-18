@@ -1,5 +1,6 @@
 package com.example.pidevbackendproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -32,6 +33,7 @@ public class EvenementsGlobales {
 
     String nomEvenementsGlobale;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "evenementsGlobale")
     Matchs matcheEvenementsGlobale;
 }

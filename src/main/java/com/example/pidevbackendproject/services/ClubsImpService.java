@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Clubs;
 import com.example.pidevbackendproject.repositories.ClubsRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ClubsImpService implements IClubsServise {
     ClubsRepo clubsRepo;
 

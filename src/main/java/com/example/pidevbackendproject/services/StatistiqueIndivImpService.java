@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.StatistiqueIndiv;
 import com.example.pidevbackendproject.repositories.StatistiqueIndivRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class StatistiqueIndivImpService implements IStatistiqueIndivService{
     StatistiqueIndivRepo statistiqueIndivRepo;
     public StatistiqueIndiv addStatistiqueIndiv(StatistiqueIndiv statistiqueIndiv) {

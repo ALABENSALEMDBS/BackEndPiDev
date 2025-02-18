@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Seances;
 import com.example.pidevbackendproject.repositories.SeancesRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class SeancesImpService implements ISeancesService {
     SeancesRepo seancesRepo;
     public Seances addSeances(Seances seance) {

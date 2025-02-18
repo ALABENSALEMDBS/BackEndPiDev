@@ -1,5 +1,6 @@
 package com.example.pidevbackendproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -19,8 +20,10 @@ public class Exercices {
     String descriptionExercice;
     String videoExercice;
     String photoExercice;
+    @JsonIgnore
     @ManyToOne
     SousGroupes sousGroupExercice;
+    @JsonIgnore
     @ManyToOne
     Seances seanceExercice;
 }

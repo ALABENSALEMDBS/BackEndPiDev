@@ -1,5 +1,6 @@
 package com.example.pidevbackendproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,12 +19,17 @@ public class Joueurs extends Users {
     int numeroJoueur;
     Date debutContratJoueur;
     Date finContratJoueur;
+
+    @JsonIgnore
     @ManyToOne
     Formations formation;
+    @JsonIgnore
     @OneToOne
     StatistiqueIndiv statistiqueIndiv;
+    @JsonIgnore
     @OneToOne
     FicheMedicales ficheMedicale;
+    @JsonIgnore
     @ManyToOne
     SousGroupes sousGroupe;
 }

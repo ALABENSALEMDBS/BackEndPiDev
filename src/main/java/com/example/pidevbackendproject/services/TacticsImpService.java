@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Tactics;
 import com.example.pidevbackendproject.repositories.TacticsRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class TacticsImpService implements ITacticsService {
     TacticsRepo tacticsRepo;
 

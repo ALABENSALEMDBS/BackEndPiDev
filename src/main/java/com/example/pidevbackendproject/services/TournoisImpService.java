@@ -3,11 +3,13 @@ package com.example.pidevbackendproject.services;
 import com.example.pidevbackendproject.entities.Tournois;
 import com.example.pidevbackendproject.repositories.TacticsRepo;
 import com.example.pidevbackendproject.repositories.TournoisRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class TournoisImpService implements ITournoisService {
     TournoisRepo tournoisRepo;
     public Tournois addTournois(Tournois tournoi) {

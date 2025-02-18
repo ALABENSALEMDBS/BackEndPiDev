@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Formations;
 import com.example.pidevbackendproject.repositories.FormationsRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class FormationsImpService implements IFormationsService {
     FormationsRepo formationsRepo;
     public Formations addFormations(Formations formation) {

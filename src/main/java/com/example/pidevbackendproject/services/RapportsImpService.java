@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Rapports;
 import com.example.pidevbackendproject.repositories.RapportsRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class RapportsImpService implements IRapportsService {
 
     RapportsRepo rapportsRepo;

@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Matchs;
 import com.example.pidevbackendproject.repositories.MatchsRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class MatchsImpService implements IMatchsService {
     MatchsRepo matchsRepo;
     public Matchs addMatchs(Matchs match) {
