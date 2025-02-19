@@ -1,9 +1,11 @@
 package com.example.pidevbackendproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,11 +24,11 @@ public class Clubs {
     String emailClub;
     String addressClub;
     int licenceClub;
-
-
+    @JsonIgnore
     @OneToMany (mappedBy = "club")
-    Set<Users> users;
+    Set<Users> users = new HashSet<>();
 
+    @JsonIgnore
     @ManyToOne
     Matchs matchClub;
 

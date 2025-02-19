@@ -1,5 +1,7 @@
 package com.example.pidevbackendproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -24,14 +26,18 @@ public class EvenementInternes {
     Date dateEvenementInterne;
 
     //@Temporal(TemporalType.TIME)
+    @JsonFormat(pattern = "HH:mm:ss")
     LocalTime startDateEvenementInterne;
 
     //@Temporal(TemporalType.TIME)
+    @JsonFormat(pattern = "HH:mm:ss")
     LocalTime endDateEvenementInterne;
 
     String descriptionEvenementInterne;
 
     String nomEvenementInterne;
+
+    @JsonIgnore
     @OneToOne(mappedBy = "evenementInterne")
     Seances seanceEvenementInterne;
 }

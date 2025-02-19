@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.FicheMedicales;
 import com.example.pidevbackendproject.repositories.FicheMedicalesRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class FicheMedicalesImpService implements IFicheMedicalesService {
     FicheMedicalesRepo ficheMedicalesRepo;
     public FicheMedicales addFicheMedicales(FicheMedicales ficheMedicale) {

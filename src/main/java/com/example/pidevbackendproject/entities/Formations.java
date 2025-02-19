@@ -1,5 +1,6 @@
 package com.example.pidevbackendproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -20,12 +21,15 @@ public class Formations {
     String nameFormation;
     String descriptionFormation;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "formation")
     Matchs matcheformation;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "formation")
     Set<Joueurs> joueurs;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "formation")
     Set<Tactics> tactics;
 

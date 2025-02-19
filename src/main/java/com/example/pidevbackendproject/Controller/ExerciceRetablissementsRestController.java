@@ -1,0 +1,51 @@
+package com.example.pidevbackendproject.Controller;
+import com.example.pidevbackendproject.entities.ExerciceRetablissements;
+import com.example.pidevbackendproject.services.IExerciceRetablissementsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Tag(name = "Gestion Exercice de Retablissement")
+@RestController
+@AllArgsConstructor
+@RequestMapping("/ExerciceRetablissements")
+public class ExerciceRetablissementsRestController {
+    IExerciceRetablissementsService exerciceRetablissementsService;
+
+    @Operation(description = "Ajouter un Exercice Retablissement")
+    @PostMapping("/add-exerciceRetablissements")
+    public ExerciceRetablissements addExerciceRetablissements(@RequestBody ExerciceRetablissements er) {
+        return exerciceRetablissementsService.addExerciceRetablissements(er);
+    }
+
+    @Operation(description = "récupérer toutes les exercices de retablissement de la base de données")
+    @GetMapping(value = "/retrieve-all-exerciceRetablissements")
+    public List<ExerciceRetablissements> getAllExerciceRetablissements() {
+        List<ExerciceRetablissements> exerciceRetablissement= exerciceRetablissementsService.getAllExerciceRetablissements();
+        return exerciceRetablissement;
+    }
+
+    @Operation(description = "récupérer les exercices de retablissement de la base de données by ID")
+    @GetMapping("/retrieve-exerciceRetablissements/{exerciceRetablissements-id}")
+    public ExerciceRetablissements retrieveExerciceRetablissements(@PathVariable("exerciceRetablissements-id") int idExerciceRetablissements) {
+        ExerciceRetablissements exerciceRetablissement = exerciceRetablissementsService.getExerciceRetablissementsById(idExerciceRetablissements);
+        return exerciceRetablissement;
+    }
+
+    @Operation(description = "Supprimer Exercice Retablissements by ID")
+    @DeleteMapping("/remove-exerciceRetablissements/{exerciceRetablissements-id}")
+    public void deleteExerciceRetablissements(@PathVariable("exerciceRetablissements-id") int idExerciceRetablissements) {
+
+        exerciceRetablissementsService.deleteExerciceRetablissements(idExerciceRetablissements);
+    }
+
+    @Operation(description = "Modifer ExerciceRetablissements")
+    @PutMapping("/modify-exerciceRetablissements")
+    public ExerciceRetablissements modifyExerciceRetablissements(@RequestBody ExerciceRetablissements er) {
+        ExerciceRetablissements exerciceRetablissement= exerciceRetablissementsService.modifyExerciceRetablissements(er);
+        return exerciceRetablissement;
+    }
+}

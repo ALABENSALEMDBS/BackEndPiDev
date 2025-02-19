@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Users;
 import com.example.pidevbackendproject.repositories.UsersRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UsersImpService implements IUsersService {
     UsersRepo usersRepo;
     public Users addUsers(Users user) {

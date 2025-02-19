@@ -2,11 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.EvenementInternes;
 import com.example.pidevbackendproject.repositories.EvenementInternesRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class EvenementInternesImpService implements IEvenementInternesService {
     EvenementInternesRepo evenementInternesRepo;
     public EvenementInternes addEvenementInternes(EvenementInternes evenementInterne) {

@@ -1,0 +1,51 @@
+package com.example.pidevbackendproject.Controller;
+
+import com.example.pidevbackendproject.entities.Rapports;
+import com.example.pidevbackendproject.services.IRapportsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Tag(name = "Gestion De Rapports")
+@RestController
+@AllArgsConstructor
+@RequestMapping("/rapports")
+public class RapportsRestController {
+    IRapportsService rapportsService;
+
+    @Operation(description = "Ajouter un rapports")
+    @PostMapping("/add-rapports")
+    public Rapports addRapports(@RequestBody Rapports rapp) {
+        return rapportsService.addRapports(rapp);
+    }
+
+    @Operation(description = "récupérer toutes les rapports de la base de données")
+    @GetMapping(value = "/retrieve-all-rapports")
+    public List<Rapports> getAllRapports() {
+        List<Rapports> rapports= rapportsService.getAllRapports();
+        return rapports;
+    }
+
+    @Operation(description = "récupérer les rapports de la base de données by ID")
+    @GetMapping("/retrieve-rapports/{rapports-id}")
+    public Rapports retrieveRapports(@PathVariable("rapports-id") int idRapports) {
+        Rapports rapports = rapportsService.getRapportsById(idRapports);
+        return rapports;
+    }
+
+    @Operation(description = "Supprimer rapports by ID")
+    @DeleteMapping("/remove-rapports/{rapports-id}")
+    public void deleteRapports(@PathVariable("rapports-id") int idRapports) {
+        rapportsService.deleteRapports(idRapports);
+    }
+
+    @Operation(description = "Modifer rapports")
+    @PutMapping("/modify-rapports")
+    public Rapports modifyRapports(@RequestBody Rapports rapp) {
+        Rapports rapport= rapportsService.modifyRapports(rapp);
+        return rapport;
+    }
+}
