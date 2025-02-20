@@ -1,3 +1,4 @@
+//**
 package com.example.pidevbackendproject.Controller;
 
 import com.example.pidevbackendproject.entities.Tactics;
@@ -21,27 +22,27 @@ public class TacticsRestController {
         return tacticsService.addTactics(t);
     }
 
-    @Operation(description = "récupérer toutes les tactics de la base de données")
+    @Operation(description = "Récupérer toutes les tactics de la base de données")
     @GetMapping(value = "/retrieve-all-tactics")
     public List<Tactics> getAllTactics() {
         List<Tactics> tactics= tacticsService.getAllTactics();
         return tactics;
     }
 
-    @Operation(description = "récupérer les tactics de la base de données by ID")
+    @Operation(description = "Récupérer les tactics de la base de données by ID")
     @GetMapping("/retrieve-tactics/{tactics-id}")
     public Tactics retrieveTactics(@PathVariable("tactics-id") int idTactics) {
         Tactics tactics = tacticsService.getTacticsById(idTactics);
         return tactics;
     }
 
-    @Operation(description = "Supprimer tactics by ID")
+    @Operation(description = "Supprimer Tactics by ID")
     @DeleteMapping("/remove-tactics/{tactics-id}")
     public void deleteTactics(@PathVariable("tactics-id") int idTactics) {
         tacticsService.deleteTactics(idTactics);
     }
 
-    @Operation(description = "Modifer tactics")
+    @Operation(description = "Modifer Tactics")
     @PutMapping("/modify-tactics")
     public Tactics modifyTactics(@RequestBody Tactics t) {
         Tactics tactics= tacticsService.modifyTactics(t);
