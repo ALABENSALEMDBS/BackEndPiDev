@@ -22,14 +22,14 @@ public class SousGroupesRestController {
         return sousGroupesService.addSousGroupes(sg);
     }
 
-    @Operation(description = "récupérer toutes les Sous Groupes de la base de données")
+    @Operation(description = "Récupérer Toutes les Sous Groupes de la base de données")
     @GetMapping(value = "/retrieve-all-sousGroupes")
     public List<SousGroupes> getAllSousGroupes() {
         List<SousGroupes> sousGroupes= sousGroupesService.getAllSousGroupes();
         return sousGroupes;
     }
 
-    @Operation(description = "récupérer les Sous Groupes de la base de données by ID")
+    @Operation(description = "Récupérer les Sous Groupes de la base de données by ID")
     @GetMapping("/retrieve-sousGroupes/{sousGroupes-id}")
     public SousGroupes retrieveSousGroupes(@PathVariable("sousGroupes-id") int idSousGroupes) {
         SousGroupes sousGroupes = sousGroupesService.getSousGroupesById(idSousGroupes);

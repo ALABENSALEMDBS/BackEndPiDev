@@ -1,3 +1,4 @@
+//**
 package com.example.pidevbackendproject.Controller;
 
 import com.example.pidevbackendproject.entities.Formations;
@@ -16,36 +17,37 @@ import java.util.List;
 public class FormationsRestController {
     IFormationsService formationsService;
 
-    @Operation(description = "Ajouter un Formation")
+    @Operation(description = "Ajouter Un Formation")
     @PostMapping("/add-formations")
     public Formations addFormations(@RequestBody Formations formation) {
         return formationsService.addFormations(formation);
     }
 
-    @Operation(description = "récupérer toutes les formations de la base de données")
+    @Operation(description = "Récupérer toutes les formations de la base de données")
     @GetMapping(value = "/retrieve-all-formation")
     public List<Formations> getAllFormations() {
         List<Formations> formation= formationsService.getAllFormations();
         return formation;
     }
 
-    @Operation(description = "récupérer les formations de la base de données by ID")
+    @Operation(description = "Récupérer les formations de la Base de données by ID")
     @GetMapping("/retrieve-formations/{formations-id}")
     public Formations retrieveFormations(@PathVariable("formations-id") int idFormations) {
         Formations formation = formationsService.getFormationsById(idFormations);
         return formation;
     }
 
-    @Operation(description = "Supprimer formation by ID")
+    @Operation(description = "Supprimer Formation By ID")
     @DeleteMapping("/remove-formation/{formation-id}")
     public void deleteFormations(@PathVariable("formation-id") int idFormations) {
         formationsService.deleteFormations(idFormations);
     }
 
-    @Operation(description = "Modifer formations")
+    @Operation(description = "Modifer Formations")
     @PutMapping("/modify-formations")
     public Formations modifyFormations(@RequestBody Formations form) {
         Formations formation= formationsService.modifyFormations(form);
         return formation;
     }
 }
+
