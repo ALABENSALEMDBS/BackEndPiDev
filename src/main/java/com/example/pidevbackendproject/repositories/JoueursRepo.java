@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JoueursRepo extends JpaRepository<Joueurs, Integer>{
+    Joueurs findByNumeroJoueur (int numeroJoueur);
 }

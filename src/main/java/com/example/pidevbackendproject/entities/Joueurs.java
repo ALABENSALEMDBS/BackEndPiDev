@@ -29,7 +29,7 @@ public class Joueurs extends Users {
     @JsonIgnore
     @OneToOne
     FicheMedicales ficheMedicale;
-    @JsonIgnore
+   // @JsonIgnore
     @ManyToOne
     SousGroupes sousGroupe;
 }

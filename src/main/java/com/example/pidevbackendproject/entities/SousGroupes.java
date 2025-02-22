@@ -1,5 +1,6 @@
 package com.example.pidevbackendproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -19,8 +20,10 @@ public class SousGroupes {
     int idSousGroup;
     String nameSousGroup;
     int nbrJoueurSousGroup;
+    @JsonIgnore
     @OneToMany(mappedBy = "sousGroupe")
     Set<Joueurs> joueurs;
+    @JsonIgnore
     @OneToMany(mappedBy = "sousGroupExercice")
     Set<Exercices> exercices;
 }
