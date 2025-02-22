@@ -13,6 +13,8 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/sousGroupes")
+@CrossOrigin(origins = "http://localhost:4200")  // Autorise Angular à accéder à l'API
+
 public class SousGroupesRestController {
     ISousGroupesService sousGroupesService;
 
@@ -47,5 +49,11 @@ public class SousGroupesRestController {
     public SousGroupes modifySousGroupes(@RequestBody SousGroupes sg) {
         SousGroupes sousGroupes= sousGroupesService.modifySousGroupes(sg);
         return sousGroupes;
+    }
+
+    @Operation(description = "Affecter Sous Groupes")
+    @PostMapping("/affecter-sousGroupesJoueur/{joueur-id}/{sousGroupes-id}")
+    public void affecterJoueurASousGroup(@PathVariable("joueur-id") int numjoueur, @PathVariable("sousGroupes-id") int idSousGroupe) {
+        sousGroupesService.affecterJoueurASousGroup(numjoueur,idSousGroupe);
     }
 }
