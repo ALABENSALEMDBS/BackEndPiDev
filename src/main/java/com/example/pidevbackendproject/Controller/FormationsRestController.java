@@ -49,5 +49,14 @@ public class FormationsRestController {
         Formations formation= formationsService.modifyFormations(form);
         return formation;
     }
+
+
+
+
+    @Operation(description = "Affecter joueur a formation 11")
+    @PostMapping("/affecter-JoueurFormation/{joueur-id}/{formation-id}")
+    public void affecterJoueurAFormation(@PathVariable("joueur-id") int numjoueur, @PathVariable("formation-id") int idFormation) {
+        formationsService.affecterJoueurAFormation(numjoueur,idFormation);
+    }
 }
 

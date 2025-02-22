@@ -10,4 +10,6 @@ public interface IFormationsService {
     Formations modifyFormations(Formations formation);
     List<Formations> getAllFormations();
     Formations getFormationsById(int idFormation);
+    void affecterJoueurAFormation(int numjoueur, int idFormation);
+
 }
