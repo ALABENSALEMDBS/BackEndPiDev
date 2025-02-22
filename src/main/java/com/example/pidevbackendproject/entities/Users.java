@@ -1,5 +1,6 @@
 package com.example.pidevbackendproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -22,7 +23,7 @@ public class Users {
     String prenomUser;
     String emailUser;
     String telephoneUser;
-
+@JsonIgnore
     @ManyToOne
     Clubs club;
 }
