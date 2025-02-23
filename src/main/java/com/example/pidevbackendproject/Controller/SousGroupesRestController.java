@@ -44,11 +44,10 @@ public class SousGroupesRestController {
         sousGroupesService.deleteSousGroupes(idSousGroupes);
     }
 
-    @Operation(description = "Modifer Sous Groupes")
-    @PutMapping("/modify-sousGroupes")
-    public SousGroupes modifySousGroupes(@RequestBody SousGroupes sg) {
-        SousGroupes sousGroupes= sousGroupesService.modifySousGroupes(sg);
-        return sousGroupes;
+    @Operation(description = "Modifier Sous Groupes")
+    @PutMapping("/modify-sousGroupes/{idSousGroupes}")
+    public SousGroupes modifySousGroupes(@PathVariable ("idSousGroupes") int idSousGroupes, @RequestBody SousGroupes sg) {
+        return sousGroupesService.modifySousGroupes(idSousGroupes, sg);
     }
 
     @Operation(description = "Affecter Sous Groupes")

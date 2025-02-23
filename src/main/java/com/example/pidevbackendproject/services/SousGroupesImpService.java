@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -32,8 +33,20 @@ public class SousGroupesImpService implements ISousGroupesService {
      sousGroupesRepo.deleteById(idSousGroup);
     }
 
-    public SousGroupes modifySousGroupes(SousGroupes sousGroupe) {
-        return sousGroupesRepo.save(sousGroupe);
+    public SousGroupes modifySousGroupes(int idSousGroup, SousGroupes sousGroupe)
+    {
+        Optional<SousGroupes> optionalSousGroupe = sousGroupesRepo.findById(idSousGroup);
+
+        if (!optionalSousGroupe.isPresent()) {
+            throw new RuntimeException("Sous-groupe non trouvé");
+        }
+
+        SousGroupes existingSousGroupe = optionalSousGroupe.get();
+        existingSousGroupe.setNameSousGroup(sousGroupe.getNameSousGroup());
+        existingSousGroupe.setNbrJoueurSousGroup(sousGroupe.getNbrJoueurSousGroup());
+
+        return sousGroupesRepo.save(existingSousGroupe);
+
     }
 
     public List<SousGroupes> getAllSousGroupes() {
