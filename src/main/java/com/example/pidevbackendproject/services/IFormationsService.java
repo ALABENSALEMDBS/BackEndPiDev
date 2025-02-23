@@ -11,5 +11,6 @@ public interface IFormationsService {
     List<Formations> getAllFormations();
     Formations getFormationsById(int idFormation);
     void affecterJoueurAFormation(int numjoueur, int idFormation);
+    void  affecterTacticAFormation(int idTactic, int idFormation);
 
 }
