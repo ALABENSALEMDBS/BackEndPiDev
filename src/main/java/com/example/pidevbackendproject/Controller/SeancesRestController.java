@@ -48,4 +48,9 @@ public class SeancesRestController {
         Seances seances= seancesService.modifySeances(sean);
         return seances;
     }
+    @Operation(description = "affecter un exercice a seance")
+    @PostMapping("/affecter-exerciseaseance/{seances-id}/{Exercice-id}")
+    public void affecterexerciseaseance(@PathVariable("seances-id") int idSeances,@PathVariable("Exercice-id") int idExercice) {
+         seancesService.affecterexerciseaseance(idExercice,idSeances);
+    }
 }

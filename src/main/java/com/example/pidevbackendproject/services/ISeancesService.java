@@ -10,4 +10,5 @@ public interface ISeancesService {
     Seances modifySeances(Seances seance);
     List<Seances> getAllSeances();
     Seances getSeancesById(int idSeance);
+    void affecterexerciseaseance(int idExercice, int idSeance);
 }
