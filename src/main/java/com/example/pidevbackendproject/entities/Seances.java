@@ -21,10 +21,13 @@ public class Seances {
     int idSeance;
     String titleSeance;
     Date jourSeance;
+    @JsonIgnore
     @OneToMany(mappedBy = "seanceExercice")
     Set<Exercices> exercises;
+    @JsonIgnore
     @OneToOne
     Rapports rapport;
+    @JsonIgnore
     @OneToOne
     EvenementInternes evenementInterne;
 
