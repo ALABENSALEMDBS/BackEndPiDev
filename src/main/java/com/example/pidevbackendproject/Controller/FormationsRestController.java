@@ -43,11 +43,10 @@ public class FormationsRestController {
         formationsService.deleteFormations(idFormations);
     }
 
-    @Operation(description = "Modifer Formations")
-    @PutMapping("/modify-formations")
-    public Formations modifyFormations(@RequestBody Formations form) {
-        Formations formation= formationsService.modifyFormations(form);
-        return formation;
+    @Operation(description = "Modifier une Formation")
+    @PutMapping("/modify-formations/{idFormation}")
+    public Formations modifyFormations(@PathVariable ("idFormation") int idFormation, @RequestBody Formations form) {
+        return formationsService.modifyFormations(idFormation, form);
     }
 
 

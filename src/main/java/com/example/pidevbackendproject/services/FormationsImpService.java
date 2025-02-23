@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -30,9 +31,20 @@ public class FormationsImpService implements IFormationsService {
      formationsRepo.deleteById(idFormation);
     }
 
-    public Formations modifyFormations(Formations formation) {
-        return formationsRepo.save(formation);
-    }
+    public Formations modifyFormations(int idFormation, Formations formation)
+    {
+        Optional<Formations> existingFormation = formationsRepo.findById(idFormation);
+
+        if (!existingFormation.isPresent()) {
+            throw new RuntimeException("Formation non trouvée !");
+        }
+
+        Formations formationToUpdate = existingFormation.get();
+        formationToUpdate.setNameFormation(formation.getNameFormation());
+        formationToUpdate.setDescriptionFormation(formation.getDescriptionFormation());
+        // Ajoutez d'autres champs si nécessaire
+
+        return formationsRepo.save(formationToUpdate);    }
 
     public List<Formations> getAllFormations() {
         return formationsRepo.findAll();
