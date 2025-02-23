@@ -3,8 +3,10 @@ package com.example.pidevbackendproject.services;
 import com.example.pidevbackendproject.entities.Formations;
 import com.example.pidevbackendproject.entities.Joueurs;
 import com.example.pidevbackendproject.entities.SousGroupes;
+import com.example.pidevbackendproject.entities.Tactics;
 import com.example.pidevbackendproject.repositories.FormationsRepo;
 import com.example.pidevbackendproject.repositories.JoueursRepo;
+import com.example.pidevbackendproject.repositories.TacticsRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class FormationsImpService implements IFormationsService {
     //******************
     FormationsRepo formationsRepo;
     JoueursRepo joueursRepo;
+    TacticsRepo tacticsRepo;
     public Formations addFormations(Formations formation) {
         return formationsRepo.save(formation);
     }
@@ -62,5 +65,12 @@ public class FormationsImpService implements IFormationsService {
             joueursRepo.save(joueur);
         }else
             throw new IllegalStateException("Le sous-groupe est déjà complet.");
+    }
+
+    public void affecterTacticAFormation(int idTactic, int idFormation) {
+        Tactics tactic = tacticsRepo.getById(idTactic);
+        Formations formation = formationsRepo.getById(idFormation);
+        tactic.setFormation(formation);
+        tacticsRepo.save(tactic);
     }
 }

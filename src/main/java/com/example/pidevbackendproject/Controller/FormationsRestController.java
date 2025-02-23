@@ -57,5 +57,13 @@ public class FormationsRestController {
     public void affecterJoueurAFormation(@PathVariable("joueur-id") int numjoueur, @PathVariable("formation-id") int idFormation) {
         formationsService.affecterJoueurAFormation(numjoueur,idFormation);
     }
+
+
+
+    @Operation(description = "Affecter tactic a formation 11")
+    @PostMapping("/affecter-TacticFormation/{tactic-id}/{formation-id}")
+    public void affecterTacticAFormation(@PathVariable("tactic-id") int idTactic, @PathVariable("formation-id") int idFormation) {
+        formationsService.affecterTacticAFormation(idTactic,idFormation);
+    }
 }
 

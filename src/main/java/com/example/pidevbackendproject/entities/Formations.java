@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -28,9 +29,8 @@ public class Formations {
     @JsonIgnore
     @OneToMany(mappedBy = "formation")
     Set<Joueurs> joueurs;
-
-    @JsonIgnore
+//@JsonIgnore
     @OneToMany(mappedBy = "formation")
-    Set<Tactics> tactics;
+    Set<Tactics> tactics = new HashSet<>();
 
 }
