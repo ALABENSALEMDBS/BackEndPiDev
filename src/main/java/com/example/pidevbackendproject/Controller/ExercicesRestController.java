@@ -43,9 +43,9 @@ public class ExercicesRestController {
     }
 
     @Operation(description = "Modifer Exercices")
-    @PutMapping("/modify-exercices")
-    public Exercices modifyExercices(@RequestBody Exercices ex) {
-        Exercices exercice= exercicesService.modifyExercices(ex);
+    @PutMapping("/modify-exercices/{exercices-id}")
+    public Exercices modifyExercices(@RequestBody Exercices ex,@PathVariable("exercices-id") int idExercices){
+        Exercices exercice= exercicesService.modifyExercices(idExercices,ex);
         return exercice;
     }
 }

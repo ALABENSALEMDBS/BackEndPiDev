@@ -43,10 +43,10 @@ public class SeancesRestController {
     }
 
     @Operation(description = "Modifer seances")
-    @PutMapping("/modify-seances")
-    public Seances modifySeances(@RequestBody Seances sean) {
-        Seances seances= seancesService.modifySeances(sean);
-        return seances;
+    @PutMapping("/modify-seances/{seances-id}")
+    public Seances modifySeances(@PathVariable("seances-id") int idSeances,@RequestBody Seances sean) {
+       return seancesService.modifySeances(idSeances,sean);
+
     }
     @Operation(description = "affecter un exercice a seance")
     @PostMapping("/affecter-exerciseaseance/{seances-id}/{Exercice-id}")

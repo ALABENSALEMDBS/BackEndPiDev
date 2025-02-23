@@ -3,12 +3,14 @@ package com.example.pidevbackendproject.services;
 import com.example.pidevbackendproject.entities.Exercices;
 import com.example.pidevbackendproject.entities.Joueurs;
 import com.example.pidevbackendproject.entities.Seances;
+import com.example.pidevbackendproject.entities.SousGroupes;
 import com.example.pidevbackendproject.repositories.ExercicesRepo;
 import com.example.pidevbackendproject.repositories.SeancesRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -28,8 +30,18 @@ public class SeancesImpService implements ISeancesService {
             seancesRepo.deleteById(idSeance);
     }
 
-    public Seances modifySeances(Seances seance) {
-        return seancesRepo.save(seance);
+
+    public Seances modifySeances(int idSeance, Seances seance) {
+
+        Optional<Seances> optionalSeances = seancesRepo.findById(idSeance);
+        if (!optionalSeances.isPresent()) {
+            throw new RuntimeException("Seance non trouvé");
+        }
+        Seances existingSeances = optionalSeances.get();
+        existingSeances.setTitleSeance(seance.getTitleSeance());
+        existingSeances.setJourSeance(seance.getJourSeance());
+
+        return seancesRepo.save(existingSeances);
     }
 
     public List<Seances> getAllSeances() {
