@@ -7,7 +7,8 @@ import java.util.List;
 public interface ITournoisService {
     Tournois addTournois(Tournois tournoi);
     void deleteTournois(int idTournoi);
-    Tournois modifyTournois(Tournois tournoi);
+    Tournois modifyTournois(int idTournoi, Tournois tournoi);
     List<Tournois> getAllTournois();
     Tournois getTournoisById(int idTournoi);
+    void affeterMatchATournois(int idMatch,int idTournoi);
 }
