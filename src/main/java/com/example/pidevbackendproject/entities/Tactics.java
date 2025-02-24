@@ -20,6 +20,16 @@ public class Tactics {
     String descriptionTactic;
     String photoTactic;
     String videoTactic;
+
+//    @Lob
+//    @Column(columnDefinition = "LONGBLOB")
+//    byte[] photoTactic;
+//
+//    @Lob
+//    @Column(columnDefinition = "LONGBLOB")
+//    byte[] videoTactic;
+
+
 @JsonIgnore
     @ManyToOne
     Formations formation;
