@@ -7,7 +7,7 @@ import java.util.List;
 public interface IMatchsService {
     Matchs addMatchs(Matchs match);
     void deleteMatchs(int idMatch);
-    Matchs modifyMatchs(Matchs match);
+    Matchs modifyMatchs(int idMatch,Matchs match);
     List<Matchs> getAllMatchs();
     Matchs getMatchsById(int idMatch);
 }
