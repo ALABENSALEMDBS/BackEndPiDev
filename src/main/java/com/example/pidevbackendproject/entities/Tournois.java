@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,8 +22,8 @@ public class Tournois {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int idTournoi;
     String nameTournoi;
-    Date debutTournoi;
-    Date finTournoi;
+    LocalDate debutTournoi;
+    LocalDate finTournoi;
 @JsonIgnore
     @OneToMany(mappedBy = "tournoi")
     Set<Matchs> matchesTournoi =  new HashSet<>();
