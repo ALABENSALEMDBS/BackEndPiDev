@@ -44,9 +44,9 @@ public class UsersRestController {
     }
 
     @Operation(description = "Modifer user")
-    @PutMapping("/modify-user")
-    public Users modifyUsers(@RequestBody Users u) {
-        Users users= usersService.modifyUsers(u);
+    @PutMapping("/modify-user/{user-id}")
+    public Users modifyUsers(@PathVariable("user-id") int idUsers ,@RequestBody Users u) {
+        Users users= usersService.modifyUsers(idUsers,u);
         return users;
     }
 }

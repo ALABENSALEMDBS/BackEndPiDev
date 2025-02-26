@@ -24,7 +24,7 @@ public class JoueursRestController {
 
     @Operation(description = "récupérer toutes les joueurs de la base de données")
     @GetMapping(value = "/retrieve-all-joueurs")
-    public List<Joueurs> getAllClubs() {
+    public List<Joueurs> getAllJoueur() {
         List<Joueurs> joueur= joueursService.getAllJoueurs();
         return joueur;
     }
