@@ -23,6 +23,7 @@ public class Users {
     String prenomUser;
     String emailUser;
     String telephoneUser;
+    //String photo;
 @JsonIgnore
     @ManyToOne
     Clubs club;
