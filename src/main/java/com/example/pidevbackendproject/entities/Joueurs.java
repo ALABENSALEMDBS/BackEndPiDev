@@ -20,7 +20,7 @@ public class Joueurs extends Users {
     Date debutContratJoueur;
     Date finContratJoueur;
 
-//    @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     Formations formation;
     @JsonIgnore
@@ -29,7 +29,7 @@ public class Joueurs extends Users {
     @JsonIgnore
     @OneToOne
     FicheMedicales ficheMedicale;
-   // @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     SousGroupes sousGroupe;
 }

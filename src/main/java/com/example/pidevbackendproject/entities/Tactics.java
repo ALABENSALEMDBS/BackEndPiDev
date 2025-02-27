@@ -24,7 +24,7 @@ public class Tactics {
 //    @Lob
 //    @Column(columnDefinition = "LONGBLOB")
 //    byte[] photoTactic;
-//
+
 //    @Lob
 //    @Column(columnDefinition = "LONGBLOB")
 //    byte[] videoTactic;
