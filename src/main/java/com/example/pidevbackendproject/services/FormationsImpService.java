@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -72,5 +73,11 @@ public class FormationsImpService implements IFormationsService {
         Formations formation = formationsRepo.getById(idFormation);
         tactic.setFormation(formation);
         tacticsRepo.save(tactic);
+    }
+
+    public Set<Joueurs> getJoueursInFormation(int idFormation) {
+        Formations formation = formationsRepo.findById(idFormation).get();
+
+        return formation.getJoueurs();
     }
 }
