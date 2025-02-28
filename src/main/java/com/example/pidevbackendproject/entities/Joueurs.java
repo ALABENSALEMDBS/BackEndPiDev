@@ -33,4 +33,6 @@ public class Joueurs extends Users {
     @JsonIgnore
     @ManyToOne
     SousGroupes sousGroupe;
+    @OneToOne
+    Rapports rapport;
 }

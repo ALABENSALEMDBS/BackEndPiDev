@@ -35,9 +35,7 @@ public class Seances {
     @JsonIgnore
     @OneToMany(mappedBy = "seanceExercice")
     Set<Exercices> exercises;
-    @JsonIgnore
-    @OneToOne
-    Rapports rapport;
+
     @JsonIgnore
     @OneToOne
     EvenementInternes evenementInterne;

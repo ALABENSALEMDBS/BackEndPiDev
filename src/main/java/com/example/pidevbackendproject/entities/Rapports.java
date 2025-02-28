@@ -37,7 +37,7 @@ public class Rapports {
     String etatRapport;
     String blessureRapport;
     @OneToOne(mappedBy = "rapport")
-    Seances seancerapport;
+    Joueurs joueurrapport;
     @OneToMany(mappedBy = "rapportExerciceRetablissement")
     Set<ExerciceRetablissements> exerciceRetablissements;
 }
