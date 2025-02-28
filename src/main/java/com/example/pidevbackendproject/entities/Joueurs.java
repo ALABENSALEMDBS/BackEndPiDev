@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -17,8 +18,8 @@ import java.util.Date;
 public class Joueurs extends Users {
     String posteJoueur;
     int numeroJoueur;
-    Date debutContratJoueur;
-    Date finContratJoueur;
+    LocalDate debutContratJoueur;
+    LocalDate finContratJoueur;
 
     @JsonIgnore
     @ManyToOne
