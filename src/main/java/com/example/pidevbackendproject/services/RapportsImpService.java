@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -20,9 +21,35 @@ public class RapportsImpService implements IRapportsService {
     rapportsRepo.deleteById(idRapport);
     }
 
-    public Rapports modifyRapports(Rapports rapport) {
-        return rapportsRepo.save(rapport);
-    }
+    public Rapports modifyRapports(int idRapport, Rapports rapport) {
+            Optional<Rapports> optionalRapports = rapportsRepo.findById(idRapport);
+            if (!optionalRapports.isPresent()) {
+                throw new RuntimeException("Rapport non trouvé");
+            }
+            Rapports existingRapports = optionalRapports.get();
+            existingRapports.setSpeedRapport(rapport.getSpeedRapport());
+            existingRapports.setAccelerationRapport(rapport.getAccelerationRapport());
+            existingRapports.setBlessureRapport(rapport.getBlessureRapport());
+            existingRapports.setEtatRapport(rapport.getEtatRapport());
+            existingRapports.setAgility(rapport.getAgility());
+            existingRapports.setBalance(rapport.getBalance());
+            existingRapports.setEndurance(rapport.getEndurance());
+            existingRapports.setAerobicCapacity(rapport.getAerobicCapacity());
+            existingRapports.setVerticalJump(rapport.getVerticalJump());
+            existingRapports.setReactivity(rapport.getReactivity());
+            existingRapports.setReactionTime(rapport.getReactionTime());
+            existingRapports.setPower(rapport.getPower());
+            existingRapports.setAnaerobicCapacity(rapport.getAnaerobicCapacity());
+            existingRapports.setCoordination(rapport.getCoordination());
+            existingRapports.setHorizontalJump(rapport.getStrength());
+            existingRapports.setMuscularEndurance(rapport.getMuscularEndurance());
+            existingRapports.setExplosiveness(rapport.getExplosiveness());
+            existingRapports.setStrength(rapport.getStrength());
+
+            return rapportsRepo.save(existingRapports);
+        }
+
+
 
     public List<Rapports> getAllRapports() {
         return rapportsRepo.findAll();
