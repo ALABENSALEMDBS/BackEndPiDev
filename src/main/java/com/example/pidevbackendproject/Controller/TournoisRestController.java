@@ -43,9 +43,16 @@ public class TournoisRestController {
     }
 
     @Operation(description = "Modifer tournois")
-    @PutMapping("/modify-tournois")
-    public Tournois modifyTournois(@RequestBody Tournois tr) {
-        Tournois tournois= tournoisService.modifyTournois(tr);
+    @PutMapping("/modify-tournois/{idtournoi}")
+    public Tournois modifyTournois(@PathVariable ("idtournoi") int idTournoi, @RequestBody Tournois tr) {
+        Tournois tournois= tournoisService.modifyTournois(idTournoi ,tr);
         return tournois;
+    }
+
+
+    @Operation(description = "Affecter match a tournoi")
+    @PostMapping("/affecter-matchTournoi/{match-id}/{tournoi-id}")
+    public void affecterTacticAFormation(@PathVariable("match-id") int idMatch, @PathVariable("tournoi-id") int idTournoi) {
+        tournoisService.affeterMatchATournois(idMatch, idTournoi);
     }
 }

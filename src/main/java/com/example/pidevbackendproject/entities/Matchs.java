@@ -25,7 +25,7 @@ public class Matchs {
     @OneToMany(mappedBy = "matchClub")
     Set<Clubs> clubs;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne
     Tournois tournoi;
 

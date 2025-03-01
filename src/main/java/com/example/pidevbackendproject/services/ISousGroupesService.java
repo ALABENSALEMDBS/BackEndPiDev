@@ -8,7 +8,7 @@ import java.util.List;
 public interface ISousGroupesService {
     SousGroupes addSousGroupes(SousGroupes sousGroupe);
     void deleteSousGroupes(int idSousGroup);
-    SousGroupes modifySousGroupes(SousGroupes sousGroupe);
+    SousGroupes modifySousGroupes(int idSousGroup, SousGroupes sousGroupe);
     List<SousGroupes> getAllSousGroupes();
     SousGroupes getSousGroupesById(int idSousGroup);
     void affecterJoueurASousGroup(int numjoueur, int idSousGroupe);

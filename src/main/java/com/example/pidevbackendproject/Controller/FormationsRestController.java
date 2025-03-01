@@ -2,6 +2,7 @@
 package com.example.pidevbackendproject.Controller;
 
 import com.example.pidevbackendproject.entities.Formations;
+import com.example.pidevbackendproject.entities.Joueurs;
 import com.example.pidevbackendproject.services.IFormationsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Tag(name = "Gestion de Formations")
 @RestController
@@ -43,11 +45,39 @@ public class FormationsRestController {
         formationsService.deleteFormations(idFormations);
     }
 
-    @Operation(description = "Modifer Formations")
-    @PutMapping("/modify-formations")
-    public Formations modifyFormations(@RequestBody Formations form) {
-        Formations formation= formationsService.modifyFormations(form);
-        return formation;
+    @Operation(description = "Modifier une Formation")
+    @PutMapping("/modify-formations/{idFormation}")
+    public Formations modifyFormations(@PathVariable ("idFormation") int idFormation, @RequestBody Formations form) {
+        return formationsService.modifyFormations(idFormation, form);
     }
-}
+
+
+
+
+    @Operation(description = "Affecter joueur a formation 11")
+    @PostMapping("/affecter-JoueurFormation/{joueur-id}/{formation-id}")
+    public void affecterJoueurAFormation(@PathVariable("joueur-id") int numjoueur, @PathVariable("formation-id") int idFormation) {
+        formationsService.affecterJoueurAFormation(numjoueur,idFormation);
+    }
+
+
+
+    @Operation(description = "Affecter tactic a formation 11")
+    @PostMapping("/affecter-TacticFormation/{tactic-id}/{formation-id}")
+    public void affecterTacticAFormation(@PathVariable("tactic-id") int idTactic, @PathVariable("formation-id") int idFormation) {
+        formationsService.affecterTacticAFormation(idTactic,idFormation);
+    }
+
+
+
+    @Operation(description = "Récupérer les joueurs dans un formation")
+    @GetMapping("/retrieve-joueurs/{formations-id}")
+    public Set<Joueurs> getJoueursInFormation(@PathVariable("formations-id") int idFormations) {
+           Set<Joueurs> joueurs = formationsService.getJoueursInFormation(idFormations);
+           return joueurs;
+    }
+
+
+
+    }
 

@@ -43,9 +43,9 @@ public class MatchsRestController {
     }
 
     @Operation(description = "Modifer Matchs")
-    @PutMapping("/modify-matchs")
-    public Matchs modifyMatchs(@RequestBody Matchs mat) {
-        Matchs matchs= matchsService.modifyMatchs(mat);
+    @PutMapping("/modify-matchs/{matchs-id}")
+    public Matchs modifyMatchs(@RequestBody Matchs mat,@PathVariable("matchs-id") int idMatchs) {
+        Matchs matchs= matchsService.modifyMatchs(idMatchs,mat);
         return matchs;
     }
 }
