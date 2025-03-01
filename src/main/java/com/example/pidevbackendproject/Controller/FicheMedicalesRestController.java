@@ -5,6 +5,7 @@ import com.example.pidevbackendproject.services.IFicheMedicalesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,15 +18,29 @@ public class FicheMedicalesRestController {
     IFicheMedicalesService ficheMedicalesService;
 
     @Operation(description = "Ajouter une Fiche Medicale")
-    @PostMapping("/add-FicheMedicales")
-    public FicheMedicales addFicheMedicales(@RequestBody FicheMedicales fm) {
-        return ficheMedicalesService.addFicheMedicales(fm);
+    @PostMapping("/add-FicheMedicales/{idPlayer}")
+    public FicheMedicales addFicheMedicales(@RequestBody FicheMedicales fm, @PathVariable int idPlayer) {
+        return ficheMedicalesService.addFicheMedicales(fm, idPlayer);
     }
 
-    @Operation(description = "récupérer toutes les Fiches Medicales de la base de données")
+   /* @PostMapping("/addfichebyplayer/{idPlayer}")
+    public FicheMedicales addFicheMedicalByIdJoueurs( @RequestBody FicheMedicales ficheMedicales,  @PathVariable int idPlayer) {
+        return ficheMedicalesService.addFicheMedicalByIdJoueurs(ficheMedicales,idPlayer);
+    }*/
+
+   /* @PostMapping("/ajouter/{joueurId}")
+    public ResponseEntity<FicheMedicales> ajouterFicheMedicale(
+            @PathVariable int joueurId,
+            @RequestBody FicheMedicales ficheMedical) {
+        System.out.println("ID Joueur reçu: " + joueurId);  // Vérifier l'ID
+        FicheMedicales nouvelleFiche = ficheMedicalesService.addFicheMedicalByIdJoueurs(joueurId, ficheMedical);
+        return ResponseEntity.ok(nouvelleFiche);
+    }*/
+
+        @Operation(description = "récupérer toutes les Fiches Medicales de la base de données")
     @GetMapping(value = "/retrieve-all-ficheMedicales")
     public List<FicheMedicales> getAllFicheMedicales() {
-        List<FicheMedicales> ficheMedicale= ficheMedicalesService.getAllFicheMedicales();
+            List<FicheMedicales> ficheMedicale= ficheMedicalesService.getAllFicheMedicales();
         return ficheMedicale;
     }
 
@@ -44,7 +59,8 @@ public class FicheMedicalesRestController {
 
     @Operation(description = "Modifer Fiche Medicales")
     @PutMapping("/modify-ficheMedicales")
-    public FicheMedicales modifyFicheMedicales(@RequestBody FicheMedicales fm) {
+    public FicheMedicales modifyFicheMedicales(
+                                               @RequestBody FicheMedicales fm) {
         FicheMedicales ficheMedicale= ficheMedicalesService.modifyFicheMedicales(fm);
         return ficheMedicale;
     }

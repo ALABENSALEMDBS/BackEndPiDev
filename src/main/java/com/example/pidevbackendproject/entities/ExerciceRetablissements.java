@@ -18,8 +18,13 @@ public class ExerciceRetablissements {
     int idExerciceRetablissement;
     String nomExerciceRetablissement;
     String descriptionExerciceRetablissement;
+    int dureeExercice;
+    String niveauDifficulte ;
     @JsonIgnore
     @ManyToOne
     Rapports rapportExerciceRetablissement;
+
+    @ManyToOne
+    Nourriture nourriture;
 
 }
