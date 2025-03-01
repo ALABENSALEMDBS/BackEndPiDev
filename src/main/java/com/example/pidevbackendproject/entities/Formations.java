@@ -26,7 +26,7 @@ public class Formations {
     @OneToOne(mappedBy = "formation")
     Matchs matcheformation;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "formation")
     Set<Joueurs> joueurs;
 //@JsonIgnore
