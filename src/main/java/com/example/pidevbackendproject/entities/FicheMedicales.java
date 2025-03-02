@@ -23,12 +23,12 @@ public class FicheMedicales {
     int idFicheMedicale;
     Float poidsFicheMedicale;
     Float tailleFicheMedicale;
-   // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateBlessure;
     private String gravite;
     private String type;
+
+    @OneToOne(mappedBy = "ficheMedicale", fetch = FetchType.EAGER)
     @JsonIgnore
-    @OneToOne(mappedBy = "ficheMedicale")
 //    @JoinColumn(name = "joueur_id")
     Joueurs joueurficheMedicale;
 }

@@ -1,5 +1,6 @@
 package com.example.pidevbackendproject.services;
 
+import com.example.pidevbackendproject.Dto.ficheMedicaleDto;
 import com.example.pidevbackendproject.entities.FicheMedicales;
 import com.example.pidevbackendproject.entities.Joueurs;
 import com.example.pidevbackendproject.repositories.FicheMedicalesRepo;
@@ -15,6 +16,9 @@ import java.util.Objects;
 public class FicheMedicalesImpService implements IFicheMedicalesService {
     FicheMedicalesRepo ficheMedicalesRepo;
     JoueursRepo joueursRepo;
+
+
+    //ubdate test create fiche
 
 
 
@@ -47,6 +51,16 @@ public class FicheMedicalesImpService implements IFicheMedicalesService {
 
 
     public void deleteFicheMedicales(int idFicheMedicale) {
+        FicheMedicales FicheMedicales = ficheMedicalesRepo.findById(idFicheMedicale).get();
+
+        var joueur = FicheMedicales.getJoueurficheMedicale();
+
+        if(joueur != null) {
+            joueur.setFicheMedicale(null);
+
+            joueursRepo.save(joueur);
+        }
+
        ficheMedicalesRepo.deleteById(idFicheMedicale);
     }
 
@@ -61,5 +75,26 @@ public class FicheMedicalesImpService implements IFicheMedicalesService {
 
     public FicheMedicales getFicheMedicalesById(int idFicheMedicale) {
         return ficheMedicalesRepo.findById(idFicheMedicale).get();
+    }
+
+    //new methode
+    public FicheMedicales createFicheMedicale(String name, String prenom, FicheMedicales ficheMedicales) {
+        // Récupérer le joueur
+        Joueurs joueur = joueursRepo.findByNameUsersAndPrenomUser(name, prenom)
+                .orElseThrow(() -> new RuntimeException("Joueur non trouvé !"));
+
+        // Vérifier si le joueur a déjà une fiche médicale
+        if (joueur.getFicheMedicale() != null) {
+            throw new RuntimeException("Ce joueur a déjà une fiche médicale !");
+        }
+
+        // Associer la fiche médicale au joueur
+        ficheMedicales.setJoueurficheMedicale(joueur);
+
+        return ficheMedicalesRepo.save(ficheMedicales);
+    }
+
+    public List<ficheMedicaleDto> findAllWithJoueurFullName() {
+        return ficheMedicalesRepo.findAllWithJoueurFullName();
     }
 }

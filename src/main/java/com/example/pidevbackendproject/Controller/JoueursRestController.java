@@ -48,4 +48,11 @@ public class JoueursRestController {
         Joueurs joueur= joueursService.modifyJoueurs(j);
         return joueur;
     }
+
+    @Operation(description = "récupérer toutes les joueurs without fiche de la base de données")
+    @GetMapping(value = "/retrieve-all-joueurs-without-fiche")
+    public List<Joueurs> getAllJoueurWithoutFiche() {
+        List<Joueurs> joueur= joueursService.findJoueursWithoutFicheMedicale();
+        return joueur;
+    }
 }
