@@ -43,9 +43,9 @@ public class RapportsRestController {
     }
 
     @Operation(description = "Modifer rapports")
-    @PutMapping("/modify-rapports")
-    public Rapports modifyRapports(@RequestBody Rapports rapp) {
-        Rapports rapport= rapportsService.modifyRapports(rapp);
+    @PutMapping("/modify-rapports/{rapports-id}")
+    public Rapports modifyRapports(@RequestBody Rapports rapp,@PathVariable("rapports-id") int idRapports) {
+        Rapports rapport= rapportsService.modifyRapports(idRapports, rapp);
         return rapport;
     }
 }
