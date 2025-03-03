@@ -1,5 +1,6 @@
 package com.example.pidevbackendproject.Controller;
 
+import com.example.pidevbackendproject.entities.Joueurs;
 import com.example.pidevbackendproject.entities.SousGroupes;
 import com.example.pidevbackendproject.services.ISousGroupesService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,6 +36,9 @@ public class SousGroupesRestController {
     @GetMapping("/retrieve-sousGroupes/{sousGroupes-id}")
     public SousGroupes retrieveSousGroupes(@PathVariable("sousGroupes-id") int idSousGroupes) {
         SousGroupes sousGroupes = sousGroupesService.getSousGroupesById(idSousGroupes);
+        /*for (Joueurs joueur: sousGroupes.getJoueurs()){
+            joueur.getName();
+        }*/
         return sousGroupes;
     }
 

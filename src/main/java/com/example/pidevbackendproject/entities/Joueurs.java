@@ -6,6 +6,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity
 @Getter
@@ -17,10 +19,12 @@ import java.util.Date;
 public class Joueurs extends Users {
     String posteJoueur;
     int numeroJoueur;
-    Date debutContratJoueur;
-    Date finContratJoueur;
+    LocalDate debutContratJoueur;
+    LocalDate finContratJoueur;
 
-//    @JsonIgnore
+
+
+    @JsonIgnore
     @ManyToOne
     Formations formation;
     @JsonIgnore
@@ -29,7 +33,8 @@ public class Joueurs extends Users {
     @JsonIgnore
     @OneToOne
     FicheMedicales ficheMedicale;
-   // @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     SousGroupes sousGroupe;
+
 }

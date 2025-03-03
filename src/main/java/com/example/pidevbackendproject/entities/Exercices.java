@@ -19,7 +19,7 @@ public class Exercices {
     String nameExercice;
     String descriptionExercice;
     String videoExercice;
-    String photoExercice;
+    //String photoExercice;
     @JsonIgnore
     @ManyToOne
     SousGroupes sousGroupExercice;

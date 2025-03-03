@@ -20,7 +20,7 @@ public class SousGroupes {
     int idSousGroup;
     String nameSousGroup;
     int nbrJoueurSousGroup;
-    @JsonIgnore
+
     @OneToMany(mappedBy = "sousGroupe")
     Set<Joueurs> joueurs;
     @JsonIgnore
