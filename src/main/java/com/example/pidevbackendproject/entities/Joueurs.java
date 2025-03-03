@@ -5,9 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
 import java.time.LocalDate;
-
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,14 +23,17 @@ public class Joueurs extends Users {
     LocalDate debutContratJoueur;
     LocalDate finContratJoueur;
 
+//    @JsonIgnore
+//    @ManyToOne
+//    Formations formation;
+      @JsonIgnore
+      @ManyToMany(mappedBy = "joueurs")
+      Set<Formations> formations =new HashSet<>();
 
-
-    @JsonIgnore
-    @ManyToOne
-    Formations formation;
     @JsonIgnore
     @OneToOne
     StatistiqueIndiv statistiqueIndiv;
+
     @JsonIgnore
     @OneToOne
     FicheMedicales ficheMedicale;
@@ -37,4 +41,6 @@ public class Joueurs extends Users {
     @ManyToOne
     SousGroupes sousGroupe;
 
+    @OneToOne
+    Rapports rapport;
 }

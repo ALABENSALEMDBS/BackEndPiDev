@@ -45,6 +45,8 @@ public class ExerciceRetablissementsRestController {
     @Operation(description = "Modifer ExerciceRetablissements")
     @PutMapping("/modify-exerciceRetablissements")
     public ExerciceRetablissements modifyExerciceRetablissements(@RequestBody ExerciceRetablissements er) {
+
+        int id = er.getIdExerciceRetablissement();
         ExerciceRetablissements exerciceRetablissement= exerciceRetablissementsService.modifyExerciceRetablissements(er);
         return exerciceRetablissement;
     }

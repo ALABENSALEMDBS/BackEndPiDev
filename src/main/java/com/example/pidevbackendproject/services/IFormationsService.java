@@ -1,8 +1,10 @@
 package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Formations;
+import com.example.pidevbackendproject.entities.Joueurs;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IFormationsService {
     Formations addFormations(Formations formation);
@@ -12,5 +14,7 @@ public interface IFormationsService {
     Formations getFormationsById(int idFormation);
     void affecterJoueurAFormation(int numjoueur, int idFormation);
     void  affecterTacticAFormation(int idTactic, int idFormation);
+
+    Set<Joueurs> getJoueursInFormation(int idFormation);
 
 }

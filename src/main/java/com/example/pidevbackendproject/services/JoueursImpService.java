@@ -30,4 +30,8 @@ public class JoueursImpService implements IJoueursService {
     public Joueurs getJoueursById(int numeroJoueur) {
         return joueursRepo.findById(numeroJoueur).get();
     }
+
+    public List<Joueurs> findJoueursWithoutFicheMedicale() {
+        return joueursRepo.findJoueursWithoutFicheMedicale();
+    }
 }

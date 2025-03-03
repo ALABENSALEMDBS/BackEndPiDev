@@ -26,9 +26,12 @@ public class Formations {
     @OneToOne(mappedBy = "formation")
     Matchs matcheformation;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "formation")
-    Set<Joueurs> joueurs;
+
+//    @OneToMany(mappedBy = "formation")
+//    Set<Joueurs> joueurs;
+      @ManyToMany
+      Set<Joueurs> joueurs = new HashSet<>();
+
 //@JsonIgnore
     @OneToMany(mappedBy = "formation")
     Set<Tactics> tactics = new HashSet<>();
