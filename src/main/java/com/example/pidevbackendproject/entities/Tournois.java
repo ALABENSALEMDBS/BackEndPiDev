@@ -21,6 +21,7 @@ public class Tournois {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int idTournoi;
+    @Column(name = "name_competition",nullable = false)
     String nameTournoi;
     LocalDate debutTournoi;
     LocalDate finTournoi;

@@ -16,6 +16,17 @@ import java.util.List;
 public class JoueursRestController {
     IJoueursService joueursService;
 
+
+
+    /*
+    @GetMapping("joueur-role")
+    @PreAuthorize("hasRole('PLAYER')")
+    public ResponseEntity<String> test() {
+        System.out.println("beeetttttoniii daviiid");
+        return ResponseEntity.status(HttpStatus.OK).body("Coaaaaaaach");
+    }
+     */
+
     @Operation(description = "Ajouter un joueur")
     @PostMapping("/add-joueurs")
     public Joueurs addJoueurs(@RequestBody Joueurs j) {
