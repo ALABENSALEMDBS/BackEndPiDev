@@ -23,9 +23,13 @@ public class Tournois {
     int idTournoi;
     @Column(name = "name_competition",nullable = false)
     String nameTournoi;
+
+    @Column(name = "date_competition", nullable = false)
     LocalDate debutTournoi;
+    @Column(name = "fin_competition",nullable = false)
     LocalDate finTournoi;
-@JsonIgnore
+
+    @JsonIgnore
     @OneToMany(mappedBy = "tournoi")
     Set<Matchs> matchesTournoi =  new HashSet<>();
 }
