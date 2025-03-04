@@ -28,6 +28,7 @@ public class Matchs {
     private String equipe2;
 
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "matchClub")
     Set<Clubs> clubs;
