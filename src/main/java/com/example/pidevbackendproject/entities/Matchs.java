@@ -38,12 +38,12 @@ public class Matchs {
 
     @JsonIgnore
     @OneToOne
-    @Column(name = "Stat_Match",nullable = false)
+    //@Column(name = "Stat_Match",nullable = false)
     StatistiqueMatchs statistiqueMatches;
 
     @JsonIgnore
     @OneToOne
-    @Column(name = "Evenement_Match",nullable = false)
+    //@Column(name = "Evenement_Match",nullable = false)
     EvenementsGlobales evenementsGlobale;
 
     @JsonIgnore

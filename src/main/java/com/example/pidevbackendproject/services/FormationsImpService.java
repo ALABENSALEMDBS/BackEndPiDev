@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -128,5 +129,34 @@ public class FormationsImpService implements IFormationsService {
         Formations formation = formationsRepo.findById(idFormation).get();
 
         return formation.getJoueurs();
+    }
+
+    private static final int MAX_JOUEURS = 11;
+
+    public Formations affecterJoueursAFormation(int idFormation, List<Integer> joueursIds) {
+        Formations formation = formationsRepo.findById(idFormation)
+                .orElseThrow(() -> new EntityNotFoundException("Formation non trouvée"));
+
+        if (formation.getJoueurs().size() + joueursIds.size() > MAX_JOUEURS) {
+            throw new IllegalStateException("Une formation ne peut pas contenir plus de " + MAX_JOUEURS + " joueurs.");
+        }
+
+        Set<Joueurs> joueurs = new HashSet<>(joueursRepo.findAllById(joueursIds));
+
+        formation.getJoueurs().addAll(joueurs);
+
+        for (Joueurs joueur : joueurs) {
+            joueur.getFormations().add(formation);
+            joueursRepo.save(joueur);
+        }
+
+        return formationsRepo.save(formation);
+    }
+
+    public void desaffecterJoueurAFormation(int idFormation, int idJoueur) {
+        Formations formation = formationsRepo.findById(idFormation).get();
+        Joueurs joueur = joueursRepo.findById(idJoueur).get();
+        formation.getJoueurs().remove(joueur);
+        formationsRepo.save(formation);
     }
 }
