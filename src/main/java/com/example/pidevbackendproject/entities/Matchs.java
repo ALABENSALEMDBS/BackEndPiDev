@@ -27,15 +27,10 @@ public class Matchs {
     private String equipe1;
     private String equipe2;
 
-
-
-
-
     @JsonIgnore
     @OneToMany(mappedBy = "matchClub")
     Set<Clubs> clubs;
 
-    //@JsonIgnore
     @ManyToOne
     Tournois tournoi;
 
