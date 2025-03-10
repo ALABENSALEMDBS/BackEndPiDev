@@ -17,9 +17,9 @@ public class RapportsRestController {
     IRapportsService rapportsService;
 
     @Operation(description = "Ajouter un rapports")
-    @PostMapping("/add-rapports")
-    public Rapports addRapports(@RequestBody Rapports rapp) {
-        return rapportsService.addRapports(rapp);
+    @PostMapping("/addRapports/{numeroJoueur}")
+    public void addRapports(@RequestBody Rapports rapport,@PathVariable("numeroJoueur") int numeroJoueur) {
+        rapportsService.addRapports(rapport,numeroJoueur);
     }
 
     @Operation(description = "récupérer toutes les rapports de la base de données")
@@ -48,4 +48,7 @@ public class RapportsRestController {
         Rapports rapport= rapportsService.modifyRapports(idRapports, rapp);
         return rapport;
     }
+
+
+
 }
