@@ -1,6 +1,9 @@
 package com.example.pidevbackendproject.services;
 
+import com.example.pidevbackendproject.entities.Exercices;
+import com.example.pidevbackendproject.entities.Joueurs;
 import com.example.pidevbackendproject.entities.Rapports;
+import com.example.pidevbackendproject.repositories.JoueursRepo;
 import com.example.pidevbackendproject.repositories.RapportsRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,13 +16,26 @@ import java.util.Optional;
 public class RapportsImpService implements IRapportsService {
 
     RapportsRepo rapportsRepo;
-    public Rapports addRapports(Rapports rapport) {
-        return rapportsRepo.save(rapport);
-    }
+    JoueursRepo joueursRepo;
 
     public void deleteRapports(int idRapport) {
-    rapportsRepo.deleteById(idRapport);
+        Optional<Rapports> optionalRapport = rapportsRepo.findById(idRapport);
+
+        if (optionalRapport.isPresent()) {
+            Rapports rapports = optionalRapport.get();
+
+            // If there is a linked joueur, set the rapport to null
+            Joueurs joueur = rapports.getJoueurrapport();
+            if (joueur != null) {
+                joueur.setRapport(null);  // Remove the link to the rapport
+                joueursRepo.save(joueur); // Save the joueur without the rapport
+            }
+
+            // Delete the rapport
+            rapportsRepo.deleteById(idRapport);
+        }
     }
+
 
     public Rapports modifyRapports(int idRapport, Rapports rapport) {
             Optional<Rapports> optionalRapports = rapportsRepo.findById(idRapport);
@@ -57,5 +73,12 @@ public class RapportsImpService implements IRapportsService {
 
     public Rapports getRapportsById(int idRapport) {
         return rapportsRepo.findById(idRapport).get();
+    }
+
+    public void addRapports(Rapports rapport, int numeroJoueur) {
+        Joueurs joueurs = joueursRepo.findByNumeroJoueur(numeroJoueur);
+        Rapports rapports = rapportsRepo.save(rapport);
+        joueurs.setRapport(rapports);
+        joueursRepo.save(joueurs);
     }
 }

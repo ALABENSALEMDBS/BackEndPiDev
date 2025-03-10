@@ -13,4 +13,5 @@ public interface IJoueursService {
 
 
     List<Joueurs> findJoueursWithoutFicheMedicale();
+
 }
