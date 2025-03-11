@@ -159,4 +159,8 @@ public class FormationsImpService implements IFormationsService {
         formation.getJoueurs().remove(joueur);
         formationsRepo.save(formation);
     }
+
+    public List<Formations> getAllFormationsWith11PlayersAndCompatiblePositions() {
+        return formationsRepo.findFormationsWith11PlayersAndCompatiblePositions();
+    }
 }

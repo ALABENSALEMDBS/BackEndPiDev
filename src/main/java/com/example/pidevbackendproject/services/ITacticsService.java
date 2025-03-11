@@ -10,4 +10,6 @@ public interface ITacticsService {
     Tactics modifyTactics(Tactics tactic);
     List<Tactics> getAllTactics();
     Tactics getTacticsById(int idTactic);
+
+    public Tactics addTacticAndAssignTacticToFormation(Tactics tactic, int idFormation);
 }
