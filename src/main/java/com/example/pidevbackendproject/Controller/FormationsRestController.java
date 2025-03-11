@@ -94,5 +94,11 @@ public class FormationsRestController {
     }
 
 
+
+    @GetMapping("/compatible-formations")
+    public List<Formations> getCompatibleFormations() {
+        return formationsService.getAllFormationsWith11PlayersAndCompatiblePositions();
+    }
+
     }
 

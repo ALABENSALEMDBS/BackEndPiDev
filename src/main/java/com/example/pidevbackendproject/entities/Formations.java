@@ -1,6 +1,7 @@
 package com.example.pidevbackendproject.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -27,13 +28,13 @@ public class Formations {
     Matchs matcheformation;
 
 
-//    @OneToMany(mappedBy = "formation")
-//    Set<Joueurs> joueurs;
       @ManyToMany
       Set<Joueurs> joueurs = new HashSet<>();
 
-//@JsonIgnore
-    @OneToMany(mappedBy = "formation")
+@JsonIgnore
+
+    @OneToMany(mappedBy = "formation",  cascade = {CascadeType.MERGE, CascadeType.PERSIST}) //garder les tactics même après suppression d'une formation
+    @JsonIgnoreProperties("formation")
     Set<Tactics> tactics = new HashSet<>();
 
 }
