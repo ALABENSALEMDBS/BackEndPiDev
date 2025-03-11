@@ -47,6 +47,13 @@ public class JoueursRestController {
         return joueur;
     }
 
+    @Operation(description = "récupérer les joueurs de la base de données by ID")
+    @GetMapping("/getbyrapports/{idRapport}")
+    public Joueurs getbyrapports(@PathVariable("idRapport") int idRapport) {
+        Joueurs joueur = joueursService.getbyrapports(idRapport);
+        return joueur;
+    }
+
     @Operation(description = "Supprimer joueurs by ID")
     @DeleteMapping("/remove-joueurs/{joueurs-id}")
     public void deleteJoueurs(@PathVariable("joueurs-id") int idJoueurs) {

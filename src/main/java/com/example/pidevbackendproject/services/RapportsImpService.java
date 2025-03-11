@@ -75,10 +75,14 @@ public class RapportsImpService implements IRapportsService {
         return rapportsRepo.findById(idRapport).get();
     }
 
+    public List<Rapports> getRapportsByJoueur(int numeroJoueur) {
+        return rapportsRepo.findByJoueurrapport_NumeroJoueur(numeroJoueur);
+    }
+
     public void addRapports(Rapports rapport, int numeroJoueur) {
         Joueurs joueurs = joueursRepo.findByNumeroJoueur(numeroJoueur);
         Rapports rapports = rapportsRepo.save(rapport);
-        joueurs.setRapport(rapports);
-        joueursRepo.save(joueurs);
+        rapports.setJoueurrapport(joueurs);
+        rapportsRepo.save(rapports);
     }
 }

@@ -38,7 +38,7 @@ public class Rapports {
     String etatRapport;
     String blessureRapport;
     @JsonIgnore
-    @OneToOne(mappedBy = "rapport")
+    @ManyToOne
     Joueurs joueurrapport;
     @JsonIgnore
     @OneToMany(mappedBy = "rapportExerciceRetablissement")

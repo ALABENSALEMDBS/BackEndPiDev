@@ -20,10 +20,8 @@ public class Exercices {
     String descriptionExercice;
     String videoExercice;
     //String photoExercice;
-    @JsonIgnore
     @ManyToOne
     SousGroupes sousGroupExercice;
-    @JsonIgnore
     @ManyToOne
     Seances seanceExercice;
 }
