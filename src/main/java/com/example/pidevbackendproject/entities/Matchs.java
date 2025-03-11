@@ -14,6 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class Matchs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +27,10 @@ public class Matchs {
     private String arbitre;
     private String equipe1;
     private String equipe2;
+
+    @Lob
+    @Column(length = 100000)
+    private byte[] displayPicture;
 
 
     @JsonIgnore
