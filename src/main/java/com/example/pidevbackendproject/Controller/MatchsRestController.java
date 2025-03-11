@@ -59,6 +59,7 @@ public class MatchsRestController {
         return new ResponseEntity<>(match, HttpStatus.CREATED);
     }
 
+
     @GetMapping("allMatchs")
     public ResponseEntity<List<Matchs>> getMatchs() {
         List<Matchs> matchsList = matchsRepo.findAll();
