@@ -11,7 +11,7 @@ public interface IJoueursService {
     List<Joueurs> getAllJoueurs();
     Joueurs getJoueursById(int numeroJoueur);
 
-
+    Joueurs getbyrapports(int idRapport );
     List<Joueurs> findJoueursWithoutFicheMedicale();
 
 }

@@ -36,6 +36,13 @@ public class RapportsRestController {
         return rapports;
     }
 
+    @Operation(description = "récupérer les rapports de la base de données by ID")
+    @GetMapping("/getRapportsByJoueur/{numeroJoueur}")
+    public List<Rapports> getRapportsByJoueur(@PathVariable("numeroJoueur") int numeroJoueur) {
+        return rapportsService.getRapportsByJoueur(numeroJoueur);
+
+    }
+
     @Operation(description = "Supprimer rapports by ID")
     @DeleteMapping("/remove-rapports/{rapports-id}")
     public void deleteRapports(@PathVariable("rapports-id") int idRapports) {

@@ -18,4 +18,5 @@ public interface JoueursRepo extends JpaRepository<Joueurs, Integer>{
 
     @Query("SELECT j FROM Joueurs j WHERE j.ficheMedicale IS NULL")
     List<Joueurs> findJoueursWithoutFicheMedicale();
+    Joueurs findByRapportIdRapport(int rapportId);
 }

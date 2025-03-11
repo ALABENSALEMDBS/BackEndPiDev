@@ -10,4 +10,5 @@ public interface IRapportsService {
     Rapports modifyRapports(int idRapport, Rapports rapport);
     List<Rapports> getAllRapports();
     Rapports getRapportsById(int idRapport);
+    public List<Rapports> getRapportsByJoueur(int numeroJoueur);
 }
