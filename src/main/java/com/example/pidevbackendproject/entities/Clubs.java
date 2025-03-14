@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@Builder
 @Entity
 @Getter
 @Setter
@@ -20,10 +22,17 @@ public class Clubs {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int idClub;
     String nameClub;
-    String logoClub;
+    //String logoClub;
     String emailClub;
-    String addressClub;
+    String adressClub;
+    Date dateClub;
     int licenceClub;
+
+    @Lob
+    @Column(length = 100000)
+    private byte[] logo;
+
+
     @JsonIgnore
     @OneToMany (mappedBy = "club")
     Set<Users> users = new HashSet<>();
