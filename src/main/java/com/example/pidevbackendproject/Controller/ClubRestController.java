@@ -48,7 +48,6 @@ public class ClubRestController {
                 .licenceClub(c.getLicenceClub())
                 .logo(file.getBytes())
                 .build();
-
         clubsRepo.save(clubs);
 
         return new ResponseEntity<>(clubs, HttpStatus.CREATED);
