@@ -48,11 +48,37 @@ public class ClubRestController {
                 .licenceClub(c.getLicenceClub())
                 .logo(file.getBytes())
                 .build();
-
         clubsRepo.save(clubs);
 
         return new ResponseEntity<>(clubs, HttpStatus.CREATED);
     }
+
+
+
+    /*
+    @PostMapping(value = "saveClub", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Clubs> createNewClub(
+            @RequestPart("club") String clubJson,
+            @RequestPart("file") MultipartFile file) throws IOException {
+
+        // Convert JSON string to Matchs object
+        ObjectMapper objectMapper = new ObjectMapper();
+        Clubs c = objectMapper.readValue(clubJson, Clubs.class);
+
+
+        Clubs clubs = Clubs.builder()
+                .nameClub(c.getNameClub())
+                .emailClub(c.getEmailClub())
+                .adressClub(c.getAdressClub())
+                .dateClub(c.getDateClub())
+                .licenceClub(c.getLicenceClub())
+                .logo(file.getBytes())
+                .build();
+        clubsRepo.save(clubs);
+
+        return new ResponseEntity<>(clubs, HttpStatus.CREATED);
+    }
+     */
 
     @GetMapping("allClubs")
     public ResponseEntity<List<Clubs>> getClubs() {
