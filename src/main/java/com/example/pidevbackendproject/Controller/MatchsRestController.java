@@ -22,9 +22,24 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/matchs")
 public class MatchsRestController {
+
     private final UsersRepo usersRepo;
     private final MatchsRepo matchsRepo;
     IMatchsService matchsService;
+
+
+
+    //Affecter
+    @PostMapping("/{matchId}/assign-clubs")
+    public ResponseEntity<String> assignClubsToMatch(
+            @RequestBody Matchs m,
+            @RequestParam int idClub1,
+            @RequestParam int idClub2) {
+
+        matchsService.affectTwoClubs(m, idClub1, idClub2);
+        return ResponseEntity.ok("Clubs assigned to match successfully");
+    }
+
 
     @Operation(description = "Ajouter un Match")
     @PostMapping("/add-matchs")

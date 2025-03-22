@@ -1,12 +1,14 @@
 package com.example.pidevbackendproject.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -32,6 +34,27 @@ public class Clubs {
     @Column(length = 100000)
     private byte[] logo;
 
+    //relation of two clubs
+    @OneToMany(mappedBy = "equipe1")
+    private List<Matchs> matchesAsEquipe1;
+
+    @OneToMany(mappedBy = "equipe2")
+    private List<Matchs> matchesAsEquipe2;
+
+
+
+/*
+    @OneToOne(cascade = CascadeType.ALL)
+    private Matchs matches;
+    //private Clubs clubb;
+*/
+
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "matchClub")
+    Set<Clubs> matchs;
+
+
 
     @JsonIgnore
     @OneToMany (mappedBy = "club")
@@ -40,6 +63,7 @@ public class Clubs {
     @JsonIgnore
     @ManyToOne
     Matchs matchClub;
+
 
 
 }

@@ -1,7 +1,9 @@
 package com.example.pidevbackendproject.services;
 
+import com.example.pidevbackendproject.entities.Clubs;
 import com.example.pidevbackendproject.entities.Matchs;
 import com.example.pidevbackendproject.entities.SousGroupes;
+import com.example.pidevbackendproject.repositories.ClubsRepo;
 import com.example.pidevbackendproject.repositories.MatchsRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,10 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class MatchsImpService implements IMatchsService {
+
     MatchsRepo matchsRepo;
+    ClubsRepo clubsRepo;
+
     public Matchs addMatchs(Matchs match) {
         return matchsRepo.save(match);
     }
@@ -46,10 +51,10 @@ public class MatchsImpService implements IMatchsService {
         return matchsRepo.findById(idMatch).get();
     }
 
-    public void AffectTwoClubs(Matchs match,int idClub1, int idClub2) {
-
-        //match.setEquipe1();
-
+    public void affectTwoClubs(Matchs match,int idClub1, int idClub2) {
+        match.setEquipe1(clubsRepo.findById(idClub1).get());
+        match.setEquipe2(clubsRepo.findById(idClub2).get());
+        matchsRepo.save(match);
 
     }
 
