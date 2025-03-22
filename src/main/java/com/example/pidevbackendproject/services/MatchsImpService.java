@@ -45,4 +45,13 @@ public class MatchsImpService implements IMatchsService {
     public Matchs getMatchsById(int idMatch) {
         return matchsRepo.findById(idMatch).get();
     }
+
+    public void AffectTwoClubs(Matchs match,int idClub1, int idClub2) {
+
+        //match.setEquipe1();
+
+
+    }
+
+
 }
