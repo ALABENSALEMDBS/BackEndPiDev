@@ -25,7 +25,11 @@ public class Matchs {
     private String statusMatch; // Nouveau attribut pour l'état du match (par exemple "en cours", "terminé")
     private String typeMatch;   // Nouveau attribut pour le type du match (par exemple "amical", "championnat")
     private String arbitre;
+
+
     private String equipe1;
+
+
     private String equipe2;
 
     @Lob
