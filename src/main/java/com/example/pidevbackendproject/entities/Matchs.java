@@ -27,19 +27,21 @@ public class Matchs {
     private String arbitre;
 
 
-    private String equipe1;
+    @ManyToOne
+    @JoinColumn(name = "equipe_1_id_club")
+    private Clubs equipe1;
 
 
-    private String equipe2;
+    @ManyToOne
+    @JoinColumn(name = "equipe_2_id_club")
+    private Clubs equipe2;
+
+
 
     @Lob
     @Column(length = 100000)
     private byte[] displayPicture;
 
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "matchClub")
-    Set<Clubs> clubs;
 
     @ManyToOne
     Tournois tournoi;
