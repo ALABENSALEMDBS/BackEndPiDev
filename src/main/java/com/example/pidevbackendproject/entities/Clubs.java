@@ -32,6 +32,10 @@ public class Clubs {
     @Column(length = 100000)
     private byte[] logo;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Matchs matches;
+    //private Clubs clubb;
+
 
     @JsonIgnore
     @OneToMany (mappedBy = "club")

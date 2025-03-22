@@ -50,7 +50,6 @@ public class MatchsImpService implements IMatchsService {
 
         //match.setEquipe1();
 
-
     }
 
 
