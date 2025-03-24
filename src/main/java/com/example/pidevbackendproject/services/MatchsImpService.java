@@ -55,7 +55,6 @@ public class MatchsImpService implements IMatchsService {
         match.setEquipe1(clubsRepo.findById(idClub1).get());
         match.setEquipe2(clubsRepo.findById(idClub2).get());
         matchsRepo.save(match);
-
     }
 
 
