@@ -39,6 +39,7 @@ public class MatchsRestController {
         matchsService.affectTwoClubs(m, idClub1, idClub2);
         return ResponseEntity.ok("Clubs assigned to match successfully");
     }
+    
 
 
     @Operation(description = "Ajouter un Match")
