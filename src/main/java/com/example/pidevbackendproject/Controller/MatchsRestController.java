@@ -66,6 +66,7 @@ public class MatchsRestController {
     }
 
 
+
     @GetMapping("allMatchs")
     public ResponseEntity<List<Matchs>> getMatchs() {
         List<Matchs> matchsList = matchsRepo.findAll();
