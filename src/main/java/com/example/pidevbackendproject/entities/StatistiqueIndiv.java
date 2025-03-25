@@ -39,6 +39,6 @@ public class StatistiqueIndiv {
     int distanceParcourue; // Distance totale parcourue en mètres
 
 
-    @OneToOne(mappedBy = "statistiqueIndiv")
+    @ManyToOne
     Joueurs joueurstatistiqueIndiv;
 }
