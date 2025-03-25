@@ -29,17 +29,7 @@ public class MatchsRestController {
 
 
 
-    //Affecter
-   /* @PostMapping("/assign-clubs/{idClub1/idClub2}")
-    public ResponseEntity<String> assignClubsToMatch(
-            @RequestBody Matchs m,
-            @RequestParam int idClub1,
-            @RequestParam int idClub2) {
 
-        matchsService.affectTwoClubs(m, idClub1, idClub2);
-        return ResponseEntity.ok("Clubs assigned to match successfully");
-    }*/
-    
 
 
     @Operation(description = "Ajouter un Match")
@@ -65,8 +55,8 @@ public class MatchsRestController {
                 .statusMatch(m.getStatusMatch())
                 .typeMatch(m.getTypeMatch())
                 .arbitre(m.getArbitre())
-                .equipe1(m.getEquipe1())
-                .equipe2(m.getEquipe2())
+                //.club1(m.getClub1())
+                //.club2(m.getClub2())
                 .displayPicture(file.getBytes())
                 .build();
 
@@ -125,4 +115,29 @@ public class MatchsRestController {
         Matchs matchs= matchsService.modifyMatchs(idMatchs,mat);
         return matchs;
     }
+
+
+    //AffecterClubs
+    @PostMapping("/affect-clubs/{idClub1}/{idClub2}")
+    public ResponseEntity<String> assignClubsToMatch(
+            @RequestBody Matchs m,
+            @PathVariable int idClub1,
+            @PathVariable int idClub2) {
+        matchsService.affectTwoClubs(m, idClub1, idClub2);
+        return ResponseEntity.ok("Clubs assigned to match successfully");
+    }
+
+
+    //normal post
+    @PostMapping("/saveMatch")
+    public Matchs saveMatchh(
+            @RequestBody Matchs m) {
+        return matchsService.addMatchs(m);
+        //return ResponseEntity.ok("Matches saved successfully");
+    }
+
+
+
+
+
 }

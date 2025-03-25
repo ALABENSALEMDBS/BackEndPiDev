@@ -51,11 +51,12 @@ public class MatchsImpService implements IMatchsService {
         return matchsRepo.findById(idMatch).get();
     }
 
-    /*public void affectTwoClubs(Matchs match,int idClub1, int idClub2) {
-        match.setEquipe1(clubsRepo.findById(idClub1).get());
-        match.setEquipe2(clubsRepo.findById(idClub2).get());
+    //affect two clubs to thee latch
+    public void affectTwoClubs(Matchs match,int idClub1, int idClub2) {
+        match.setClub1(clubsRepo.findById(idClub1).get());
+        match.setClub2(clubsRepo.findById(idClub2).get());
         matchsRepo.save(match);
-    }*/
+    }
 
 
 }

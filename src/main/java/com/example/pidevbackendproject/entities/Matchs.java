@@ -26,8 +26,8 @@ public class Matchs {
     private String typeMatch;   // Nouveau attribut pour le type du match (par exemple "amical", "championnat")
     private String arbitre;
 
-    private String equipe1;
-    private String equipe2;
+    //private String equipe1;
+    //private String equipe2;
 
 
     /*@ManyToOne
@@ -60,4 +60,13 @@ public class Matchs {
     @JsonIgnore
     @OneToOne
     Formations formation;
+
+
+    @ManyToOne
+    @JoinColumn(name = "club1_id")
+    private Clubs club1;
+
+    @ManyToOne
+    @JoinColumn(name = "club2_id")
+    private Clubs club2;
 }

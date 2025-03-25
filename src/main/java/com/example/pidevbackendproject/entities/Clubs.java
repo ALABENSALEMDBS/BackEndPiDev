@@ -6,10 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Builder
 @Entity
@@ -60,9 +57,22 @@ public class Clubs {
     @OneToMany (mappedBy = "club")
     Set<Users> users = new HashSet<>();
 
-    @JsonIgnore
+    /*@JsonIgnore
     @ManyToOne
-    Matchs matchClub;
+    Matchs matchClub;*/
+
+    @OneToMany(mappedBy = "club1")
+    private List<Matchs> matchesOfClub1 = new ArrayList<>();
+
+    @OneToMany(mappedBy = "club2")
+    private List<Matchs> matchesOfClub2 = new ArrayList<>();
+
+
+
+
+
+
+
 
 
 
