@@ -10,5 +10,5 @@ public interface IMatchsService {
     Matchs modifyMatchs(int idMatch,Matchs match);
     List<Matchs> getAllMatchs();
     Matchs getMatchsById(int idMatch);
-    void affectTwoClubs(Matchs match,int idClub1, int idClub2);
+    //void affectTwoClubs(Matchs match,int idClub1, int idClub2);
 }

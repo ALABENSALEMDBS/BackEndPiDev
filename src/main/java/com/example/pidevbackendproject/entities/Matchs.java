@@ -26,15 +26,18 @@ public class Matchs {
     private String typeMatch;   // Nouveau attribut pour le type du match (par exemple "amical", "championnat")
     private String arbitre;
 
+    private String equipe1;
+    private String equipe2;
 
-    @ManyToOne
+
+    /*@ManyToOne
     @JoinColumn(name = "equipe_1_id_club")
-    private Clubs equipe1;
+    private Clubs equipe1;*/
 
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "equipe_2_id_club")
-    private Clubs equipe2;
+    private Clubs equipe2;*/
 
 
 

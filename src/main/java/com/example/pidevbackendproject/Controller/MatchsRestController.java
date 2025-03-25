@@ -30,7 +30,7 @@ public class MatchsRestController {
 
 
     //Affecter
-    @PostMapping("/{matchId}/assign-clubs")
+   /* @PostMapping("/assign-clubs/{idClub1/idClub2}")
     public ResponseEntity<String> assignClubsToMatch(
             @RequestBody Matchs m,
             @RequestParam int idClub1,
@@ -38,7 +38,7 @@ public class MatchsRestController {
 
         matchsService.affectTwoClubs(m, idClub1, idClub2);
         return ResponseEntity.ok("Clubs assigned to match successfully");
-    }
+    }*/
     
 
 

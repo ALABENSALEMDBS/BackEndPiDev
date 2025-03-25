@@ -35,11 +35,11 @@ public class Clubs {
     private byte[] logo;
 
     //relation of two clubs
-    @OneToMany(mappedBy = "equipe1")
+    /*@OneToMany(mappedBy = "equipe1")
     private List<Matchs> matchesAsEquipe1;
 
     @OneToMany(mappedBy = "equipe2")
-    private List<Matchs> matchesAsEquipe2;
+    private List<Matchs> matchesAsEquipe2;*/
 
 
 
@@ -50,9 +50,9 @@ public class Clubs {
 */
 
 
-    @JsonIgnore
+    /*@JsonIgnore
     @ManyToMany(mappedBy = "matchClub")
-    Set<Clubs> matchs;
+    Set<Clubs> matchs;*/
 
 
 
