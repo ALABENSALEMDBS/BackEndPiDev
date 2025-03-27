@@ -1,6 +1,8 @@
 package com.example.pidevbackendproject.Controller;
 
+import com.example.pidevbackendproject.entities.Clubs;
 import com.example.pidevbackendproject.entities.Matchs;
+import com.example.pidevbackendproject.repositories.ClubsRepo;
 import com.example.pidevbackendproject.repositories.MatchsRepo;
 import com.example.pidevbackendproject.repositories.UsersRepo;
 import com.example.pidevbackendproject.services.IMatchsService;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Tag(name = "Gestion des Matchs")
 @RestController
@@ -25,6 +28,7 @@ public class MatchsRestController {
 
     private final UsersRepo usersRepo;
     private final MatchsRepo matchsRepo;
+    private final ClubsRepo clubsRepo;
     IMatchsService matchsService;
 
 
@@ -39,7 +43,7 @@ public class MatchsRestController {
     }
 
     /// //
-    @PostMapping(value = "saveMatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    /*@PostMapping(value = "saveMatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Matchs> createNewMatch(
             @RequestPart("match") String matchJson,
             @RequestPart("file") MultipartFile file) throws IOException {
@@ -63,7 +67,7 @@ public class MatchsRestController {
         matchsRepo.save(match);
 
         return new ResponseEntity<>(match, HttpStatus.CREATED);
-    }
+    }*/
 
 
 
@@ -135,6 +139,48 @@ public class MatchsRestController {
             @RequestBody Matchs m) {
         return matchsService.addMatchs(m);
         //return ResponseEntity.ok("Matches saved successfully");
+    }
+
+
+    @PostMapping(value = "saveMatch/{idClub1}/{idClub2}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createNewMatch(
+            @RequestPart("match") String matchJson,
+            @RequestPart("file") MultipartFile file,
+            @PathVariable int idClub1,
+            @PathVariable int idClub2) throws IOException {
+
+        // Convert JSON string to Matchs object
+        ObjectMapper objectMapper = new ObjectMapper();
+        Matchs m = objectMapper.readValue(matchJson, Matchs.class);
+
+
+        Optional<Clubs> club1 = clubsRepo.findById(idClub1);
+        Optional<Clubs> club2 = clubsRepo.findById(idClub2);
+
+        /*if (!club1.isPresent() || !club1.isPresent()) {
+            //return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("dddd");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("One or both clubs not found");
+        }*/
+
+        Matchs match = Matchs.builder()
+                .resultatMatch(m.getResultatMatch())
+                .dateMatch(m.getDateMatch())
+                .lieuMatch(m.getLieuMatch())
+                .statusMatch(m.getStatusMatch())
+                .typeMatch(m.getTypeMatch())
+                .arbitre(m.getArbitre())
+                .club1(club1.get())
+                .club2(club2.get())
+                .displayPicture(file.getBytes())
+                .build();
+
+        matchsRepo.save(match);
+
+        //return new ResponseEntity<>(match, HttpStatus.CREATED);
+        return new ResponseEntity<>(match, HttpStatus.CREATED);
+
+        //return new ResponseEntity<>(match, HttpStatus.CREATED);
     }
 
 
