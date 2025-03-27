@@ -18,7 +18,6 @@ public class ClubsImpService implements IClubsServise {
 
     public void deleteClubs(int idClub) {
         clubsRepo.deleteById(idClub);
-
     }
 
     public Clubs modifyClubs(Clubs club) {

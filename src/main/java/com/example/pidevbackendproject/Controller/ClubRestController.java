@@ -112,7 +112,6 @@ public class ClubRestController {
     @Operation(description = "Supprimer club by ID")
     @DeleteMapping("/remove-club/{club-id}")
     public void deleteClubs(@PathVariable("club-id") int idClub) {
-
         clubsServise.deleteClubs(idClub);
     }
 

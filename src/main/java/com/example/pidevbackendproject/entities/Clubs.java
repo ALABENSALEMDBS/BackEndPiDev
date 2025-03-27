@@ -61,9 +61,11 @@ public class Clubs {
     @ManyToOne
     Matchs matchClub;*/
 
+    @JsonIgnore
     @OneToMany(mappedBy = "club1")
     private List<Matchs> matchesOfClub1 = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "club2")
     private List<Matchs> matchesOfClub2 = new ArrayList<>();
 

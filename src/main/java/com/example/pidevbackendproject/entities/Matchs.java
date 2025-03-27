@@ -46,6 +46,7 @@ public class Matchs {
     private byte[] displayPicture;
 
 
+    @JsonIgnore
     @ManyToOne
     Tournois tournoi;
 
@@ -62,10 +63,12 @@ public class Matchs {
     Formations formation;
 
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "club1_id")
     private Clubs club1;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "club2_id")
     private Clubs club2;
