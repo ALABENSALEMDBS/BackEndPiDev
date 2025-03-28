@@ -17,26 +17,26 @@ public class StatistiqueIndiv {
     int idStatistiqueIndiv;
 
     // Vitesse et endurance
-    Float vitesseStatistiqueIndiv;  // Vitesse du joueur
-    String endurenceStatistiqueIndiv; // Niveau d'endurance
+    Float vitesseStatistiqueIndiv;
+    String endurenceStatistiqueIndiv;
 
     // Statistiques offensives
-    int buts;  // Nombre de buts marqués
-    int passesDecisives; // Nombre de passes décisives
-    int tirs;  // Nombre de tirs tentés
-    int tirsCadres; // Nombre de tirs cadrés
+    int buts;
+    int passesDecisives;
+    int tirs;
+    int tirsCadres;
 
     // Statistiques défensives
-    int tacles;  // Nombre de tacles réussis
-    int fautesCommises; // Nombre de fautes commises
-    int cartonsJaunes; // Nombre de cartons jaunes reçus
-    int cartonsRouges; // Nombre de cartons rouges reçus
+    int tacles;
+    int fautesCommises;
+    int cartonsJaunes;
+    int cartonsRouges;
 
     // Autres statistiques
-    int passesReussies; // Nombre de passes réussies
-    int dribblesReussis; // Nombre de dribbles réussis
-    int duelsGagnes; // Nombre de duels remportés
-    int distanceParcourue; // Distance totale parcourue en mètres
+    int passesReussies;
+    int dribblesReussis;
+    int duelsGagnes;
+    Float distanceParcourue;
 
 
     @ManyToOne
