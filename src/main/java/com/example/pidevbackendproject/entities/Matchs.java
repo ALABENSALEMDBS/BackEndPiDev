@@ -63,12 +63,12 @@ public class Matchs {
     Formations formation;
 
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "club1_id")
     private Clubs club1;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "club2_id")
     private Clubs club2;

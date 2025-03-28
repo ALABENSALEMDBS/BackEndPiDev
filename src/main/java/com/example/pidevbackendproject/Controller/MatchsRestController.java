@@ -141,27 +141,27 @@ public class MatchsRestController {
         //return ResponseEntity.ok("Matches saved successfully");
     }
 
-
-    @PostMapping(value = "saveMatch/{idClub1}/{idClub2}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+/*
+    @PostMapping(value = "saveMatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> createNewMatch(
             @RequestPart("match") String matchJson,
-            @RequestPart("file") MultipartFile file,
-            @PathVariable int idClub1,
-            @PathVariable int idClub2) throws IOException {
+            @RequestPart("file") MultipartFile file
+            ) throws IOException {
 
         // Convert JSON string to Matchs object
         ObjectMapper objectMapper = new ObjectMapper();
         Matchs m = objectMapper.readValue(matchJson, Matchs.class);
 
 
-        Optional<Clubs> club1 = clubsRepo.findById(idClub1);
-        Optional<Clubs> club2 = clubsRepo.findById(idClub2);
 
-        /*if (!club1.isPresent() || !club1.isPresent()) {
-            //return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("dddd");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("One or both clubs not found");
-        }*/
+        Optional<Clubs> club1 = clubsRepo.findByNameClub(m.getClub1().getNameClub());
+        Optional<Clubs> club2 = clubsRepo.findByNameClub(m.getClub2().getNameClub());
+
+        if(club1.isEmpty() || club2.isEmpty()){
+            return ResponseEntity.badRequest().body("Clubs not found");
+        }
+
+
 
         Matchs match = Matchs.builder()
                 .resultatMatch(m.getResultatMatch())
@@ -175,13 +175,82 @@ public class MatchsRestController {
                 .displayPicture(file.getBytes())
                 .build();
 
+
+
+
         matchsRepo.save(match);
 
         //return new ResponseEntity<>(match, HttpStatus.CREATED);
         return new ResponseEntity<>(match, HttpStatus.CREATED);
 
         //return new ResponseEntity<>(match, HttpStatus.CREATED);
+    }*/
+
+    @PostMapping(value = "saveMatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createNewMatch(
+            @RequestPart("match") String matchJson,
+            @RequestPart("file") MultipartFile file) throws IOException {
+
+        // Convert JSON string to Matchs object
+        ObjectMapper objectMapper = new ObjectMapper();
+        Matchs m = objectMapper.readValue(matchJson, Matchs.class);
+
+        // Fetch clubs by name
+        Clubs clubb1 = clubsRepo.findByNameClub(m.getClub1().getNameClub())
+                .orElseThrow(() -> new RuntimeException("Club1 not found"));
+        Clubs clubb2 = clubsRepo.findByNameClub(m.getClub2().getNameClub())
+                .orElseThrow(() -> new RuntimeException("Club2 not found"));
+
+
+
+        Matchs match = Matchs.builder()
+                .resultatMatch(m.getResultatMatch())
+                .dateMatch(m.getDateMatch())
+                .lieuMatch(m.getLieuMatch())
+                .statusMatch(m.getStatusMatch())
+                .typeMatch(m.getTypeMatch())
+                .arbitre(m.getArbitre())
+                .club1(clubb1)
+                .club2(clubb2)
+                .displayPicture(file.getBytes())
+                .build();
+
+        //System.out.println(m.getClub1().getNameClub());
+        matchsRepo.save(match);
+        //System.out.println(m.getClub1().getNameClub());
+
+        //return ResponseEntity.status(HttpStatus.CREATED).body("Match mrigl");
+        return new ResponseEntity<>(match, HttpStatus.CREATED);
     }
+
+
+
+    /*@PostMapping(value = "saveMatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createNewMatch(
+            @RequestPart("match") String matchJson,
+            @RequestPart("file") MultipartFile file) throws IOException {
+
+        // Convert JSON string to Matchs object
+        ObjectMapper objectMapper = new ObjectMapper();
+        Matchs m = objectMapper.readValue(matchJson, Matchs.class);
+
+        // Create and save match
+        Matchs match = Matchs.builder()
+                .resultatMatch(m.getResultatMatch())
+                .dateMatch(m.getDateMatch())
+                .lieuMatch(m.getLieuMatch())
+                .statusMatch(m.getStatusMatch())
+                .typeMatch(m.getTypeMatch())
+                .arbitre(m.getArbitre())
+                .club1(m.getClub1())
+                .club2(m.getClub2())
+                .displayPicture(file.getBytes())
+                .build();
+        matchsRepo.save(match);
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Match created successfully");
+    }*/
 
 
 
