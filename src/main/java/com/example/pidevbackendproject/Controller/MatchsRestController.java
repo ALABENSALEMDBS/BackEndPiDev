@@ -202,7 +202,6 @@ public class MatchsRestController {
                 .orElseThrow(() -> new RuntimeException("Club2 not found"));
 
 
-
         Matchs match = Matchs.builder()
                 .resultatMatch(m.getResultatMatch())
                 .dateMatch(m.getDateMatch())
@@ -252,6 +251,17 @@ public class MatchsRestController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Match created successfully");
     }*/
 
+
+
+    @GetMapping("/notYedPlayedMatchs")
+    public List<Matchs> notYetPlayedMatchs() {
+        return matchsRepo.notYetPlayedMatchs();
+    }
+
+    @GetMapping("/playedMatchs")
+    public List<Matchs> playedMatchs() {
+        return matchsRepo.playedMatchs();
+    }
 
 
 

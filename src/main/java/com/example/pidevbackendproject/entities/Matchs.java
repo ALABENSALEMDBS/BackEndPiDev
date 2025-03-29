@@ -26,25 +26,33 @@ public class Matchs {
     private String typeMatch;   // Nouveau attribut pour le type du match (par exemple "amical", "championnat")
     private String arbitre;
 
+
+    /*private int goals1;
+    private int goals2;
+    @Transient
+    public String resultatMatch(){
+        String goalsStr1 = String.valueOf(goals1);
+        String goalsStr2 = String.valueOf(goals2);
+        return goalsStr1 + " - " + goalsStr2;
+    }*/
+
+
+
+
     //private String equipe1;
     //private String equipe2;
-
 
     /*@ManyToOne
     @JoinColumn(name = "equipe_1_id_club")
     private Clubs equipe1;*/
 
-
     /*@ManyToOne
     @JoinColumn(name = "equipe_2_id_club")
     private Clubs equipe2;*/
 
-
-
     @Lob
     @Column(length = 100000)
     private byte[] displayPicture;
-
 
     @JsonIgnore
     @ManyToOne
@@ -61,7 +69,6 @@ public class Matchs {
     @JsonIgnore
     @OneToOne
     Formations formation;
-
 
     //@JsonIgnore
     @ManyToOne
