@@ -23,6 +23,9 @@ public class Tournois {
     @Column(name = "name_competition",nullable = false)
     String nameTournoi;
 
+    @Enumerated(EnumType.STRING)
+    private TypeTournois TypeT;
+
     /*@Column(name = "date_competition", nullable = false)
     LocalDate debutTournoi;
     @Column(name = "fin_competition",nullable = false)
@@ -35,4 +38,8 @@ public class Tournois {
 
     @OneToMany(mappedBy = "tournois", cascade = CascadeType.ALL)
     private List<Standing> standings = new ArrayList<>();
+
+
+
+
 }
