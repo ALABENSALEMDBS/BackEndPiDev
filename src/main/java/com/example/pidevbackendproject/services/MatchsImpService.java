@@ -7,7 +7,9 @@ import com.example.pidevbackendproject.repositories.ClubsRepo;
 import com.example.pidevbackendproject.repositories.MatchsRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.Transient;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +27,6 @@ public class MatchsImpService implements IMatchsService {
     public void deleteMatchs(int idMatch) {
      matchsRepo.deleteById(idMatch);
     }
-
-
 
 
 
@@ -58,5 +58,16 @@ public class MatchsImpService implements IMatchsService {
         matchsRepo.save(match);
     }
 
+    @Override
+    @Transactional
+    public Optional<Matchs> updateGoals(int idMatch, Integer goal1, Integer goal2) {
+        return matchsRepo.findById(idMatch).map(matchs ->{//map etsta3mlha m3a optional behc tbuildi if exists
+            matchs.setGoals1(goal1);
+            matchs.setGoals2(goal2);
+            matchs.updateResultat();
+            //lmehtode mte3 lwinner
+            return matchsRepo.save(matchs);
+                });
+    }
 
 }

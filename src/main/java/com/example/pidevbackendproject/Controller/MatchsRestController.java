@@ -152,16 +152,12 @@ public class MatchsRestController {
         ObjectMapper objectMapper = new ObjectMapper();
         Matchs m = objectMapper.readValue(matchJson, Matchs.class);
 
-
-
         Optional<Clubs> club1 = clubsRepo.findByNameClub(m.getClub1().getNameClub());
         Optional<Clubs> club2 = clubsRepo.findByNameClub(m.getClub2().getNameClub());
 
         if(club1.isEmpty() || club2.isEmpty()){
             return ResponseEntity.badRequest().body("Clubs not found");
         }
-
-
 
         Matchs match = Matchs.builder()
                 .resultatMatch(m.getResultatMatch())
@@ -175,9 +171,6 @@ public class MatchsRestController {
                 .displayPicture(file.getBytes())
                 .build();
 
-
-
-
         matchsRepo.save(match);
 
         //return new ResponseEntity<>(match, HttpStatus.CREATED);
@@ -186,7 +179,7 @@ public class MatchsRestController {
         //return new ResponseEntity<>(match, HttpStatus.CREATED);
     }*/
 
-    @PostMapping(value = "saveMatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    /*@PostMapping(value = "saveMatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> createNewMatch(
             @RequestPart("match") String matchJson,
             @RequestPart("file") MultipartFile file) throws IOException {
@@ -220,7 +213,7 @@ public class MatchsRestController {
 
         //return ResponseEntity.status(HttpStatus.CREATED).body("Match mrigl");
         return new ResponseEntity<>(match, HttpStatus.CREATED);
-    }
+    }*/
 
 
 
@@ -264,6 +257,51 @@ public class MatchsRestController {
     }
 
 
+    @PostMapping(value = "saveMatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createNewMatch(
+            @RequestPart("match") String matchJson,
+            @RequestPart("file") MultipartFile file) throws IOException {
+
+        // Convert JSON string to Matchs object
+        ObjectMapper objectMapper = new ObjectMapper();
+        Matchs m = objectMapper.readValue(matchJson, Matchs.class);
+
+        // Fetch clubs by name
+        Clubs clubb1 = clubsRepo.findByNameClub(m.getClub1().getNameClub())
+                .orElseThrow(() -> new RuntimeException("Club1 not found"));
+        Clubs clubb2 = clubsRepo.findByNameClub(m.getClub2().getNameClub())
+                .orElseThrow(() -> new RuntimeException("Club2 not found"));
+
+
+        Matchs match = Matchs.builder()
+                .resultatMatch(null)
+                .dateMatch(m.getDateMatch())
+                .lieuMatch(m.getLieuMatch())
+                .statusMatch(m.getStatusMatch())
+                .typeMatch(m.getTypeMatch())
+                .arbitre(m.getArbitre())
+                .goals1(null)
+                .goals2(null)
+                .club1(clubb1)
+                .club2(clubb2)
+                .displayPicture(file.getBytes())
+                .build();
+
+        //System.out.println(m.getClub1().getNameClub());
+        matchsRepo.save(match);
+        //System.out.println(m.getClub1().getNameClub());
+
+        //return ResponseEntity.status(HttpStatus.CREATED).body("Match mrigl");
+        return new ResponseEntity<>(match, HttpStatus.CREATED);
+    }
+
+
+
+    @PatchMapping("/goals/{idMatch}")
+    public Matchs updateGoals(@PathVariable int idMatch , @RequestBody Matchs goalsBody){
+        Optional<Matchs> updatedMatch = matchsService.updateGoals(idMatch , goalsBody.getGoals1(), goalsBody.getGoals2());
+                return updatedMatch.orElse(null);
+    }
 
 
 }

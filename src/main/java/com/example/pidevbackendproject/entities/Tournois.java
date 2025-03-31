@@ -26,10 +26,10 @@ public class Tournois {
     @Enumerated(EnumType.STRING)
     private TypeTournois TypeT;
 
-    /*@Column(name = "date_competition", nullable = false)
+    @Column(name = "date_competition", nullable = false)
     LocalDate debutTournoi;
     @Column(name = "fin_competition",nullable = false)
-    LocalDate finTournoi;*/
+    LocalDate finTournoi;
 
     @JsonIgnore
     @OneToMany(mappedBy = "tournoi")
