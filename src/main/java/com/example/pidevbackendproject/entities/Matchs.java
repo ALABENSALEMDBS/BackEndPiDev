@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Set;
-
 @Entity
 @Getter
 @Setter
@@ -27,14 +25,40 @@ public class Matchs {
     private String arbitre;
 
 
-    /*private int goals1;
-    private int goals2;
-    @Transient
-    public String resultatMatch(){
-        String goalsStr1 = String.valueOf(goals1);
-        String goalsStr2 = String.valueOf(goals2);
-        return goalsStr1 + " - " + goalsStr2;
+    private Integer goals1;
+    private Integer goals2;
+    /*@Transient*/
+
+
+    public void updateResultat(){
+        if(goals1!=null && goals2!=null){
+            resultatMatch = goals1+" - "+goals2;
+        }
+    }
+
+
+
+    private String winner;
+
+    /*
+    public String winner(){
+        if ((goals1==null) || (goals2 == null)){
+            return "goals are not set yet";
+        }
+
+        if(resultatMatch!=null && resultatMatch.length()>=3){
+            if(  goals1>goals2 || (resultatMatch.charAt(0)>resultatMatch.charAt(2)) ){
+                return getClub1().getNameClub();
+            }
+            else if(  goals1<goals2 || (resultatMatch.charAt(0)<resultatMatch.charAt(2)) ){
+                return getClub2().getNameClub();
+            }
+            return "Draw";
+        }
+        return "result is not set yet";
     }*/
+
+
 
 
 
