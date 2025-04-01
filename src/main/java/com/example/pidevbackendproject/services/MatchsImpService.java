@@ -6,6 +6,7 @@ import com.example.pidevbackendproject.entities.SousGroupes;
 import com.example.pidevbackendproject.repositories.ClubsRepo;
 import com.example.pidevbackendproject.repositories.MatchsRepo;
 import lombok.AllArgsConstructor;
+import net.sourceforge.tess4j.Tesseract;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class MatchsImpService implements IMatchsService {
 
     MatchsRepo matchsRepo;
     ClubsRepo clubsRepo;
+    Tesseract tesseract;
 
     public Matchs addMatchs(Matchs match) {
         return matchsRepo.save(match);
@@ -70,5 +72,11 @@ public class MatchsImpService implements IMatchsService {
             return matchsRepo.save(matchs);
                 });
     }
+
+    public static final String BASEURL="https://api.tesseract.com/";
+
+
+
+
 
 }
