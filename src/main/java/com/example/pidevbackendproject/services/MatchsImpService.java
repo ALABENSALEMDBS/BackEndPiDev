@@ -65,6 +65,7 @@ public class MatchsImpService implements IMatchsService {
             matchs.setGoals1(goal1);
             matchs.setGoals2(goal2);
             matchs.updateResultat();
+            matchs.theWinner();
             //lmehtode mte3 lwinner
             return matchsRepo.save(matchs);
                 });

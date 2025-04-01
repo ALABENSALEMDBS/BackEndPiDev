@@ -37,9 +37,6 @@ public class Matchs {
     }
 
 
-
-    private String winner;
-
     /*
     public String winner(){
         if ((goals1==null) || (goals2 == null)){
@@ -59,6 +56,26 @@ public class Matchs {
     }*/
 
 
+    @ManyToOne
+    @JoinColumn(name = "winner_id")  // Foreign key in the Matchs table referencing Clubs
+    private Clubs winner;
+
+    public Clubs theWinner(){
+        if ((goals1==null) || (goals2 == null)){
+            return null;
+        }
+
+        if(resultatMatch!=null && resultatMatch.length()>=3){
+            if(  goals1>goals2 || (resultatMatch.charAt(0)>resultatMatch.charAt(4)) ){
+                winner = getClub1();
+            }
+            else if(  goals1<goals2 || (resultatMatch.charAt(0)<resultatMatch.charAt(4)) ){
+                winner = getClub2();
+            }
+            return null;
+        }
+        return null;
+    }
 
 
 
