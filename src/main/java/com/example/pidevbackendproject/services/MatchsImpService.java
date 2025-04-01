@@ -7,10 +7,16 @@ import com.example.pidevbackendproject.repositories.ClubsRepo;
 import com.example.pidevbackendproject.repositories.MatchsRepo;
 import lombok.AllArgsConstructor;
 import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.beans.Transient;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,9 +79,15 @@ public class MatchsImpService implements IMatchsService {
                 });
     }
 
-    public static final String BASEURL="https://api.tesseract.com/";
+    public static final String BASEURL="C:\\Program Files";
 
 
+    public String getImageString(MultipartFile multipartFile) throws TesseractException {
+        final String originalFileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        Path filePath = Paths.get(BASEURL +"\\"+originalFileName);
+        final String orcToString = tesseract.doOCR(new File(String.valueOf(filePath)));
+        return orcToString;
+    }
 
 
 
