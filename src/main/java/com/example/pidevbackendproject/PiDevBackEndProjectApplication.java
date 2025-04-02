@@ -15,7 +15,7 @@ public class PiDevBackEndProjectApplication {
     @Bean
     public Tesseract tesseract(){
         Tesseract tesseract = new Tesseract();
-        tesseract.setLanguage("French");
+        tesseract.setLanguage("eng");
         tesseract.setDatapath("C:\\Program Files\\Tesseract-OCR\\tessdata");
         return tesseract;
 
