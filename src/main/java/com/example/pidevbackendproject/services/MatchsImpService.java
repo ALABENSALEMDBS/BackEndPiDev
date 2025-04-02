@@ -15,8 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.beans.Transient;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,7 +82,7 @@ public class MatchsImpService implements IMatchsService {
                 });
     }
 
-    public static final String BASEURL="C:\\Program Files";
+    /*public static final String BASEURL="C:\\Program Files\\Tesseract-OCR";
 
 
     public String getImageString(MultipartFile multipartFile) throws TesseractException {
@@ -87,6 +90,24 @@ public class MatchsImpService implements IMatchsService {
         Path filePath = Paths.get(BASEURL +"\\"+originalFileName);
         final String orcToString = tesseract.doOCR(new File(String.valueOf(filePath)));
         return orcToString;
+    }*/
+
+
+
+    public static final String BASEURL = "C:\\Program Files\\Tesseract-OCR";
+
+    public String getImageString(MultipartFile multipartFile) throws TesseractException, IOException, IOException {
+        String originalFileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        Path filePath = Paths.get(BASEURL, originalFileName);
+
+        // Ensure the directory exists
+        Files.createDirectories(filePath.getParent());
+
+        // Save the file
+        Files.copy(multipartFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        // Perform OCR
+        return tesseract.doOCR(filePath.toFile());
     }
 
 

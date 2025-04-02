@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import net.sourceforge.tess4j.TesseractException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -303,6 +304,12 @@ public class MatchsRestController {
                 return updatedMatch.orElse(null);
     }
 
+
+    @GetMapping("/ImgToString")
+    public ResponseEntity<String> getImgToString(@RequestParam MultipartFile file) throws TesseractException, IOException {
+        return new ResponseEntity<>(matchsService.getImageString(file), HttpStatus.OK);
+
+    }
 
 
 
