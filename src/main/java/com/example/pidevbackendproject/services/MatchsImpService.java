@@ -96,7 +96,7 @@ public class MatchsImpService implements IMatchsService {
 
     public static final String BASEURL = "C:\\Program Files\\Tesseract-OCR";
 
-    public String getImageString(MultipartFile multipartFile) throws TesseractException, IOException, IOException {
+    /*public String getImageString(MultipartFile multipartFile) throws TesseractException, IOException, IOException {
         String originalFileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         Path filePath = Paths.get(BASEURL, originalFileName);
 
@@ -108,7 +108,34 @@ public class MatchsImpService implements IMatchsService {
 
         // Perform OCR
         return tesseract.doOCR(filePath.toFile());
+    }*/
+
+
+    public String getImageString(MultipartFile multipartFile) throws TesseractException, IOException, IOException {
+        String originalFileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        Path filePath = Paths.get(BASEURL, originalFileName);
+
+        // Ensure the directory exists
+        Files.createDirectories(filePath.getParent());
+
+        // Save the file
+        Files.copy(multipartFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        // Perform OCR
+        String res = tesseract.doOCR(filePath.toFile());
+        return res;
     }
+
+    public String getResultsFromSheet(String na){
+        String[] parts=na.split(":")[1].split("-");
+
+        // trim tna7i l'esapcet bech t7assel score menna wmenna
+        String score1=parts[0].trim();
+        String score2=parts[1].trim();
+        System.out.println(score1);
+        return score1;
+    }
+
+
 
 
 
