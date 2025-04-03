@@ -120,7 +120,6 @@ public class MatchsImpService implements IMatchsService {
 
         // Save the file
         Files.copy(multipartFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
         // Perform OCR
         String res = tesseract.doOCR(filePath.toFile());
         return res;
