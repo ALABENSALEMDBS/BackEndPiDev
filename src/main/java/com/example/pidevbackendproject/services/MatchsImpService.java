@@ -125,14 +125,43 @@ public class MatchsImpService implements IMatchsService {
         return res;
     }
 
-    public String getResultsFromSheet(String na){
+    /*public void extractResultsFromSheet(String na){
+        //9asemthom 7asb :
         String[] parts=na.split(":")[1].split("-");
 
         // trim tna7i l'esapcet bech t7assel score menna wmenna
         String score1=parts[0].trim();
         String score2=parts[1].trim();
-        System.out.println(score1);
-        return score1;
+
+        Integer numGoal1 = Integer.valueOf(score1);
+        Integer numGoal2 = Integer.valueOf(score2);
+    }*/
+
+
+    @Override
+    @Transactional
+    public Optional<Matchs> updateGoalsFromSheet(int idMatch,MultipartFile multipartFile ) throws TesseractException, IOException {
+
+        String resultat = getImageString(multipartFile);
+
+        String[] parts=resultat.split(":")[1].split("-");
+
+        // trim tna7i l'esapcet bech t7assel score menna wmenna
+        String score1=parts[0].trim();
+        String score2=parts[1].trim();
+
+        Integer numGoal1 = Integer.valueOf(score1);
+        Integer numGoal2 = Integer.valueOf(score2);
+
+
+        return matchsRepo.findById(idMatch).map(matchs ->{//map etsta3mlha m3a optional bech tbuildi if exists
+            matchs.setGoals1(numGoal1);
+            matchs.setGoals2(numGoal2);
+            matchs.updateResultat();
+            matchs.theWinner();
+            //lmehtode mte3 lwinner
+            return matchsRepo.save(matchs);
+        });
     }
 
 

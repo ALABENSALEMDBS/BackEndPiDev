@@ -17,4 +17,5 @@ public interface IMatchsService {
     void affectTwoClubs(Matchs match,int idClub1, int idClub2);
     Optional<Matchs> updateGoals(int idMatch, Integer goal1 , Integer goal2);
     String getImageString(MultipartFile multipartFile) throws TesseractException, IOException;
+    public Optional<Matchs> updateGoalsFromSheet(int idMatch,MultipartFile multipartFile ) throws TesseractException, IOException;
 }
