@@ -40,6 +40,14 @@ public class JoueursRestController {
         return joueur;
     }
 
+    @Operation(description = "récupérer toutes les joueurs sans groupe de la base de données")
+    @GetMapping(value = "/retrieve-joueurs-Withoutsousgroups")
+
+    public List<Joueurs> getJoueurWithoutsousgroups() {
+        List<Joueurs> joueur= joueursService.getJoueurWithoutsousgroups();
+        return joueur;
+    }
+
     @Operation(description = "récupérer les joueurs de la base de données by ID")
     @GetMapping("/retrieve-joueurs/{joueurs-id}")
     public Joueurs retrieveJoueurs(@PathVariable("joueurs-id") int idJoueurs) {
