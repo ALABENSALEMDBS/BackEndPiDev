@@ -312,6 +312,7 @@ public class MatchsRestController {
     }
 
 
+
     @PatchMapping("/goalsFromSheet/{idMatch}")
     public Matchs updateGoalsFromSheet(@PathVariable int idMatch , @RequestParam MultipartFile file) throws TesseractException, IOException {
         Optional<Matchs> updatedMatch = matchsService.updateGoalsFromSheet(idMatch, file);
