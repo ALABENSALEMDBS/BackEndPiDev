@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -29,6 +30,12 @@ public class JoueursImpService implements IJoueursService {
 
     public Joueurs getJoueursById(int numeroJoueur) {
         return joueursRepo.findById(numeroJoueur).get();
+    }
+
+    public List<Joueurs> getJoueurWithoutsousgroups() {
+
+        List<Joueurs> allJoueurs = joueursRepo.findAll();
+        return allJoueurs.stream().filter(x -> x.getSousGroupe()==null).collect(Collectors.toList());
     }
 
     public List<Joueurs> findJoueursWithoutFicheMedicale() {

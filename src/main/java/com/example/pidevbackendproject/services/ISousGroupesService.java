@@ -11,5 +11,4 @@ public interface ISousGroupesService {
     SousGroupes modifySousGroupes(int idSousGroup, SousGroupes sousGroupe);
     List<SousGroupes> getAllSousGroupes();
     SousGroupes getSousGroupesById(int idSousGroup);
-    void affecterJoueurASousGroup(int numjoueur, int idSousGroupe);
 }

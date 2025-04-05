@@ -54,9 +54,9 @@ public class SousGroupesRestController {
         return sousGroupesService.modifySousGroupes(idSousGroupes, sg);
     }
 
-    @Operation(description = "Affecter Sous Groupes")
+    /*@Operation(description = "Affecter Sous Groupes")
     @PostMapping("/affecter-sousGroupesJoueur/{joueur-id}/{sousGroupes-id}")
     public void affecterJoueurASousGroup(@PathVariable("joueur-id") int numjoueur, @PathVariable("sousGroupes-id") int idSousGroupe) {
         sousGroupesService.affecterJoueurASousGroup(numjoueur,idSousGroupe);
-    }
+    }*/
 }
