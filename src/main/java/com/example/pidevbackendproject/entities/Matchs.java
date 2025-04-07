@@ -37,23 +37,6 @@ public class Matchs {
     }
 
 
-    /*
-    public String winner(){
-        if ((goals1==null) || (goals2 == null)){
-            return "goals are not set yet";
-        }
-
-        if(resultatMatch!=null && resultatMatch.length()>=3){
-            if(  goals1>goals2 || (resultatMatch.charAt(0)>resultatMatch.charAt(2)) ){
-                return getClub1().getNameClub();
-            }
-            else if(  goals1<goals2 || (resultatMatch.charAt(0)<resultatMatch.charAt(2)) ){
-                return getClub2().getNameClub();
-            }
-            return "Draw";
-        }
-        return "result is not set yet";
-    }*/
 
 
     @ManyToOne
