@@ -138,9 +138,19 @@ public class MatchsImpService implements IMatchsService {
     }*/
 
 
+
+    public String getTeams(int idMatch){
+        Matchs matchh = matchsRepo.findById(idMatch).get();
+        return "";
+
+    }
+
+
     @Override
     @Transactional
     public Optional<Matchs> updateGoalsFromSheet(int idMatch,MultipartFile multipartFile ) throws TesseractException, IOException {
+
+
 
         String resultat = getImageString(multipartFile);
 
