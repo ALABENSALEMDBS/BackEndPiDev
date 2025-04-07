@@ -141,8 +141,7 @@ public class MatchsImpService implements IMatchsService {
 
     public String getTeams(int idMatch){
         Matchs matchh = matchsRepo.findById(idMatch).get();
-        return "";
-
+        return matchh.getClub1()+" - "+matchh.getClub2();
     }
 
 
