@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Tag(name = "Gestion Statistique Indiv")
 @RestController
@@ -47,5 +48,11 @@ public class StatistiqueIndivRestController {
     public StatistiqueIndiv modifyStatistiqueIndiv(@RequestBody StatistiqueIndiv stat) {
         StatistiqueIndiv statistiqueIndiv= statistiqueIndivService.modifyStatistiqueIndiv(stat);
         return statistiqueIndiv;
+    }
+
+
+    @GetMapping("/getStatistiqueIndivByJoueurNumero/{numeroJoueur}")
+    public List <StatistiqueIndiv> getStatistiqueIndivByJoueurNumero(@PathVariable ("numeroJoueur") int numeroJoueur) {
+        return statistiqueIndivService.getStatistiqueIndivByJoueurNumero(numeroJoueur);
     }
 }

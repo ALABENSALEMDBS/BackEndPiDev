@@ -10,7 +10,10 @@ public interface IJoueursService {
     Joueurs modifyJoueurs(Joueurs joueur);
     List<Joueurs> getAllJoueurs();
     Joueurs getJoueursById(int numeroJoueur);
+     List<Joueurs> getJoueurWithoutsousgroups();
 
 
+    Joueurs getbyrapports(int idRapport );
     List<Joueurs> findJoueursWithoutFicheMedicale();
+
 }

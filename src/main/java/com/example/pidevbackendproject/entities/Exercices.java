@@ -19,11 +19,9 @@ public class Exercices {
     String nameExercice;
     String descriptionExercice;
     String videoExercice;
-    String photoExercice;
-    @JsonIgnore
+    //String photoExercice;
     @ManyToOne
     SousGroupes sousGroupExercice;
-    @JsonIgnore
     @ManyToOne
     Seances seanceExercice;
 }

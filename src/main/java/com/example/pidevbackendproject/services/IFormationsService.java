@@ -17,4 +17,10 @@ public interface IFormationsService {
 
     Set<Joueurs> getJoueursInFormation(int idFormation);
 
+    public Formations affecterJoueursAFormation(int idFormation, List<Integer> joueursIds);
+
+    public void desaffecterJoueurAFormation(int idFormation, int idJoueur);
+
+
+    public List<Formations> getAllFormationsWith11PlayersAndCompatiblePositions();
 }

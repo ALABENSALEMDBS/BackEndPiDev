@@ -1,5 +1,6 @@
 package com.example.pidevbackendproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -36,8 +37,10 @@ public class Rapports {
     Long reactivity;    // Adjusting movements
     String etatRapport;
     String blessureRapport;
-    @OneToOne(mappedBy = "rapport")
+    @JsonIgnore
+    @ManyToOne
     Joueurs joueurrapport;
+    @JsonIgnore
     @OneToMany(mappedBy = "rapportExerciceRetablissement")
     Set<ExerciceRetablissements> exerciceRetablissements;
 }

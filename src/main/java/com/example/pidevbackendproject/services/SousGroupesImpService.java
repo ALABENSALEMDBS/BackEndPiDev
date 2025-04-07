@@ -16,9 +16,15 @@ public class SousGroupesImpService implements ISousGroupesService {
     //********
     SousGroupesRepo sousGroupesRepo;
     JoueursRepo joueursRepo;
+    EmailService emailService;
 
     public SousGroupes addSousGroupes(SousGroupes sousGroupe) {
-        return sousGroupesRepo.save(sousGroupe);
+        sousGroupesRepo.save(sousGroupe);
+        sousGroupe.getJoueurs().forEach(j -> {
+            affecterJoueurASousGroup(j.getIdUser(), sousGroupe);
+            sendEmail(j, sousGroupe);
+        });
+        return sousGroupe;
     }
 
     public void deleteSousGroupes(int idSousGroup) {
@@ -57,13 +63,22 @@ public class SousGroupesImpService implements ISousGroupesService {
         return sousGroupesRepo.findById(idSousGroup).get();
     }
 
-    public void affecterJoueurASousGroup(int numjoueur, int idSousGroupe) {
-        Joueurs joueur = joueursRepo.findByNumeroJoueur(numjoueur);
-        SousGroupes sousGroupe = sousGroupesRepo.getById(idSousGroupe);
+    private void affecterJoueurASousGroup(int idJoueur, SousGroupes sousGroupe) {
+        Joueurs joueur = joueursRepo.findById(idJoueur).get();
         joueur.setSousGroupe(sousGroupe);
-        if (sousGroupe.getJoueurs().size() < sousGroupe.getNbrJoueurSousGroup()){
-            joueursRepo.save(joueur);
-        }else
-            throw new IllegalStateException("Le sous-groupe est déjà complet.");
+//        if (sousGroupe.getJoueurs().size() < sousGroupe.getNbrJoueurSousGroup()){
+        joueursRepo.save(joueur);
+//        }else
+//            throw new IllegalStateException("Le sous-groupe est déjà complet.");
+    }
+
+    private void sendEmail(Joueurs j, SousGroupes s){
+        StringBuilder emailBody = new StringBuilder();
+        emailBody.append("Hello ")
+                .append(j.getNameUsers())
+                .append("\nYou have been added to a new subgroup (")
+                .append(s.getNameSousGroup())
+                .append(")");
+        emailService.sendMail(j.getEmailUser(), emailBody.toString());
     }
 }

@@ -16,6 +16,17 @@ import java.util.List;
 public class JoueursRestController {
     IJoueursService joueursService;
 
+
+
+    /*
+    @GetMapping("joueur-role")
+    @PreAuthorize("hasRole('PLAYER')")
+    public ResponseEntity<String> test() {
+        System.out.println("beeetttttoniii daviiid");
+        return ResponseEntity.status(HttpStatus.OK).body("Coaaaaaaach");
+    }
+     */
+
     @Operation(description = "Ajouter un joueur")
     @PostMapping("/add-joueurs")
     public Joueurs addJoueurs(@RequestBody Joueurs j) {
@@ -29,10 +40,25 @@ public class JoueursRestController {
         return joueur;
     }
 
+    @Operation(description = "récupérer toutes les joueurs sans groupe de la base de données")
+    @GetMapping(value = "/retrieve-joueurs-Withoutsousgroups")
+
+    public List<Joueurs> getJoueurWithoutsousgroups() {
+        List<Joueurs> joueur= joueursService.getJoueurWithoutsousgroups();
+        return joueur;
+    }
+
     @Operation(description = "récupérer les joueurs de la base de données by ID")
     @GetMapping("/retrieve-joueurs/{joueurs-id}")
     public Joueurs retrieveJoueurs(@PathVariable("joueurs-id") int idJoueurs) {
         Joueurs joueur = joueursService.getJoueursById(idJoueurs);
+        return joueur;
+    }
+
+    @Operation(description = "récupérer les joueurs de la base de données by ID")
+    @GetMapping("/getbyrapports/{idRapport}")
+    public Joueurs getbyrapports(@PathVariable("idRapport") int idRapport) {
+        Joueurs joueur = joueursService.getbyrapports(idRapport);
         return joueur;
     }
 

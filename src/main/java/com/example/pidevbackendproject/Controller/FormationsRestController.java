@@ -7,6 +7,7 @@ import com.example.pidevbackendproject.services.IFormationsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -78,6 +79,26 @@ public class FormationsRestController {
     }
 
 
+    @PostMapping("/affecter-joueursAFormation/{idFormation}")
+    public ResponseEntity<Formations> affecterJoueursAFormation(
+            @PathVariable ("idFormation") int idFormation,
+            @RequestBody List<Integer> joueursIds) {
+        Formations formation = formationsService.affecterJoueursAFormation(idFormation, joueursIds);
+        return ResponseEntity.ok(formation);
+    }
+
+    @Operation(description = "Desaffecter joueur a un formation")
+    @PostMapping("/desaffecterJoueurAFormation/{idFormation}/{idJoueur}")
+    public void desaffecterJoueurAFormation(@PathVariable("idFormation") int idFormation, @PathVariable("idJoueur") int idJoueur) {
+        formationsService.desaffecterJoueurAFormation(idFormation, idJoueur);
+    }
+
+
+
+    @GetMapping("/compatible-formations")
+    public List<Formations> getCompatibleFormations() {
+        return formationsService.getAllFormationsWith11PlayersAndCompatiblePositions();
+    }
 
     }
 

@@ -70,6 +70,19 @@ public class TacticsRestController {
 
 
 
+    @PostMapping("/add-tactic-affecterFormation/{idFormation}")
+    public Tactics addTacticAndAssignToFormation(
+            @RequestBody Tactics tactic,
+            @PathVariable ("idFormation") int idFormation) {
+
+           return  tacticsService.addTacticAndAssignTacticToFormation(tactic, idFormation);
+
+
+    }
+
+
+
+
 
 
     private final String uploadDir = "C:/xampp/htdocs/tactics/";

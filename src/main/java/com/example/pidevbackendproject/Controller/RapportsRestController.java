@@ -17,9 +17,9 @@ public class RapportsRestController {
     IRapportsService rapportsService;
 
     @Operation(description = "Ajouter un rapports")
-    @PostMapping("/add-rapports")
-    public Rapports addRapports(@RequestBody Rapports rapp) {
-        return rapportsService.addRapports(rapp);
+    @PostMapping("/addRapports/{numeroJoueur}")
+    public void addRapports(@RequestBody Rapports rapport,@PathVariable("numeroJoueur") int numeroJoueur) {
+        rapportsService.addRapports(rapport,numeroJoueur);
     }
 
     @Operation(description = "récupérer toutes les rapports de la base de données")
@@ -36,6 +36,13 @@ public class RapportsRestController {
         return rapports;
     }
 
+    @Operation(description = "récupérer les rapports de la base de données by ID")
+    @GetMapping("/getRapportsByJoueur/{numeroJoueur}")
+    public List<Rapports> getRapportsByJoueur(@PathVariable("numeroJoueur") int numeroJoueur) {
+        return rapportsService.getRapportsByJoueur(numeroJoueur);
+
+    }
+
     @Operation(description = "Supprimer rapports by ID")
     @DeleteMapping("/remove-rapports/{rapports-id}")
     public void deleteRapports(@PathVariable("rapports-id") int idRapports) {
@@ -48,4 +55,7 @@ public class RapportsRestController {
         Rapports rapport= rapportsService.modifyRapports(idRapports, rapp);
         return rapport;
     }
+
+
+
 }

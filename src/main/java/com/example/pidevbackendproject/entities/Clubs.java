@@ -1,13 +1,14 @@
 package com.example.pidevbackendproject.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
+@Builder
 @Entity
 @Getter
 @Setter
@@ -20,16 +21,61 @@ public class Clubs {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int idClub;
     String nameClub;
-    String logoClub;
+    //String logoClub;
     String emailClub;
-    String addressClub;
+    String adressClub;
+    Date dateClub;
     int licenceClub;
+
+    @Lob
+    @Column(length = 100000)
+    private byte[] logo;
+
+    //relation of two clubs
+    /*@OneToMany(mappedBy = "equipe1")
+    private List<Matchs> matchesAsEquipe1;
+
+    @OneToMany(mappedBy = "equipe2")
+    private List<Matchs> matchesAsEquipe2;*/
+
+
+
+/*
+    @OneToOne(cascade = CascadeType.ALL)
+    private Matchs matches;
+    //private Clubs clubb;
+*/
+
+
+    /*@JsonIgnore
+    @ManyToMany(mappedBy = "matchClub")
+    Set<Clubs> matchs;*/
+
+
+
     @JsonIgnore
     @OneToMany (mappedBy = "club")
     Set<Users> users = new HashSet<>();
 
-    @JsonIgnore
+    /*@JsonIgnore
     @ManyToOne
-    Matchs matchClub;
+    Matchs matchClub;*/
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "club1")
+    private List<Matchs> matchesOfClub1 = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "club2")
+    private List<Matchs> matchesOfClub2 = new ArrayList<>();
+
+
+
+
+
+
+
+
+
 
 }

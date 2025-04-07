@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -29,5 +30,18 @@ public class StatistiqueIndivImpService implements IStatistiqueIndivService{
 
     public StatistiqueIndiv getStatistiqueIndivById(int idStatistiqueIndiv) {
         return statistiqueIndivRepo.findById(idStatistiqueIndiv).get();
+    }
+
+
+
+
+
+    public List <StatistiqueIndiv> getStatistiqueIndivByJoueurNumero(int numeroJoueur) {
+        List<StatistiqueIndiv> statistiqueIndiv = statistiqueIndivRepo.findByJoueurstatistiqueIndiv_NumeroJoueur(numeroJoueur);
+        if (!statistiqueIndiv.isEmpty()) {
+            return statistiqueIndiv;
+        } else {
+            return null;
+        }
     }
 }

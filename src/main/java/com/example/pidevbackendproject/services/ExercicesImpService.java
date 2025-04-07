@@ -31,7 +31,7 @@ public class ExercicesImpService implements IExercicesService{
         Exercices existingExercices = optionalExercices.get();
         existingExercices.setNameExercice(exercice.getNameExercice());
         existingExercices.setDescriptionExercice(exercice.getDescriptionExercice());
-        existingExercices.setPhotoExercice(exercice.getPhotoExercice());
+        //existingExercices.setPhotoExercice(exercice.getPhotoExercice());
         existingExercices.setVideoExercice(exercice.getVideoExercice());
 
         return exercicesRepo.save(existingExercices);
