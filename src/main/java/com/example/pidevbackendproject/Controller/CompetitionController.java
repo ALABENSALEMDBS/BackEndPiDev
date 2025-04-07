@@ -3,7 +3,9 @@ package com.example.pidevbackendproject.Controller;
 
 //import com.example.pidevbackendproject.entities.Clubs;
 import com.example.pidevbackendproject.entities.Competition;
+import com.example.pidevbackendproject.entities.Matchs;
 import com.example.pidevbackendproject.repositories.CompetitionRepo;
+import com.example.pidevbackendproject.repositories.MatchsRepo;
 import com.example.pidevbackendproject.services.CompetitionImplService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,6 +21,7 @@ import java.util.List;
 @RequestMapping("/competition")
 public class CompetitionController {
 
+    private final MatchsRepo matchsRepo;
     CompetitionRepo competitionRepo;
     CompetitionImplService competitionServise;
 
@@ -69,6 +72,16 @@ public class CompetitionController {
         competitionServise.assignMatchToCompetition(idMatch, idCompetition);
         return ResponseEntity.ok("Match assigned to competition " + idCompetition);
     }
+
+
+    @GetMapping("/getMatchsOfCompetition/{idMatch}")
+    public ResponseEntity<List<Matchs>> getMatchsOfCompetition(@PathVariable int idCompetition) {
+        //return matchsRepo.MatchsOfCompetition(idCompetition);
+        return ResponseEntity.ok(matchsRepo.MatchsOfCompetition(idCompetition));
+    }
+
+
+
 
 
 
