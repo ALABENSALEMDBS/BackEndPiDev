@@ -14,7 +14,7 @@ import java.util.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+//@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Tournois {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,21 +23,33 @@ public class Tournois {
     @Column(name = "name_competition",nullable = false)
     String nameTournoi;
 
+
+    @OneToMany(mappedBy = "tournois", cascade = CascadeType.ALL)
+    private List<Standing> listeMatchs = new ArrayList<>();
+
+
     @Enumerated(EnumType.STRING)
     private TypeTournois TypeT;
 
+    @JsonIgnore
     @Column(name = "date_competition", nullable = false)
     LocalDate debutTournoi;
+
+    @JsonIgnore
     @Column(name = "fin_competition",nullable = false)
     LocalDate finTournoi;
 
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(mappedBy = "tournoi")
+    @Column(name="liste_Des_Matchs")
     Set<Matchs> matchesTournoi =  new HashSet<>();
 
 
     @OneToMany(mappedBy = "tournois", cascade = CascadeType.ALL)
     private List<Standing> standings = new ArrayList<>();
+
+
+
 
 
 

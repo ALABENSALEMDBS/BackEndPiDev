@@ -1,10 +1,13 @@
 package com.example.pidevbackendproject.Controller;
 
 import com.example.pidevbackendproject.entities.Tournois;
+import com.example.pidevbackendproject.repositories.TournoisRepo;
 import com.example.pidevbackendproject.services.ITournoisService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/tournois")
 public class TournoisRestController {
+    private final TournoisRepo tournoisRepo;
     ITournoisService tournoisService;
 
     @Operation(description = "Ajouter un tournoi")
@@ -50,9 +54,17 @@ public class TournoisRestController {
     }
 
 
-    @Operation(description = "Affecter match a tournoi")
+    /*@Operation(description = "Affecter match a tournoi")
     @PostMapping("/affecter-matchTournoi/{match-id}/{tournoi-id}")
     public void affecterTacticAFormation(@PathVariable("match-id") int idMatch, @PathVariable("tournoi-id") int idTournoi) {
         tournoisService.affeterMatchATournois(idMatch, idTournoi);
+    }*/
+
+
+    @Operation(description = "Affecter match a tournoi")
+    @PostMapping("/affecter-matchTournoi/{match-id}/{tournoi-id}")
+    public ResponseEntity<Tournois> affecterTacticAFormation(@PathVariable("match-id") int idMatch, @PathVariable("tournoi-id") int idTournoi) {
+        tournoisService.affeterMatchATournois(idMatch, idTournoi);
+        return new ResponseEntity<>(tournoisRepo.findById(idTournoi).get(), HttpStatus.OK);
     }
 }
