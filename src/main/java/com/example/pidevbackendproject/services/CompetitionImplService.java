@@ -48,9 +48,13 @@ public class CompetitionImplService {
         matchsRepo.save(match);
     }
 
+
     public List<Matchs> MatchsOfCompetition(int idCompetition) {
         return matchsRepo.MatchsOfCompetition(idCompetition);
     }
+
+
+
 
 
 
