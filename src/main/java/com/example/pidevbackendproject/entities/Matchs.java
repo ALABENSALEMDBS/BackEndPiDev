@@ -82,6 +82,17 @@ public class Matchs {
     @ManyToOne
     Tournois tournoi;
 
+
+
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "competition_id")
+    Competition competition;
+
+
+
+
     @JsonIgnore
     @OneToOne
     StatistiqueMatchs statistiqueMatches;
