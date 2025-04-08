@@ -23,5 +23,10 @@ public interface MatchsRepo extends JpaRepository<Matchs, Integer> {
     @Query("select m from Matchs m where m.competition= :idCompetition ")
     List<Matchs> MatchsOfCompetition(@Param("idCompetition") int idCompetition);
 
+    /*@Query("select m.club1 from Matchs m where m.competition= :idCompetition ")
+    List<Matchs> ClubsFromMatchs(@Param("idCompetition") int idCompetition);*/
+
+
+
 
 }

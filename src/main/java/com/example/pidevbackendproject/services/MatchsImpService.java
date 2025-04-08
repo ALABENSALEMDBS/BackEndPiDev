@@ -151,23 +151,23 @@ public class MatchsImpService implements IMatchsService {
     @Transactional
     public Optional<Matchs> updateGoalsFromSheet(int idMatch,MultipartFile multipartFile ) throws TesseractException, IOException {
 
+        //String teamsvs = getTeams(idMatch);
 
-        String teamsvs = getTeams(idMatch);
-
-        String resultat = getImageString(multipartFile);
+        String resultat=getImageString(multipartFile);
         //String[] parts=resultat.split(":")[1].split("-");
 
-        String[] teams = resultat.split(":");
-        String[] parts = teams[1].split("-");
+        //todo : check if they are really the clubs (getClubs1() wtchouf if contains)
+
+        String[] teams=resultat.split(":");
+        String[] parts=teams[1].split("-");
         // trim tna7i l'esapcet bech t7assel score menna wmenna
         String score1=parts[0].trim();
         String score2=parts[1].trim();
 
-        Integer numGoal1 = Integer.valueOf(score1);
-        Integer numGoal2 = Integer.valueOf(score2);
+        Integer numGoal1=Integer.valueOf(score1);
+        Integer numGoal2=Integer.valueOf(score2);
 
 
-        
 
         return matchsRepo.findById(idMatch).map(matchs ->{//map etsta3mlha m3a optional bech tbuildi if exists
             matchs.setGoals1(numGoal1);
