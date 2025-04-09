@@ -2,6 +2,7 @@ package com.example.pidevbackendproject.Controller;
 
 
 //import com.example.pidevbackendproject.entities.Clubs;
+import com.example.pidevbackendproject.entities.Clubs;
 import com.example.pidevbackendproject.entities.Competition;
 import com.example.pidevbackendproject.entities.Matchs;
 import com.example.pidevbackendproject.repositories.CompetitionRepo;
@@ -14,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Tag(name = "Gestion des Matchs")
 @RestController
@@ -74,10 +77,33 @@ public class CompetitionController {
     }
 
 
-    @GetMapping("/getMatchsOfCompetition/{idMatch}")
+    /*@GetMapping("/getMatchsOfCompetition/{idCompetition}")
     public ResponseEntity<List<Matchs>> getMatchsOfCompetition(@PathVariable int idCompetition) {
         //return matchsRepo.MatchsOfCompetition(idCompetition);
         return ResponseEntity.ok(matchsRepo.MatchsOfCompetition(idCompetition));
+    }*/
+
+
+    @GetMapping("/getMatchsOfCompetition/{idCompetition}")
+    public ResponseEntity<List<Matchs>> getMatchsOfCompetition(@PathVariable int idCompetition) {
+        //return matchsRepo.MatchsOfCompetition(idCompetition);
+        return ResponseEntity.ok(matchsRepo.MatchsOfCompetition(idCompetition));
+    }
+
+
+    @GetMapping("/getParticipatedClubsNames/{idCompetition}")
+    public ResponseEntity<List<String>> getParticipatedClubsNames(@PathVariable int idCompetition) {
+        //return matchsRepo.MatchsOfCompetition(idCompetition);
+        Set<Clubs> partClubs = competitionServise.ClubsOfCompetition(idCompetition);
+        List<String> clubsName = partClubs.stream().map(Clubs::getNameClub).toList();
+        return ResponseEntity.ok(clubsName);
+    }
+
+    @GetMapping("/getParticipatedClubs/{idCompetition}")
+    public ResponseEntity<Set<Clubs>> getParticipatedClubs(@PathVariable int idCompetition) {
+        Set<Clubs> partClubs = competitionServise.ClubsOfCompetition(idCompetition);
+        //List<String> clubsName = partClubs.stream().map(Clubs::getNameClub).toList();
+        return ResponseEntity.ok(partClubs);
     }
 
 

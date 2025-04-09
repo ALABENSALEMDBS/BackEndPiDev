@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -40,6 +41,20 @@ public class Competition {
     @OneToMany(mappedBy = "competition")
     //@JsonIgnore // Retire cette ligne si tu veux que les matchs soient renvoyés dans la réponse JSON
     Set<Matchs> matchesTournoi = new HashSet<>();
+
+    /*@OneToOne
+    Standing standing;*/
+
+
+
+
+    @OneToMany(mappedBy = "competition", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Standings> standings;
+
+
+
+
 }
 
 
