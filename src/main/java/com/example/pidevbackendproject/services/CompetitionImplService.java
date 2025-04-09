@@ -5,8 +5,10 @@ package com.example.pidevbackendproject.services;
 import com.example.pidevbackendproject.entities.Clubs;
 import com.example.pidevbackendproject.entities.Competition;
 import com.example.pidevbackendproject.entities.Matchs;
+import com.example.pidevbackendproject.entities.Standings;
 import com.example.pidevbackendproject.repositories.CompetitionRepo;
 import com.example.pidevbackendproject.repositories.MatchsRepo;
+import com.example.pidevbackendproject.repositories.StandingsRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class CompetitionImplService {
 
+    private final StandingsRepo standingsRepo;
     CompetitionRepo competitionRepo;
     MatchsRepo matchsRepo;
 
@@ -58,7 +61,8 @@ public class CompetitionImplService {
 
 
     //thisss is the function of getting the Clubs of each
-    public Set<Clubs> ClubsOfCompetition(List<Matchs> ListMatchs) {
+    public Set<Clubs> ClubsOfCompetition(int idCompetition) {
+        List<Matchs> ListMatchs = matchsRepo.MatchsOfCompetition(idCompetition);
         Set<Clubs> participatedClubs = new HashSet<>();
         for (Matchs match : ListMatchs) {
             Clubs club1 = match.getClub1();
@@ -68,6 +72,30 @@ public class CompetitionImplService {
         }
         return participatedClubs;
     }
+
+
+    /*public void givePoints(int idCompetition) {
+        Competition competition = competitionRepo.findById(idCompetition).get();
+        for (Matchs match : matchsRepo.MatchsOfCompetition(idCompetition)) {
+            if(match.getWinner()!=null) {
+                //int winnerId = match.getWinner().getIdClub();
+                Standings stand = standingsRepo.findByClub(match.getWinner());
+                stand.setPoints(stand.getPoints()+3);
+                standingsRepo.save(stand);
+            }
+            else {
+                Standings stand1 = standingsRepo.findByClub(match.getClub1());
+                stand1.setPoints(stand1.getPoints()+1);
+                standingsRepo.save(stand1);
+                Standings stand2 = standingsRepo.findByClub(match.getClub2());
+                stand2.setPoints(stand2.getPoints()+1);
+                standingsRepo.save(stand2);
+            }
+
+        }
+    }*/
+
+
 
 
 }

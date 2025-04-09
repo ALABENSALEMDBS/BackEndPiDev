@@ -24,8 +24,8 @@ public class Tournois {
     String nameTournoi;
 
 
-    @OneToMany(mappedBy = "tournois", cascade = CascadeType.ALL)
-    private List<Standing> listeMatchs = new ArrayList<>();
+    /*@OneToMany(mappedBy = "tournois", cascade = CascadeType.ALL)
+    private List<Standings> listeMatchs = new ArrayList<>();*/
 
 
     @Enumerated(EnumType.STRING)
@@ -45,8 +45,8 @@ public class Tournois {
     Set<Matchs> matchesTournoi =  new HashSet<>();
 
 
-    @OneToMany(mappedBy = "tournois", cascade = CascadeType.ALL)
-    private List<Standing> standings = new ArrayList<>();
+    /*@OneToMany(mappedBy = "tournois", cascade = CascadeType.ALL)
+    private List<Standings> standings = new ArrayList<>();*/
 
 
 
