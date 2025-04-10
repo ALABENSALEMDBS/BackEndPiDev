@@ -97,5 +97,79 @@ public class CompetitionImplService {
 
 
 
+    //cup competition:
+    /*
+    public void createRandomFirstRoundMatches(Competition competition) {
+    Set<Club> clubs = competition.getClubs();  // Retrieve clubs from the competition
+
+    List<Club> clubList = new ArrayList<>(clubs);
+    Collections.shuffle(clubList); // Shuffle clubs to randomize the draw
+
+    List<Match> roundMatches = new ArrayList<>();
+
+    for (int i = 0; i < clubList.size(); i += 2) {
+        Club club1 = clubList.get(i);
+        Club club2 = clubList.get(i + 1);
+
+        Match match = new Match();
+        match.setCompetition(competition);
+        match.setClub1(club1);
+        match.setClub2(club2);
+        match.setRound("Round 1");  // Round 1 or whatever you want to name it
+        matchRepo.save(match);  // Save the match to the database
+    }
+}
+
+     */
+
+
+    //get the winners ya maehr
+
+
+    /*
+    public List<Club> getWinnersForNextRound(Competition competition, String round) {
+    List<Match> matches = matchRepo.findByCompetitionAndRound(competition, round);
+    List<Club> winners = new ArrayList<>();
+
+    for (Match match : matches) {
+        if (match.getGoals1() > match.getGoals2()) {
+            winners.add(match.getClub1());
+        } else if (match.getGoals2() > match.getGoals1()) {
+            winners.add(match.getClub2());
+        }
+        // In case of a draw, handle it accordingly (optional)
+    }
+    return winners;
+}
+
+     */
+
+
+    //generate next round:
+    /*
+    public void createNextRoundMatches(Competition competition, String currentRound) {
+    List<Club> winners = getWinnersForNextRound(competition, currentRound);
+
+    Collections.shuffle(winners);  // Randomize the winners
+
+    String nextRound = getNextRound(currentRound);
+
+    // Create matches for the next round
+    for (int i = 0; i < winners.size(); i += 2) {
+        Club club1 = winners.get(i);
+        Club club2 = winners.get(i + 1);
+
+        Match match = new Match();
+        match.setCompetition(competition);
+        match.setClub1(club1);
+        match.setClub2(club2);
+        match.setRound(nextRound);
+        matchRepo.save(match);  // Save the match to the database
+    }
+}
+
+     */
+
+
 
 }
