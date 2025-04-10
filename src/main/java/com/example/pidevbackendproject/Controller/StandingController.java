@@ -65,10 +65,29 @@ public class StandingController {
     }
 
 
+    @GetMapping("/totalDraws/{idCompetition}/{idClub}")
+    public Integer totalDraws(@PathVariable int idCompetition , @PathVariable int idClub) {
+        return matchsRepo.totalDraws(idCompetition, idClub);
+    }
+
+
+    @GetMapping("/totalAgainstGoals/{idCompetition}/{idClub}")
+    public Integer totalGoalsAgainst(@PathVariable int idCompetition , @PathVariable int idClub) {
+        return matchsRepo.againstGoals(idCompetition, idClub);
+    }
+
+
+    @GetMapping("/totalPlayedMatchs/{idCompetition}/{idClub}")
+    public Integer totalPlayedMatchs(@PathVariable int idCompetition , @PathVariable int idClub) {
+        return matchsRepo.playedMatchs(idCompetition, idClub);
+    }
+
+
     @PostMapping("/givePoints/{idCompetition}")
     public void givePoints(@PathVariable int idCompetition) {
         standingService.givePoints(idCompetition);
     }
+
 
 
 

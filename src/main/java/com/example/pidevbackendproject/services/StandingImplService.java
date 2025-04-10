@@ -5,6 +5,7 @@ import com.example.pidevbackendproject.entities.Clubs;
 import com.example.pidevbackendproject.entities.Competition;
 import com.example.pidevbackendproject.entities.Matchs;
 import com.example.pidevbackendproject.entities.Standings;
+import com.example.pidevbackendproject.repositories.ClubsRepo;
 import com.example.pidevbackendproject.repositories.CompetitionRepo;
 import com.example.pidevbackendproject.repositories.MatchsRepo;
 import com.example.pidevbackendproject.repositories.StandingsRepo;
@@ -24,7 +25,7 @@ public class StandingImplService {
     private final CompetitionImplService competitionService;
     private final CompetitionRepo competitionRepo;
     private final StandingsRepo standingsRepo;
-
+    private final ClubsRepo clubsRepo;
 
 
     //public void saveT
@@ -41,47 +42,33 @@ public class StandingImplService {
     }
 
 
-   /* public void saveStandingsData(int idCompetition){
-        Set<Clubs> particClubs = competitionService.ClubsOfCompetition(idCompetition);
-
-        for (Clubs club : particClubs) {
-            Standings standing = new Standings();
-            standing.setClub(club);
-            Competition theCompetition = competitionRepo.findById(idCompetition).get();
-            standing.setCompetition(theCompetition);
-            int wins = matchsRepo.totalWins(club.getIdClub(), theCompetition.getIdCompetition());
-            standing.setWins(wins);
-            int draws = matchsRepo.totalDraws(club.getIdClub(), theCompetition.getIdCompetition());
-            standing.setDraws(draws);
-            standing.setMatchesPlayed(matchsRepo.playedMatchs(club.getIdClub(), theCompetition.getIdCompetition()));
-            standing.setPoints(3*wins + draws);
-            standing.setGoalsAgainst(matchsRepo.againstGoals(club.getIdClub(), theCompetition.getIdCompetition()));
-            standing.setGoalsFor(matchsRepo.totalGoals(club.getIdClub(), theCompetition.getIdCompetition()));
-            standing.setLosses(matchsRepo.playedMatchs(club.getIdClub(), theCompetition.getIdCompetition())-(wins+draws));
-            standing.setGoalDifference(matchsRepo.totalGoals(club.getIdClub(), theCompetition.getIdCompetition())- matchsRepo.againstGoals(club.getIdClub(), theCompetition.getIdCompetition()));
-            standingsRepo.save(standing);
-        }
-    }*/
-
-
     public void saveStandingsData(int idCompetition) {
-        // Fetch competition once
-        Competition theCompetition = competitionRepo.findById(idCompetition).get();
-        Set<Clubs> particClubs = competitionService.ClubsOfCompetition(idCompetition);
+        Competition theCompetition=competitionRepo.findById(idCompetition).get();
+        Set<Clubs> particClubs=competitionService.ClubsOfCompetition(idCompetition);
 
         for (Clubs club : particClubs) {
-            Standings standing = new Standings();
-            standing.setClub(club);
-            standing.setCompetition(theCompetition);
+            Standings standing;
 
-            // Fetch stats once for the current club and competition
-            int wins = matchsRepo.totalWins(club.getIdClub(), idCompetition);
-            int draws = matchsRepo.totalDraws(club.getIdClub(), idCompetition);
-            int playedMatches = matchsRepo.playedMatchs(club.getIdClub(), idCompetition);
-            int goalsFor = matchsRepo.totalGoals(club.getIdClub(), idCompetition);
-            int goalsAgainst = matchsRepo.againstGoals(club.getIdClub(), idCompetition);
+            Optional<Standings> existing = standingsRepo.findByClubAndCompetition(club,theCompetition);
 
-            // Set the fields
+            if(existing.isPresent()){
+                standing = existing.get();
+            }
+            else{
+                standing = new Standings();
+                standing.setClub(club);
+                standing.setCompetition(theCompetition);
+            }
+            //if(!standingsRepo.existsByClubAndCompetition(club,theCompetition))
+
+
+            int wins=matchsRepo.totalWins(idCompetition , club.getIdClub());
+            int draws=matchsRepo.totalDraws(idCompetition , club.getIdClub());
+            int playedMatches=matchsRepo.playedMatchs(idCompetition , club.getIdClub());
+            int goalsFor=matchsRepo.totalGoals( idCompetition , club.getIdClub());
+            int goalsAgainst=matchsRepo.againstGoals(idCompetition , club.getIdClub());
+
+
             standing.setWins(wins);
             standing.setDraws(draws);
             standing.setMatchesPlayed(playedMatches);
@@ -91,20 +78,6 @@ public class StandingImplService {
             standing.setLosses(playedMatches - (wins + draws));
             standing.setGoalDifference(goalsFor - goalsAgainst);
 
-            // Log data for debugging
-            System.out.println("Club: " + club.getIdClub());
-
-
-
-            System.out.println("Wins: " + wins);
-            System.out.println("Draws: " + draws);
-            System.out.println("Played Matches: " + playedMatches);
-            System.out.println("Goals For: " + goalsFor);
-            System.out.println("Goals Against: " + goalsAgainst);
-            System.out.println("Losses: " + standing.getLosses());
-            System.out.println("Goal Difference: " + standing.getGoalDifference());
-
-            // Save standings data
             standingsRepo.save(standing);
         }
     }
