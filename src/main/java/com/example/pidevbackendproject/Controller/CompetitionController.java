@@ -99,12 +99,16 @@ public class CompetitionController {
         return ResponseEntity.ok(clubsName);
     }
 
+
     @GetMapping("/getParticipatedClubs/{idCompetition}")
     public ResponseEntity<Set<Clubs>> getParticipatedClubs(@PathVariable int idCompetition) {
         Set<Clubs> partClubs = competitionServise.ClubsOfCompetition(idCompetition);
         //List<String> clubsName = partClubs.stream().map(Clubs::getNameClub).toList();
         return ResponseEntity.ok(partClubs);
     }
+
+
+
 
 
 
