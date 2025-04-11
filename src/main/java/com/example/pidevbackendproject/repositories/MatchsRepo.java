@@ -23,6 +23,11 @@ public interface MatchsRepo extends JpaRepository<Matchs, Integer> {
     @Query("select m from Matchs m where m.competition.idCompetition = :idCompetition ")
     List<Matchs> MatchsOfCompetition(@Param("idCompetition") int idCompetition);
 
+
+
+    @Query("select m from Matchs m where m.competition.idCompetition= :idCompetition")
+    List<Matchs> matchsOfCompetition(@Param("idCompetition") int idCompetition);
+
     /*@Query("select m.club1 from Matchs m where m.competition= :idCompetition ")
     List<Matchs> ClubsFromMatchs(@Param("idCompetition") int idCompetition);*/
 
@@ -93,6 +98,10 @@ public interface MatchsRepo extends JpaRepository<Matchs, Integer> {
       AND m.competition.idCompetition = :idCompetition
 """)
     Integer totalDraws(@Param("idCompetition") int idCompetition, @Param("idClub") int idClub);
+
+
+
+
 
 
 }
