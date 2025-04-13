@@ -11,6 +11,7 @@ import com.example.pidevbackendproject.services.CompetitionImplService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -105,6 +106,21 @@ public class CompetitionController {
         Set<Clubs> partClubs = competitionServise.ClubsOfCompetition(idCompetition);
         //List<String> clubsName = partClubs.stream().map(Clubs::getNameClub).toList();
         return ResponseEntity.ok(partClubs);
+    }
+
+
+
+    @PostMapping("/{idCompetition}/affecter-matches")
+    public ResponseEntity<String> assignMatchesToCompetition(
+            @PathVariable int idCompetition,
+            @RequestBody List<Integer> matchIds) {
+        try {
+            competitionServise.assignManyMatchesToCompetition(matchIds, idCompetition);
+            return ResponseEntity.ok("Matches successfully assigned to competition " + idCompetition);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error: " + e.getMessage());
+        }
     }
 
 
