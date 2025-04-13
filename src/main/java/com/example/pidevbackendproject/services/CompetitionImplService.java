@@ -55,6 +55,22 @@ public class CompetitionImplService {
     }
 
 
+    public void assignManyMatchesToCompetition(List<Integer> matchIds, int idCompetition) {
+        Competition competition = competitionRepo.findById(idCompetition)
+                .orElseThrow(() -> new RuntimeException("Competition is not found"));
+
+        for (int idMatch : matchIds) {
+            // Retrieve the match object for each match ID
+            Matchs match = matchsRepo.findById(idMatch)
+                    .orElseThrow(() -> new RuntimeException("Match with ID " + idMatch + " is not found"));
+            match.setCompetition(competition);
+
+            matchsRepo.save(match);
+        }
+    }
+
+
+
     public List<Matchs> MatchsOfCompetition(int idCompetition) {
         return matchsRepo.MatchsOfCompetition(idCompetition);
     }
