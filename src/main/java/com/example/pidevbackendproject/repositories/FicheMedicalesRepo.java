@@ -16,4 +16,10 @@ public interface FicheMedicalesRepo extends JpaRepository<FicheMedicales, Intege
             "FROM FicheMedicales f " +
             "LEFT JOIN f.joueurficheMedicale j") // Ensure this matches the entity field
     List<ficheMedicaleDto> findAllWithJoueurFullName();
+
+
+
+    @Query("select gravite,count (*)as Countofinjuredplayres from FicheMedicales group by gravite")
+    List<Object[]> countInjuredPlayersByGravite();
+
 }

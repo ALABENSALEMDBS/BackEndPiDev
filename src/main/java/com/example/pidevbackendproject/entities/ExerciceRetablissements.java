@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang3.builder.ToStringExclude;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -26,5 +29,8 @@ public class ExerciceRetablissements {
 
     @ManyToOne
     Nourriture nourriture;
+    @OneToMany(mappedBy = "exerciceRetablissements")
+    @JsonIgnore
+    Set<FicheMedicales>ficheMedicales;
 
 }

@@ -40,7 +40,7 @@ public class Rapports {
     @JsonIgnore
     @ManyToOne
     Joueurs joueurrapport;
-    @JsonIgnore
-    @OneToMany(mappedBy = "rapportExerciceRetablissement")
-    Set<ExerciceRetablissements> exerciceRetablissements;
+    //@JsonIgnore
+   /* @OneToMany(mappedBy = "rapportExerciceRetablissement")
+    Set<ExerciceRetablissements> exerciceRetablissements;*/
 }
