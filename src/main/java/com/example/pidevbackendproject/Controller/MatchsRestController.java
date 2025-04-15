@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @Tag(name = "Gestion des Matchs")
 @RestController
 @AllArgsConstructor
@@ -135,12 +136,12 @@ public class MatchsRestController {
 
 
     //normal post
-    @PostMapping("/saveMatch")
+    /*@PostMapping("/saveMatch")
     public Matchs saveMatchh(
             @RequestBody Matchs m) {
         return matchsService.addMatchs(m);
         //return ResponseEntity.ok("Matches saved successfully");
-    }
+    }*/
 
 /*
     @PostMapping(value = "saveMatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -258,11 +259,10 @@ public class MatchsRestController {
     }
 
 
-    @PostMapping(value = "saveMatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    /*@PostMapping(value = "saveMatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> createNewMatch(
             @RequestPart("match") String matchJson,
             @RequestPart("file") MultipartFile file) throws IOException {
-
         // Convert JSON string to Matchs object
         ObjectMapper objectMapper = new ObjectMapper();
         Matchs m = objectMapper.readValue(matchJson, Matchs.class);
@@ -272,8 +272,6 @@ public class MatchsRestController {
                 .orElseThrow(() -> new RuntimeException("Club1 not found"));
         Clubs clubb2 = clubsRepo.findByNameClub(m.getClub2().getNameClub())
                 .orElseThrow(() -> new RuntimeException("Club2 not found"));
-
-
         Matchs match = Matchs.builder()
                 .resultatMatch(null)
                 .dateMatch(m.getDateMatch())
@@ -291,10 +289,37 @@ public class MatchsRestController {
         //System.out.println(m.getClub1().getNameClub());
         matchsRepo.save(match);
         //System.out.println(m.getClub1().getNameClub());
-
         //return ResponseEntity.status(HttpStatus.CREATED).body("Match mrigl");
         return new ResponseEntity<>(match, HttpStatus.CREATED);
+    }*/
+
+
+    @PostMapping("/saveMatch")
+    public ResponseEntity<?> createNewMatch(@RequestBody Matchs m) {
+        // Fetch clubs by name
+        Clubs clubb1 = clubsRepo.findByNameClub(m.getClub1().getNameClub())
+                .orElseThrow(() -> new RuntimeException("Club1 not found"));
+        Clubs clubb2 = clubsRepo.findByNameClub(m.getClub2().getNameClub())
+                .orElseThrow(() -> new RuntimeException("Club2 not found"));
+
+        Matchs match = Matchs.builder()
+                .resultatMatch(null)
+                .dateMatch(m.getDateMatch())
+                .lieuMatch(m.getLieuMatch())
+                .statusMatch(m.getStatusMatch())
+                .typeMatch(m.getTypeMatch())
+                .arbitre(m.getArbitre())
+                .goals1(null)
+                .goals2(null)
+                .club1(clubb1)
+                .club2(clubb2)
+                .build();
+        matchsRepo.save(match);
+        return new ResponseEntity<>(match, HttpStatus.CREATED);
     }
+
+
+
 
 
 

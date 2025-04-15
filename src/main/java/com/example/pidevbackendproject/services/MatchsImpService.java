@@ -58,6 +58,7 @@ public class MatchsImpService implements IMatchsService {
         return matchsRepo.findAll();
     }
 
+
     public Matchs getMatchsById(int idMatch) {
         return matchsRepo.findById(idMatch).get();
     }
@@ -166,7 +167,6 @@ public class MatchsImpService implements IMatchsService {
 
         Integer numGoal1=Integer.valueOf(score1);
         Integer numGoal2=Integer.valueOf(score2);
-
 
 
         return matchsRepo.findById(idMatch).map(matchs ->{//map etsta3mlha m3a optional bech tbuildi if exists
