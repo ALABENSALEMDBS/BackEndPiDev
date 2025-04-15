@@ -123,11 +123,18 @@ public class ClubRestController {
     }
 
 
-    @Operation(description = "Modifer club")
     @PutMapping("/modify-club/{id}")
-    public Clubs modifyClub(@PathVariable int id , @RequestBody Clubs c) {
-        Clubs club= clubsServise.modifyClubs(id , c);
-        return club;
+    public ResponseEntity<?> updateClub(
+            @PathVariable Long id,
+            @RequestParam String nameClub,
+            @RequestParam String emailClub,
+            @RequestParam String adressClub,
+            @RequestParam String dateClub,
+            @RequestParam String licenceClub,
+            @RequestParam(required = false) MultipartFile logo
+    ) {
+        // Handle the update logic here
+        return ResponseEntity.ok().build();
     }
 }
 
