@@ -22,6 +22,7 @@ public class Joueurs extends Users {
     int numeroJoueur;
     LocalDate debutContratJoueur;
     LocalDate finContratJoueur;
+    boolean isTituliare;
 
 //    @JsonIgnore
 //    @ManyToOne
