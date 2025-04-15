@@ -8,7 +8,7 @@ public interface IClubsServise {
 
     Clubs addClubs(Clubs club);
     void deleteClubs(int idClub);
-    Clubs modifyClubs(Clubs club);
+    Clubs modifyClubs(int id ,Clubs club);
     List<Clubs> getAllClubs();
     Clubs getClubsById(int idClub);
 }
