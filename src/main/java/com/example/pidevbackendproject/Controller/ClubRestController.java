@@ -86,6 +86,12 @@ public class ClubRestController {
         return ResponseEntity.ok(clubList);
     }
 
+    /*@GetMapping("allClubs")
+    public ResponseEntity<List<Clubs> getClubByID() {
+        clubList = clubsRepo.findById(id);
+        return ResponseEntity.ok(clubList);
+    }*/
+
 
 
     @Operation(description = "Ajouter un Club")
@@ -109,21 +115,19 @@ public class ClubRestController {
         return club;
     }
 
+
     @Operation(description = "Supprimer club by ID")
     @DeleteMapping("/remove-club/{club-id}")
     public void deleteClubs(@PathVariable("club-id") int idClub) {
         clubsServise.deleteClubs(idClub);
     }
 
+
     @Operation(description = "Modifer club")
-    @PutMapping("/modify-club")
-    public Clubs modifyClub(@RequestBody Clubs c) {
-        Clubs club= clubsServise.modifyClubs(c);
+    @PutMapping("/modify-club/{id}")
+    public Clubs modifyClub(@PathVariable int id , @RequestBody Clubs c) {
+        Clubs club= clubsServise.modifyClubs(id , c);
         return club;
     }
-
-
-
-
 }
 
