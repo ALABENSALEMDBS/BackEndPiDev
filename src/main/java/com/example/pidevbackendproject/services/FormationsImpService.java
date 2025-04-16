@@ -131,7 +131,7 @@ public class FormationsImpService implements IFormationsService {
         return formation.getJoueurs();
     }
 
-    private static final int MAX_JOUEURS = 11;
+    private static final int MAX_JOUEURS = 16;
 
     public Formations affecterJoueursAFormation(int idFormation, List<Integer> joueursIds) {
         Formations formation = formationsRepo.findById(idFormation)

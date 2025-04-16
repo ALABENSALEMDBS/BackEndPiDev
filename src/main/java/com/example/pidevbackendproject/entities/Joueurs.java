@@ -28,10 +28,12 @@ public class Joueurs extends Users {
 //    @ManyToOne
 //    Formations formation;
       @JsonIgnore
-      @ManyToMany(mappedBy = "joueurs")
-      Set<Formations> formations =new HashSet<>();
+          @ManyToMany(mappedBy = "joueurs")
+          Set<Formations> formations =new HashSet<>();
 
-//    @JsonIgnore
+
+
+    //    @JsonIgnore
 //    @OneToOne
 //    StatistiqueIndiv statistiqueIndiv;
        @JsonIgnore

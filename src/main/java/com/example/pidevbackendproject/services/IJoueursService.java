@@ -16,4 +16,6 @@ public interface IJoueursService {
     Joueurs getbyrapports(int idRapport );
     List<Joueurs> findJoueursWithoutFicheMedicale();
 
+    void maktitulaire(int joueurid);
+
 }

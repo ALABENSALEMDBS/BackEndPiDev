@@ -45,4 +45,14 @@ public class JoueursImpService implements IJoueursService {
     public List<Joueurs> findJoueursWithoutFicheMedicale() {
         return joueursRepo.findJoueursWithoutFicheMedicale();
     }
+
+    public void maktitulaire(int joueurid) {
+        Joueurs joueur = joueursRepo.findById(joueurid)
+                .orElseThrow(() -> new RuntimeException("Joueur not found"));
+        if (joueur.isTituliare()){
+            joueur.setTituliare(false);
+        }
+        else joueur.setTituliare(true);
+        joueursRepo.save(joueur);
+    }
 }
