@@ -81,4 +81,11 @@ public class JoueursRestController {
         List<Joueurs> joueur= joueursService.findJoueursWithoutFicheMedicale();
         return joueur;
     }
+
+
+
+    @PutMapping("/maktitulaire/{idjoueur}")
+    public void makeTituliare(@PathVariable ("idjoueur") int id) {
+            joueursService.maktitulaire(id);
+    }
 }

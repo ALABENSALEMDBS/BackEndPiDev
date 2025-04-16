@@ -31,7 +31,8 @@ public class Formations {
       @ManyToMany
       Set<Joueurs> joueurs = new HashSet<>();
 
-@JsonIgnore
+
+    @JsonIgnore
 
     @OneToMany(mappedBy = "formation",  cascade = {CascadeType.MERGE, CascadeType.PERSIST}) //garder les tactics même après suppression d'une formation
     @JsonIgnoreProperties("formation")
