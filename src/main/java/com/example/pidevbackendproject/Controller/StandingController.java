@@ -22,20 +22,22 @@ public class StandingController {
     StandingImplService standingService;
 
 
+
+    //wihtout updating the points
+    /*@PostMapping("/saveStandingsOfCompetition/{idCompetition}")
+    public void SaveStandings(@PathVariable int idCompetition) {
+        standingService.saveStandings(idCompetition);
+    }*/
+
+    /*@PostMapping("/saveStanding")
+    public void SaveStanding(@RequestBody Standings standings) {
+        standingsRepo.save(standings);
+    }*/
+
+
     @PostMapping("/saveHoleInfos/{idCompetition}")
     public void SaveHoleInfos(@PathVariable int idCompetition) {
         standingService.saveStandingsData(idCompetition);
-    }
-
-
-    @PostMapping("/saveStandingsOfCompetition/{idCompetition}")
-    public void SaveStandings(@PathVariable int idCompetition) {
-        standingService.saveStandings(idCompetition);
-    }
-
-    @PostMapping("/saveStanding")
-    public void SaveStanding(@RequestBody Standings standings) {
-        standingsRepo.save(standings);
     }
 
     @GetMapping("/getAllStandings")

@@ -21,7 +21,7 @@ import java.util.Set;
 public class StandingImplService {
 
     private final MatchsRepo matchsRepo;
-    private final MatchsImpService matchsService;
+    //private final MatchsImpService matchsService;
     private final CompetitionImplService competitionService;
     private final CompetitionRepo competitionRepo;
     private final StandingsRepo standingsRepo;
@@ -30,7 +30,7 @@ public class StandingImplService {
 
     //public void saveT
 
-    public void saveStandings(int idCompetition){
+    /*public void saveStandings(int idCompetition){
         Set<Clubs> particClubs = competitionService.ClubsOfCompetition(idCompetition);
 
         for (Clubs club : particClubs) {
@@ -39,7 +39,7 @@ public class StandingImplService {
             standing.setCompetition(competitionRepo.findById(idCompetition).get());
             standingsRepo.save(standing);
         }
-    }
+    }*/
 
 
     public void saveStandingsData(int idCompetition) {
