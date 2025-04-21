@@ -96,12 +96,23 @@ public class MatchsRestController {
 
 
 
-    @Operation(description = "récupérer toutes les Matchs de la base de données")
+    /* @Operation(description = "récupérer toutes les Matchs de la base de données")
     @GetMapping(value = "/retrieve-all-Matchs")
     public List<Matchs> getAllMatchs() {
         List<Matchs> matchs= matchsService.getAllMatchs();
         return matchs;
+    }*/
+
+
+    @Operation(description = "récupérer toutes les Matchs de la base de données")
+    @GetMapping(value = "/retrieve-all-Matchs")
+    public List<Matchs> getAllMatchs() {
+        List<Matchs> matchs= matchsRepo.allMatchs();
+        return matchs;
     }
+
+
+
 
     @Operation(description = "récupérer les Matchs de la base de données by ID")
     @GetMapping("/retrieve-matchs/{matchs-id}")
@@ -118,7 +129,7 @@ public class MatchsRestController {
 
     @Operation(description = "Modifer Matchs")
     @PutMapping("/modify-matchs/{matchs-id}")
-    public Matchs modifyMatchs(@RequestBody Matchs mat,@PathVariable("matchs-id") int idMatchs) {
+    public Matchs modifyMatchs(@PathVariable("matchs-id") int idMatchs , @RequestBody Matchs mat) {
         Matchs matchs= matchsService.modifyMatchs(idMatchs,mat);
         return matchs;
     }
@@ -297,9 +308,14 @@ public class MatchsRestController {
     @PostMapping("/saveMatch")
     public ResponseEntity<?> createNewMatch(@RequestBody Matchs m) {
         // Fetch clubs by name
-        Clubs clubb1 = clubsRepo.findByNameClub(m.getClub1().getNameClub())
+        /*Clubs clubb1 = clubsRepo.findByNameClub(m.getClub1().getNameClub())
                 .orElseThrow(() -> new RuntimeException("Club1 not found"));
         Clubs clubb2 = clubsRepo.findByNameClub(m.getClub2().getNameClub())
+                .orElseThrow(() -> new RuntimeException("Club2 not found"));*/
+
+        Clubs clubb1 = clubsRepo.findById(m.getClub1().getIdClub())
+                .orElseThrow(() -> new RuntimeException("Club1 not found"));
+        Clubs clubb2 = clubsRepo.findById(m.getClub2().getIdClub())
                 .orElseThrow(() -> new RuntimeException("Club2 not found"));
 
         Matchs match = Matchs.builder()

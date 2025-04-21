@@ -17,6 +17,7 @@ public class PiDevBackEndProjectApplication {
         Tesseract tesseract = new Tesseract();
         tesseract.setLanguage("eng");
         tesseract.setDatapath("C:\\Program Files\\Tesseract-OCR\\tessdata");
+        //tesseract.setDatapath("C:\\Users\\Maher Kouki\\Desktop\\Competition management");
         return tesseract;
 
     }

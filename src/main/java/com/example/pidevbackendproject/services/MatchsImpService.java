@@ -5,6 +5,7 @@ import com.example.pidevbackendproject.entities.Matchs;
 import com.example.pidevbackendproject.entities.SousGroupes;
 import com.example.pidevbackendproject.repositories.ClubsRepo;
 import com.example.pidevbackendproject.repositories.MatchsRepo;
+import com.example.pidevbackendproject.repositories.StandingsRepo;
 import lombok.AllArgsConstructor;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -27,9 +28,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class MatchsImpService implements IMatchsService {
 
+    private final StandingsRepo standingsRepo;
     MatchsRepo matchsRepo;
     ClubsRepo clubsRepo;
     Tesseract tesseract;
+    StandingImplService standingImplService;
 
     public Matchs addMatchs(Matchs match) {
         return matchsRepo.save(match);
@@ -41,7 +44,7 @@ public class MatchsImpService implements IMatchsService {
 
 
 
-    public Matchs modifyMatchs(int idMatch, Matchs match) 
+    /*public Matchs modifyMatchs(int idMatch, Matchs match)
     {
         Optional<Matchs> optionalMatchs = matchsRepo.findById(idMatch);
 
@@ -52,7 +55,32 @@ public class MatchsImpService implements IMatchsService {
         Matchs existingMatchs = optionalMatchs.get();
         existingMatchs.setResultatMatch(match.getResultatMatch());
 
-        return matchsRepo.save(existingMatchs);    }
+        return matchsRepo.save(existingMatchs);    }*/
+
+
+    public Matchs modifyMatchs(int idMatch, Matchs match) {
+        Matchs existingMatchs = matchsRepo.findById(idMatch)
+                .orElseThrow(() -> new RuntimeException("Match non trouvé"));
+
+        existingMatchs.setResultatMatch(match.getResultatMatch());
+        existingMatchs.setDateMatch(match.getDateMatch());
+        existingMatchs.setLieuMatch(match.getLieuMatch());
+        existingMatchs.setStatusMatch(match.getStatusMatch());
+        existingMatchs.setTypeMatch(match.getTypeMatch());
+        existingMatchs.setArbitre(match.getArbitre());
+        existingMatchs.setGoals1(match.getGoals1());
+        existingMatchs.setGoals2(match.getGoals2());
+        existingMatchs.setClub1(match.getClub1());
+        existingMatchs.setClub2(match.getClub2());
+        existingMatchs.updateResultat(); // auto-update resultatMatch
+        existingMatchs.theWinner();      // auto-set winner
+
+        return matchsRepo.save(existingMatchs);
+    }
+
+
+
+
 
     public List<Matchs> getAllMatchs() {
         return matchsRepo.findAll();
@@ -83,71 +111,39 @@ public class MatchsImpService implements IMatchsService {
                 });
     }
 
-    /*public static final String BASEURL="C:\\Program Files\\Tesseract-OCR";
 
 
-    public String getImageString(MultipartFile multipartFile) throws TesseractException {
-        final String originalFileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        Path filePath = Paths.get(BASEURL +"\\"+originalFileName);
-        final String orcToString = tesseract.doOCR(new File(String.valueOf(filePath)));
-        return orcToString;
-    }*/
 
 
 
     public static final String BASEURL = "C:\\Program Files\\Tesseract-OCR";
 
-    /*public String getImageString(MultipartFile multipartFile) throws TesseractException, IOException, IOException {
-        String originalFileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        Path filePath = Paths.get(BASEURL, originalFileName);
 
-        // Ensure the directory exists
-        Files.createDirectories(filePath.getParent());
+    /*@Override
+    @Transactional
+    public Optional<Matchs> updateGoals(int idMatch, Integer goal1, Integer goal2) {
+        Optional<Matchs> updatedMatch = matchsRepo.findById(idMatch).map(matchs -> {
+            matchs.setGoals1(goal1);
+            matchs.setGoals2(goal2);
+            matchs.updateResultat();
+            matchs.theWinner();
+            return matchsRepo.save(matchs);
+        });
 
-        // Save the file
-        Files.copy(multipartFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        updatedMatch.ifPresent(match -> {
+            if (match.getCompetition() != null) {
+                int idCompetition = match.getCompetition().getIdCompetition();
+                standingImplService.saveStandingsData(idCompetition);
+            }
+        });
 
-        // Perform OCR
-        return tesseract.doOCR(filePath.toFile());
-    }*/
-
-
-    public String getImageString(MultipartFile multipartFile) throws TesseractException, IOException, IOException {
-        String originalFileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        Path filePath = Paths.get(BASEURL, originalFileName);
-
-        // Ensure the directory exists
-        Files.createDirectories(filePath.getParent());
-
-        // Save the file
-        Files.copy(multipartFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        // Perform OCR
-        String res = tesseract.doOCR(filePath.toFile());
-        return res;
-    }
-
-    /*public void extractResultsFromSheet(String na){
-        //9asemthom 7asb :
-        String[] parts=na.split(":")[1].split("-");
-
-        // trim tna7i l'esapcet bech t7assel score menna wmenna
-        String score1=parts[0].trim();
-        String score2=parts[1].trim();
-
-        Integer numGoal1 = Integer.valueOf(score1);
-        Integer numGoal2 = Integer.valueOf(score2);
+        return updatedMatch;
     }*/
 
 
 
-    public String getTeams(int idMatch){
-        Matchs matchh = matchsRepo.findById(idMatch).get();
-        return matchh.getClub1()+" - "+matchh.getClub2();
-    }
 
-
-
-
+/*
     @Override
     @Transactional
     public Optional<Matchs> updateGoalsFromSheet(int idMatch,MultipartFile multipartFile ) throws TesseractException, IOException {
@@ -177,14 +173,12 @@ public class MatchsImpService implements IMatchsService {
             //lmehtode mte3 lwinner
             return matchsRepo.save(matchs);
         });
-    }
+    }*/
 
 
 
 
-
-
-    /*@Override
+        /*@Override
     @Transactional
     public Optional<Matchs> updateGoalsFromSheet(int idMatch,MultipartFile multipartFile ) throws TesseractException, IOException {
 
@@ -212,6 +206,137 @@ public class MatchsImpService implements IMatchsService {
         });
     }*/
 
+
+
+
+    public String getTeams(int idMatch){
+        Matchs matchh = matchsRepo.findById(idMatch).get();
+        return matchh.getClub1()+" - "+matchh.getClub2();
+    }
+
+/*
+    public String getImageString(MultipartFile multipartFile) throws TesseractException, IOException, IOException {
+        String originalFileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        Path filePath = Paths.get(BASEURL, originalFileName);
+
+        // Ensure the directory exists
+        Files.createDirectories(filePath.getParent());
+
+        // Save the file
+        Files.copy(multipartFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        // Perform OCR
+        String res = tesseract.doOCR(filePath.toFile());
+        return res;
+    }
+
+
+
+    @Override
+    @Transactional
+    public Optional<Matchs> updateGoalsFromSheet(int idMatch, MultipartFile multipartFile) throws TesseractException, IOException {
+        String resultat = getImageString(multipartFile);
+
+        // Check if the result contains the expected format
+        if (resultat.contains(":")) {
+            String[] parts = resultat.split(":");
+
+            // Check if the split string has enough parts
+            if (parts.length > 1) {
+                String[] scores = parts[1].split("-");
+
+                // Ensure that we have two parts for the scores
+                if (scores.length == 2) {
+                    String score1 = scores[0].trim();
+                    String score2 = scores[1].trim();
+
+                    Integer numGoal1 = Integer.valueOf(score1);
+                    Integer numGoal2 = Integer.valueOf(score2);
+
+                    return matchsRepo.findById(idMatch).map(matchs -> {
+                        matchs.setGoals1(numGoal1);
+                        matchs.setGoals2(numGoal2);
+                        matchs.updateResultat();
+                        matchs.theWinner(); // Assuming this method handles the logic for the winner
+                        return matchsRepo.save(matchs);
+                    });
+                } else {
+                    throw new IllegalArgumentException("Invalid score format. Expected format is 'score1 - score2'.");
+                }
+            } else {
+                throw new IllegalArgumentException("Invalid OCR result. Expected format is 'something: score1 - score2'.");
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid OCR result. ':' separator not found.");
+        }
+
+
+
+
+
+    }
+
+
+*/
+
+    public String getImageString(MultipartFile multipartFile) throws TesseractException, IOException {
+        String originalFileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        Path filePath = Paths.get(BASEURL, originalFileName);
+
+        // Ensure the directory exists
+        Files.createDirectories(filePath.getParent());
+
+        // Save the file
+        Files.copy(multipartFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        // Perform OCR and return the result
+        return tesseract.doOCR(filePath.toFile());
+    }
+
+
+
+
+    @Override
+    @Transactional
+    public Optional<Matchs> updateGoalsFromSheet(int idMatch, MultipartFile multipartFile) throws TesseractException, IOException {
+        String resultat = getImageString(multipartFile);
+
+        // Sanitize and log the OCR result
+        if (resultat == null || resultat.trim().isEmpty()) {
+            throw new IllegalArgumentException("OCR result is empty or unreadable.");
+        }
+
+        resultat = resultat.replaceAll("\\s+", ""); // Remove all whitespace
+
+        // Example OCR result: "FinalScore:2-1"
+        if (!resultat.contains(":") || !resultat.contains("-")) {
+            throw new IllegalArgumentException("Invalid OCR result format. Expected format like 'Label:2-1'.");
+        }
+
+        String[] parts = resultat.split(":");
+        if (parts.length < 2) {
+            throw new IllegalArgumentException("OCR result is missing score section after ':'.");
+        }
+
+        String[] scores = parts[1].split("-");
+        if (scores.length != 2) {
+            throw new IllegalArgumentException("Score section should contain two values separated by '-'.");
+        }
+
+        try {
+            Integer numGoal1 = Integer.parseInt(scores[0].trim());
+            Integer numGoal2 = Integer.parseInt(scores[1].trim());
+
+            return matchsRepo.findById(idMatch).map(matchs -> {
+                matchs.setGoals1(numGoal1);
+                matchs.setGoals2(numGoal2);
+                matchs.updateResultat();
+                matchs.theWinner();
+                return matchsRepo.save(matchs);
+            });
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("OCR extracted scores are not valid integers.", e);
+        }
+    }
 
 
 

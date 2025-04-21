@@ -187,9 +187,8 @@ public class CompetitionImplService {
      */
 
 
-    /*public Matchs matchsOfCompetition(int idCompetition) {
 
-    }*/
+
 
 
 

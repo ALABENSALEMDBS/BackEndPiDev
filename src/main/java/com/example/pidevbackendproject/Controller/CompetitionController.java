@@ -5,6 +5,8 @@ package com.example.pidevbackendproject.Controller;
 import com.example.pidevbackendproject.entities.Clubs;
 import com.example.pidevbackendproject.entities.Competition;
 import com.example.pidevbackendproject.entities.Matchs;
+import com.example.pidevbackendproject.entities.TypeCompetition;
+import com.example.pidevbackendproject.repositories.ClubsRepo;
 import com.example.pidevbackendproject.repositories.CompetitionRepo;
 import com.example.pidevbackendproject.repositories.MatchsRepo;
 import com.example.pidevbackendproject.services.CompetitionImplService;
@@ -15,8 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Tag(name = "Gestion des Matchs")
@@ -28,7 +29,7 @@ public class CompetitionController {
     private final MatchsRepo matchsRepo;
     CompetitionRepo competitionRepo;
     CompetitionImplService competitionServise;
-
+    ClubsRepo clubsRepo;
 
 
     @GetMapping("allCompetition")
@@ -38,13 +39,12 @@ public class CompetitionController {
     }
 
 
-
-    @Operation(description = "Add a Competition")
+    /*@Operation(description = "Add a Competition")
     @PostMapping("/add-Competition")
     public Competition addClub(@RequestBody Competition c) {
         //Clubs club= clubsServise.addClubs(c);
         return competitionServise.addCompetition(c);
-    }
+    }*/
 
 
     @GetMapping(value = "/retrieve-all-competition")
@@ -71,11 +71,11 @@ public class CompetitionController {
     }
 
 
-    @PostMapping("/{idCompetition}/affecter-match/{idMatch}")
+    /*@PostMapping("/{idCompetition}/affecter-match/{idMatch}")
     public ResponseEntity<String> affecterMatchACompetition(@PathVariable int idCompetition, @PathVariable int idMatch) {
         competitionServise.assignMatchToCompetition(idMatch, idCompetition);
         return ResponseEntity.ok("Match assigned to competition " + idCompetition);
-    }
+    }*/
 
 
     /*@GetMapping("/getMatchsOfCompetition/{idCompetition}")
@@ -109,8 +109,7 @@ public class CompetitionController {
     }
 
 
-
-    @PostMapping("/{idCompetition}/affecter-matches")
+    /*@PostMapping("/{idCompetition}/affecter-matches")
     public ResponseEntity<String> assignMatchesToCompetition(
             @PathVariable int idCompetition,
             @RequestBody List<Integer> matchIds) {
@@ -121,12 +120,44 @@ public class CompetitionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Error: " + e.getMessage());
         }
+    }*/
+
+
+    @PostMapping("/createCompetition")
+    public ResponseEntity<String> createCompetition(@RequestBody Map<String, Object> requestData) {
+        String name = (String) requestData.get("nameCompetition");
+        String typeString = (String) requestData.get("typeC");
+        List<Integer> clubIds = (List<Integer>) requestData.get("clubIds");
+
+        // Convert string to enum
+        TypeCompetition type = TypeCompetition.valueOf(typeString.toUpperCase());
+
+        // Load clubs from DB
+        List<Clubs> clubs = clubsRepo.findAllById(
+                clubIds.stream().map(Integer::valueOf).toList()
+        );
+
+        // Create and save competition
+        Competition competition = Competition.builder()
+                .nameCompetition(name)
+                .TypeC(type)
+                .build();
+        competition = competitionRepo.save(competition);
+        // Generate all match combinations
+        Set<Matchs> matches = new HashSet<>();
+        for (int i = 0; i < clubs.size(); i++) {
+            for (int j = i + 1; j < clubs.size(); j++) {
+                Matchs match = Matchs.builder()
+                        .club1(clubs.get(i))
+                        .club2(clubs.get(j))
+                        .competition(competition)
+                        .build();
+                matches.add(match);
+            }
+        }
+        // Save all matches
+        matchsRepo.saveAll(matches);
+        return ResponseEntity.ok("Competition and matches created successfully.");
     }
 
-
-
-
-
-
-    
 }

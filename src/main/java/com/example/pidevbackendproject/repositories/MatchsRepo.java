@@ -14,11 +14,20 @@ public interface MatchsRepo extends JpaRepository<Matchs, Integer> {
     //@Query("select p from Participant p join p.evenements ev join ev.logistiques log where p.tache='ORGANISATEUR' and log.reserve=false")
 
 
-    @Query("select m from Matchs m where m.resultatMatch IS null ")
+    /*@Query("select m from Matchs m where m.resultatMatch IS null AND m.competition.idCompetition IS null ")
+    List<Matchs> notYetPlayedMatchs();*/
+
+    @Query("SELECT m FROM Matchs m WHERE m.resultatMatch IS NULL AND m.competition.idCompetition IS NULL")
     List<Matchs> notYetPlayedMatchs();
 
-    @Query("select m from Matchs m where m.resultatMatch IS NOT NULL ")
+
+    @Query("select m from Matchs m where m.resultatMatch IS NOT NULL AND m.competition.idCompetition IS null")
     List<Matchs> playedMatchs();
+
+    @Query("select m from Matchs m where m.competition.idCompetition IS null")
+    List<Matchs> allMatchs();
+
+
 
     @Query("select m from Matchs m where m.competition.idCompetition = :idCompetition ")
     List<Matchs> MatchsOfCompetition(@Param("idCompetition") int idCompetition);

@@ -38,7 +38,7 @@ public class Competition {
     Set<Matchs> matchesTournoi =  new HashSet<>();*/
 
 
-    @OneToMany(mappedBy = "competition")
+    @OneToMany(mappedBy = "competition" ,cascade = CascadeType.ALL)
     //@JsonIgnore // Retire cette ligne si tu veux que les matchs soient renvoyés dans la réponse JSON
     Set<Matchs> matchesTournoi = new HashSet<>();
 
