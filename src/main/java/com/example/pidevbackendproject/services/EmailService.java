@@ -47,7 +47,7 @@ public class EmailService {
                 <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
                     <div style="max-width: 600px; margin: auto; background-color: white; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
                         <div style="text-align: center;">
-                            <img src='https://i.imgur.com/cv2MCj7.png' alt='Logo' style='width: 100px; margin-bottom: 20px;'/>
+                            <img src='https://i.imgur.com/amoLega.png' alt='Logo' style='width: 100px; margin-bottom: 20px;'/>
                             <h2 style="color: #333;">Hello %s 👋</h2>
                         </div>
                         <p style="font-size: 16px; color: #555;">
@@ -58,7 +58,7 @@ public class EmailService {
                         </p>
                          <!-- Image de la signature -->
                     <div style="text-align: right; margin-top: 40px;">
-                        <img src="https://i.imgur.com/MZNwkEe.png" alt="Signature" style="width: 100px;" />
+                        <img src="https://i.imgur.com/RK2znLl.png" alt="Signature" style="width: 100px;" />
                     </div>
                         <hr style="margin: 30px 0;">
                         <p style="font-size: 12px; color: #aaa; text-align: center;">
