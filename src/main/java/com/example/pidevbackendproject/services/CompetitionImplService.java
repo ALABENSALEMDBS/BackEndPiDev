@@ -33,9 +33,24 @@ public class CompetitionImplService {
         competitionRepo.deleteById(idCompetition);
     }
 
+
+
     public Competition modifyCompetition(Competition competition) {
         return competitionRepo.save(competition);
     }
+
+
+    public Competition modifyCompetition(int idCompetition, Competition competition) {
+        Competition existingMatchs = competitionRepo.findById(idCompetition)
+                .orElseThrow(() -> new RuntimeException("Competition non trouvé"));
+
+        //existingMatchs.setResultatMatch(match.getResultatMatch());
+        existingMatchs.setNameCompetition(competition.getNameCompetition());
+        //existingMatchs.setTypeC(competition.getTypeC());
+
+        return competitionRepo.save(existingMatchs);
+    }
+
 
     public List<Competition> getAllCompetition() {
         List<Competition> competitions = competitionRepo.findAll();
@@ -185,11 +200,4 @@ public class CompetitionImplService {
 }
 
      */
-
-
-
-
-
-
-
 }

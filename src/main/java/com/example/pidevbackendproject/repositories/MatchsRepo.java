@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -107,6 +108,20 @@ public interface MatchsRepo extends JpaRepository<Matchs, Integer> {
       AND m.competition.idCompetition = :idCompetition
 """)
     Integer totalDraws(@Param("idCompetition") int idCompetition, @Param("idClub") int idClub);
+
+
+
+    @Query("""
+    SELECT m
+    FROM Matchs m
+    WHERE (m.club1.idClub = :idClub OR m.club2.idClub = :idClub)
+      AND m.dateMatch between :startDate AND :endDate
+""")
+    List<Matchs> validMatchs (@Param("idClub1") int idClub1, @Param("startDate") Date startDate);
+
+
+
+
 
 
 

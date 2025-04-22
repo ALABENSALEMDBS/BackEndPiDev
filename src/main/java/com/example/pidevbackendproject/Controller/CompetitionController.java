@@ -71,6 +71,22 @@ public class CompetitionController {
     }
 
 
+    /*@Operation(description = "Modifer Matchs")
+    @PutMapping("/modify-matchs/{matchs-id}")
+    public Matchs modifyMatchs(@PathVariable("matchs-id") int idMatchs , @RequestBody Matchs mat) {
+        Matchs matchs= competitionServise.modifyMatchs(idMatchs,mat);
+        return matchs;
+    }*/
+
+
+    @Operation(description = "Modifer Competition")
+    @PutMapping("/modify-competition/{competition-id}")
+    public Competition modifyCompetition(@PathVariable("competition-id") int idMatchs , @RequestBody Competition mat) {
+        Competition matchs= competitionServise.modifyCompetition(idMatchs,mat);
+        return matchs;
+    }
+
+
     /*@PostMapping("/{idCompetition}/affecter-match/{idMatch}")
     public ResponseEntity<String> affecterMatchACompetition(@PathVariable int idCompetition, @PathVariable int idMatch) {
         competitionServise.assignMatchToCompetition(idMatch, idCompetition);

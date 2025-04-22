@@ -44,6 +44,7 @@ public class Matchs {
     private Clubs winner;
 
     public Clubs theWinner(){
+        winner=null;
         if ((goals1==null) || (goals2 == null)){
             return null;
         }
