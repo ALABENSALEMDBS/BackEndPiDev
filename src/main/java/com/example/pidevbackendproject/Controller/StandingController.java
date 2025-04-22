@@ -45,7 +45,7 @@ public class StandingController {
         return standingsRepo.findAll();
     }
 
-    @GetMapping("/goalsHome/{idCompetition}/{idClub}")
+    /*@GetMapping("/goalsHome/{idCompetition}/{idClub}")
     public Integer goalsHome(@PathVariable int idCompetition , @PathVariable int idClub) {
         return standingService.goalsHome(idCompetition, idClub);
     }
@@ -88,7 +88,7 @@ public class StandingController {
     @PostMapping("/givePoints/{idCompetition}")
     public void givePoints(@PathVariable int idCompetition) {
         standingService.givePoints(idCompetition);
-    }
+    }*/
 
 
 

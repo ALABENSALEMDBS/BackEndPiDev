@@ -89,7 +89,7 @@ public class StandingImplService {
 
 
 
-    public void givePoints(Integer idCompetition) {
+    /*public void givePoints(Integer idCompetition) {
         Optional<Competition> competition = Optional.ofNullable(competitionRepo.findById(idCompetition).orElseThrow(() -> new RuntimeException("competition is not found")));
         for (Matchs match : matchsRepo.MatchsOfCompetition(idCompetition)) {
             if(match.getWinner()!=null) {
@@ -107,11 +107,11 @@ public class StandingImplService {
                 standingsRepo.save(stand2);
             }
         }
-    }
+    }*/
 
-    public Integer goalsHome(int idCompetition , int idClub) {
+    /*public Integer goalsHome(int idCompetition , int idClub) {
         return matchsRepo.goalsHome(idCompetition, idClub);
-    }
+    }*/
 
 
     /*public Integer numbWins(int idCompetition , int idClub) {

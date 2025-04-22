@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 @Getter
 @Setter
@@ -115,4 +118,14 @@ public class Matchs {
     @ManyToOne
     @JoinColumn(name = "club2_id")
     private Clubs club2;
+
+
+    /*@Transient
+    private LocalDateTime date;
+
+    {
+        String dateStr = match.getDateMatch(); // must be like "2025-04-08T08:03"
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(dateStr, formatter);
+    }*/
 }

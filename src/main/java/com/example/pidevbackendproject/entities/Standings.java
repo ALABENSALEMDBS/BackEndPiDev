@@ -33,8 +33,6 @@ public class Standings {
     @JoinColumn(name = "competition_id")
     private Competition competition;
 
-
-
     //@Column(updatable = false)
     int points = 0;
 
