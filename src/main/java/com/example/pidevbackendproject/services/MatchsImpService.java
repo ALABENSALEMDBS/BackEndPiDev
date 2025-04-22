@@ -43,6 +43,11 @@ public class MatchsImpService implements IMatchsService {
     }
 
 
+    /*public Matchs addValidMatchs(Matchs match) {
+        Clubs club1 = clubsRepo.findById(match.getClub1()).orElseThrow(()-> new RuntimeException("there is"));
+    }*/
+
+
 
     /*public Matchs modifyMatchs(int idMatch, Matchs match)
     {
@@ -56,6 +61,9 @@ public class MatchsImpService implements IMatchsService {
         existingMatchs.setResultatMatch(match.getResultatMatch());
 
         return matchsRepo.save(existingMatchs);    }*/
+
+
+
 
 
     public Matchs modifyMatchs(int idMatch, Matchs match) {
@@ -77,6 +85,9 @@ public class MatchsImpService implements IMatchsService {
 
         return matchsRepo.save(existingMatchs);
     }
+
+
+
 
 
 

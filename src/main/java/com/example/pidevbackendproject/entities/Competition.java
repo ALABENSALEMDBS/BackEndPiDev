@@ -1,6 +1,7 @@
 package com.example.pidevbackendproject.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -19,6 +20,8 @@ import java.util.Set;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Competition {
 
     @Id
