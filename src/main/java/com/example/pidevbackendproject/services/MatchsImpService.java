@@ -2,7 +2,6 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Clubs;
 import com.example.pidevbackendproject.entities.Matchs;
-import com.example.pidevbackendproject.entities.SousGroupes;
 import com.example.pidevbackendproject.repositories.ClubsRepo;
 import com.example.pidevbackendproject.repositories.MatchsRepo;
 import com.example.pidevbackendproject.repositories.StandingsRepo;
@@ -14,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.beans.Transient;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,9 +42,48 @@ public class MatchsImpService implements IMatchsService {
     }
 
 
-    /*public Matchs addValidMatchs(Matchs match) {
-        Clubs club1 = clubsRepo.findById(match.getClub1()).orElseThrow(()-> new RuntimeException("there is"));
+    //test methode of one match each three days
+    /*public RuntimeException addValidMatchs(Matchs match) {
+        Clubs club1 = clubsRepo.findById(match.getClub1().getIdClub())
+                .orElseThrow(()-> new RuntimeException("there is no club 1"));
+        Clubs club2 = clubsRepo.findById(match.getClub2().getIdClub())
+                .orElseThrow(()-> new RuntimeException("there is no club 2"));
+
+        //Date dateMatch = match.getDateMatch();
+
+        String dateStr = match.getDateMatch();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(dateStr, formatter);
+
+        LocalDateTime startDate = dateTime.plusDays(3);
+        LocalDateTime endDate = dateTime.minusDays(3);
+
+
+        //System.out.println(dateTime); // Output: 2025-04-08T08:03
+
+        List<Matchs> playedMatchsIn3DaysClub1 = matchsRepo.validMatchsForAclub(club1.getIdClub(),startDate,endDate);
+        List<Matchs> playedMatchsIn3DaysClub2 = matchsRepo.validMatchsForAclub(club2.getIdClub(),startDate,endDate);
+
+
+        if(playedMatchsIn3DaysClub1.isEmpty() && playedMatchsIn3DaysClub2.isEmpty()){
+            matchsRepo.save(match);
+
+        }
+        else if(!playedMatchsIn3DaysClub1.isEmpty()){
+            playedMatchsIn3DaysClub1.stream().map(Matchs::getIdMatch).toList();
+            return new RuntimeException("there are match for club 1 in 3 days" , (Throwable) playedMatchsIn3DaysClub1);
+        }
+        else {
+            playedMatchsIn3DaysClub2.stream().map(Matchs::getIdMatch).toList();
+            return new RuntimeException("there are match for club 1 in 3 days" , (Throwable) playedMatchsIn3DaysClub2);
+        }
+
+        return null;
     }*/
+
+
+
+
 
 
 
@@ -62,6 +100,64 @@ public class MatchsImpService implements IMatchsService {
 
         return matchsRepo.save(existingMatchs);    }*/
 
+
+
+    /*public void addValidMatchs(Matchs match) {
+        Clubs club1 = clubsRepo.findById(match.getClub1().getIdClub())
+                .orElseThrow(() -> new RuntimeException("There is no club 1"));
+        Clubs club2 = clubsRepo.findById(match.getClub2().getIdClub())
+                .orElseThrow(() -> new RuntimeException("There is no club 2"));
+
+        String dateStr = match.getDateMatch(); // must be like "2025-04-08T08:03"
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(dateStr, formatter);
+
+        LocalDateTime startDate = dateTime.minusDays(3);
+        LocalDateTime endDate = dateTime.plusDays(3);
+
+        List<Matchs> playedMatchsIn3DaysClub1 = matchsRepo.validMatchsForAclub(club1.getIdClub(), startDate, endDate);
+        List<Matchs> playedMatchsIn3DaysClub2 = matchsRepo.validMatchsForAclub(club2.getIdClub(), startDate, endDate);
+
+        if (playedMatchsIn3DaysClub1.isEmpty() && playedMatchsIn3DaysClub2.isEmpty()) {
+            matchsRepo.save(match);
+        } else if (!playedMatchsIn3DaysClub1.isEmpty()) {
+            throw new RuntimeException("Club 1 has a match within 3 days" + playedMatchsIn3DaysClub1.stream().map(Matchs::getIdMatch));
+        } else {
+            throw new RuntimeException("Club 2 has a match within 3 days" + playedMatchsIn3DaysClub2.stream().map(Matchs::getIdMatch)  );
+        }
+    }*/
+
+
+    public boolean isValidMatch(Matchs match){
+        Clubs club1 = clubsRepo.findById(match.getClub1().getIdClub())
+                .orElseThrow(() -> new RuntimeException("There is no club 1"));
+        Clubs club2 = clubsRepo.findById(match.getClub2().getIdClub())
+                .orElseThrow(() -> new RuntimeException("There is no club 2"));
+
+        String dateStr = match.getDateMatch(); // must be like "2025-04-08T08:03"
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        //LocalDateTime dateTime = LocalDateTime.parse(dateStr, formatter);
+
+        /*DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime matchDate = LocalDateTime.parse(match.getDateMatch(), formatter);*/
+
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime matchDate = LocalDateTime.parse(match.getDateMatch(), formatter);
+
+        String startStr = matchDate.minusDays(3).format(formatter);
+        String endStr = matchDate.plusDays(3).format(formatter);
+
+        List<Matchs> playedMatchsIn3DaysClub1 = matchsRepo.validMatchsForAclub(club1.getIdClub(), startStr, endStr);
+        List<Matchs> playedMatchsIn3DaysClub2 = matchsRepo.validMatchsForAclub(club2.getIdClub(), startStr, endStr);
+
+        if (playedMatchsIn3DaysClub1.isEmpty() && playedMatchsIn3DaysClub2.isEmpty()) {
+            return true;
+        }
+        else
+            return false;
+    }
 
 
 

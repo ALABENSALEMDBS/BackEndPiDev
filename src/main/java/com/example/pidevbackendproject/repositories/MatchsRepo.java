@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -114,11 +115,10 @@ public interface MatchsRepo extends JpaRepository<Matchs, Integer> {
     @Query("""
     SELECT m
     FROM Matchs m
-    WHERE (m.club1.idClub = :idClub OR m.club2.idClub = :idClub)
+    WHERE (m.club1.idClub = :idClub  OR  m.club2.idClub = :idClub)
       AND m.dateMatch between :startDate AND :endDate
-""")
-    List<Matchs> validMatchs (@Param("idClub1") int idClub1, @Param("startDate") Date startDate);
-
+    """)
+    List<Matchs> validMatchsForAclub (@Param("idClub") int idClub, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
 
 

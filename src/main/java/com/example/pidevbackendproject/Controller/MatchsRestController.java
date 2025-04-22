@@ -6,6 +6,7 @@ import com.example.pidevbackendproject.repositories.ClubsRepo;
 import com.example.pidevbackendproject.repositories.MatchsRepo;
 import com.example.pidevbackendproject.repositories.UsersRepo;
 import com.example.pidevbackendproject.services.IMatchsService;
+import com.example.pidevbackendproject.services.MatchsImpService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,6 +33,7 @@ public class MatchsRestController {
     private final MatchsRepo matchsRepo;
     private final ClubsRepo clubsRepo;
     IMatchsService matchsService;
+    private final MatchsImpService matchsImpService;
 
 
 
@@ -43,6 +45,17 @@ public class MatchsRestController {
     public Matchs addMatchs(@RequestBody Matchs m) {
         return matchsService.addMatchs(m);
     }
+
+
+    /*@PostMapping("/addValidMatch")
+    public ResponseEntity<?> addMatch(@RequestBody Matchs match) {
+        try {
+            matchsImpService.addValidMatchs(match);
+            return ResponseEntity.ok("Match added successfully");
+        } catch (RuntimeException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }*/
 
     /// //
     /*@PostMapping(value = "saveMatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -307,36 +320,31 @@ public class MatchsRestController {
 
     @PostMapping("/saveMatch")
     public ResponseEntity<?> createNewMatch(@RequestBody Matchs m) {
-        // Fetch clubs by name
-        /*Clubs clubb1 = clubsRepo.findByNameClub(m.getClub1().getNameClub())
-                .orElseThrow(() -> new RuntimeException("Club1 not found"));
-        Clubs clubb2 = clubsRepo.findByNameClub(m.getClub2().getNameClub())
-                .orElseThrow(() -> new RuntimeException("Club2 not found"));*/
-
         Clubs clubb1 = clubsRepo.findById(m.getClub1().getIdClub())
                 .orElseThrow(() -> new RuntimeException("Club1 not found"));
         Clubs clubb2 = clubsRepo.findById(m.getClub2().getIdClub())
                 .orElseThrow(() -> new RuntimeException("Club2 not found"));
 
-        Matchs match = Matchs.builder()
-                .resultatMatch(null)
-                .dateMatch(m.getDateMatch())
-                .lieuMatch(m.getLieuMatch())
-                .statusMatch(m.getStatusMatch())
-                .typeMatch(m.getTypeMatch())
-                .arbitre(m.getArbitre())
-                .goals1(null)
-                .goals2(null)
-                .club1(clubb1)
-                .club2(clubb2)
-                .build();
-        matchsRepo.save(match);
-        return new ResponseEntity<>(match, HttpStatus.CREATED);
+        if(matchsImpService.isValidMatch(m)){
+            Matchs match = Matchs.builder()
+                    .resultatMatch(null)
+                    .dateMatch(m.getDateMatch())
+                    .lieuMatch(m.getLieuMatch())
+                    .statusMatch(m.getStatusMatch())
+                    .typeMatch(m.getTypeMatch())
+                    .arbitre(m.getArbitre())
+                    .goals1(null)
+                    .goals2(null)
+                    .club1(clubb1)
+                    .club2(clubb2)
+                    .build();
+            matchsRepo.save(match);
+            return new ResponseEntity<>(match, HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
-
-
-
-
 
 
     @PatchMapping("/goals/{idMatch}")
