@@ -98,4 +98,8 @@ public class FicheMedicalesRestController {
     public List<Object[]> getCountByGravite() {
         return ficheMedicalesService.countInjuredPlayersByGravite();
     }
+
 }
+
+
+

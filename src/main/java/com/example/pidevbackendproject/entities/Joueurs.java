@@ -46,4 +46,9 @@ public class Joueurs extends Users {
     @JsonIgnore
     @OneToMany(mappedBy = "joueurrapport")
     Set<Rapports> rapport=new HashSet<>();
+
+    @OneToMany(mappedBy = "joueur")
+    @JsonIgnore
+    Set<Consultation> consultations=new HashSet<>();
+
 }

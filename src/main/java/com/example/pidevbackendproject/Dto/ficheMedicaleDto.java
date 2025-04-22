@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,6 +17,11 @@ public class ficheMedicaleDto {
     String type;
     Integer joueurId;
     String joueurFullName;
+    Integer iddescription;
+    String  nomExerciceRetablissement;
+    LocalDateTime dateConsultation;
+    Long id;
+
 
     public ficheMedicaleDto(int idFicheMedicale,
                             Float poidsFicheMedicale,
@@ -39,8 +45,11 @@ public class ficheMedicaleDto {
                             LocalDate dateBlessure,
                             String gravite,
                             String type,
+                            Integer iddescription,
+                            String nomExerciceRetablissement,
                             Integer joueurId,
-                            String joueurFullName) {
+                            String joueurFullName
+                            ) {
         this.idFicheMedicale = idFicheMedicale;
         this.poidsFicheMedicale = poidsFicheMedicale;
         this.tailleFicheMedicale = tailleFicheMedicale;
@@ -49,5 +58,15 @@ public class ficheMedicaleDto {
         this.type = type;
         this.joueurId = joueurId;
         this.joueurFullName = joueurFullName;
+        this.iddescription=iddescription;
+        this.nomExerciceRetablissement=nomExerciceRetablissement;
+    }
+
+    public  ficheMedicaleDto(Long id ,LocalDateTime dateConsultation,String joueurFullName,Integer joueurId){
+        this.joueurFullName = joueurFullName;
+        this.dateConsultation=dateConsultation;
+        this.id=id;
+        this.joueurId = joueurId;
+
     }
 }

@@ -3,6 +3,7 @@ package com.example.pidevbackendproject.services;
 import com.example.pidevbackendproject.Dto.ficheMedicaleDto;
 import com.example.pidevbackendproject.entities.FicheMedicales;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IFicheMedicalesService {
@@ -25,4 +26,6 @@ public interface IFicheMedicalesService {
     List<ficheMedicaleDto> findAllWithJoueurFullName();
 
     List<Object[]> countInjuredPlayersByGravite();
+
+
 }

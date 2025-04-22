@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -114,7 +115,7 @@ public class FicheMedicalesImpService implements IFicheMedicalesService {
         return ficheMedicalesRepo.countInjuredPlayersByGravite();
     }
 //envoier mail
-private void sendRecoveryExercisesEmail(Joueurs joueur, ExerciceRetablissements exercice) {
+/*private void sendRecoveryExercisesEmail(Joueurs joueur, ExerciceRetablissements exercice) {
     StringBuilder body = new StringBuilder();
     body.append("Bonjour ").append(joueur.getNameUsers()).append(",\n\n");
     body.append("Votre fiche médicale a été créée avec succès.\n");
@@ -124,7 +125,32 @@ private void sendRecoveryExercisesEmail(Joueurs joueur, ExerciceRetablissements 
     body.append("Prenez soin de vous et suivez les instructions !");
 
    emailService.sendMail(joueur.getEmailUser(), body.toString());
-}
+}*/
+
+    private void sendRecoveryExercisesEmail(Joueurs joueur, ExerciceRetablissements exercice) {
+        String html = "<html><body style='font-family: Arial, sans-serif; color: #333;'>"
+                + "<h1 style='color: #2c3e50;'>CLUBSPORT - Application Médicale Sportive</h1>"
+                + "<h2>Bonjour " + joueur.getNameUsers() + ",</h2>"
+                + "<p>Nous avons le plaisir de vous informer que votre <strong>fiche médicale</strong> a été créée avec succès.</p>"
+                + "<p>Un programme de rétablissement vous a été assigné :</p>"
+                + "<ul>"
+                + "<li><strong>Nom de l'exercice :</strong> " + exercice.getNomExerciceRetablissement() + "</li>"
+                + "<li><strong>Description :</strong> " + exercice.getDescriptionExerciceRetablissement() + "</li>"
+                + "</ul>"
+                + "<p>Nous vous souhaitons un bon rétablissement et restons à votre disposition pour tout complément d'information.</p>"
+                + "<p style='margin-top:20px;'>💪 Prenez soin de vous,<br>L'équipe CLUBSPORT</p>"
+                + "<hr style='margin:30px 0;'>"
+                + "<p style='font-size: 13px; color: #777;'>"
+                + "📧 Contact : CLUBSPORTFOOT@medisport.tn<br>"
+                + "📞 Téléphone : +216 20 345 678<br>"
+                + "🌐 Site web : <a href='https://www.medisport.tn'>www.medisport.tn</a>"
+                + "</p>"
+                + "</body></html>";
+
+        emailService.sendMail(joueur.getEmailUser(), html);
+    }
+
+
 
 
 }
