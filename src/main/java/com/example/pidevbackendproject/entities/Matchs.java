@@ -120,12 +120,12 @@ public class Matchs {
     private Clubs club2;
 
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "id_cup")
-    private Cup cup;*/
+    private Cup cup;
 
 
-    //private String roundName;
+    private String roundName;
 
 
 }
