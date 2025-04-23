@@ -120,12 +120,12 @@ public class Matchs {
     private Clubs club2;
 
 
-    /*@Transient
-    private LocalDateTime date;
+    /*@ManyToOne
+    @JoinColumn(name = "id_cup")
+    private Cup cup;*/
 
-    {
-        String dateStr = match.getDateMatch(); // must be like "2025-04-08T08:03"
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(dateStr, formatter);
-    }*/
+
+    //private String roundName;
+
+
 }
