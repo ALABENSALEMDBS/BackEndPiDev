@@ -19,14 +19,14 @@ public interface MatchsRepo extends JpaRepository<Matchs, Integer> {
     /*@Query("select m from Matchs m where m.resultatMatch IS null AND m.competition.idCompetition IS null ")
     List<Matchs> notYetPlayedMatchs();*/
 
-    @Query("SELECT m FROM Matchs m WHERE m.resultatMatch IS NULL AND m.competition.idCompetition IS NULL")
+    @Query("SELECT m FROM Matchs m WHERE m.resultatMatch IS NULL AND m.competition.idCompetition IS NULL And m.cup.idCup Is null")
     List<Matchs> notYetPlayedMatchs();
 
 
-    @Query("select m from Matchs m where m.resultatMatch IS NOT NULL AND m.competition.idCompetition IS null")
+    @Query("select m from Matchs m where m.resultatMatch IS NOT NULL AND m.competition.idCompetition IS null And m.cup.idCup Is null")
     List<Matchs> playedMatchs();
 
-    @Query("select m from Matchs m where m.competition.idCompetition IS null")
+    @Query("select m from Matchs m where m.competition.idCompetition IS null And m.cup.idCup Is null")
     List<Matchs> allMatchs();
 
 
@@ -121,6 +121,10 @@ public interface MatchsRepo extends JpaRepository<Matchs, Integer> {
     List<Matchs> validMatchsForAclub (@Param("idClub") int idClub, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
 
+
+
+    @Query("select m from Matchs m where m.cup.idCup = :idCup ")
+    List<Matchs> MatchsOfCup(@Param("idCup") int idCup);
 
 
 

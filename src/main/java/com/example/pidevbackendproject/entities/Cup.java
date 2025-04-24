@@ -21,7 +21,7 @@ public class Cup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idCup;
+    Integer idCup;
 
 
     private String name;
