@@ -13,5 +13,8 @@ public interface ClubsRepo extends JpaRepository<Clubs, Integer> {
     Optional<Clubs> findByNameClub(String name);
 
 
-    List<Clubs> findAllByIdClub(List<Integer> idClub);
+    //List<Clubs> findAllByIdClub(List<Integer> idClub);
+
+    List<Clubs> findAllByIdClubIn(List<Integer> idClub);
+
 }
