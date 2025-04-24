@@ -51,6 +51,7 @@ public class CupController {
 
 
 
+
     @GetMapping("/getParticipatedClubsNames/{idCompetition}")
     public ResponseEntity<List<String>> getParticipatedClubsNames(@PathVariable int idCompetition) {
         //return matchsRepo.MatchsOfCompetition(idCompetition);
