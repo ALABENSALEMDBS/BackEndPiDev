@@ -18,6 +18,9 @@ public class Comment {
     private String content;
     private String timestamp;
 
+    @Enumerated(EnumType.STRING)
+    private CommentType type;
+
 //    @ManyToOne
 //    @JoinColumn(name = "video_id")
 //    private Video video;
