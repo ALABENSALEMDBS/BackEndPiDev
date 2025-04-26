@@ -123,8 +123,8 @@ public interface MatchsRepo extends JpaRepository<Matchs, Integer> {
 
 
 
-    @Query("select m from Matchs m where m.cup.idCup = :idCup ")
-    List<Matchs> MatchsOfCup(@Param("idCup") int idCup);
+    @Query("select m from Matchs m where m.cup.idCup = :idCup AND m.competition.idCompetition is null ")
+    List<Matchs> matchsOfCup(@Param("idCup") int idCup);
 
 
 
