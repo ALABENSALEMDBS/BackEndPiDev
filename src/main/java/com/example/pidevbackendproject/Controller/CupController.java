@@ -41,10 +41,16 @@ public class CupController {
         return cupService.generateNextRoundMatches(cupId);
     }
 
-    @GetMapping("/getParticipatingClubs/{idCup}")
+    /*@GetMapping("/getParticipatingClubs/{idCup}")
     public ResponseEntity<List<Matchs>> getMatchsOfCup(@PathVariable int idCup) {
         //return matchsRepo.MatchsOfCompetition(idCompetition);
         return ResponseEntity.ok(matchsRepo.matchsOfCup(idCup));
+    }*/
+
+    @GetMapping("/getParticipatingClubs/{idCup}")
+    public ResponseEntity<Set<Clubs>> getClubsOfCup(@PathVariable int idCup) {
+        //return matchsRepo.MatchsOfCompetition(idCompetition);
+        return ResponseEntity.ok(cupService.ClubsOfCup(idCup));
     }
 
     @GetMapping("/getCup/{idCup}")
@@ -52,10 +58,19 @@ public class CupController {
         return ResponseEntity.ok(cupRepo.findById(idCup).get());
     }
 
-    @GetMapping("/getAllCups")
+
+    /*@GetMapping("/getAllCups")
     public ResponseEntity<List<Cup>> getAllCups() {
         return ResponseEntity.ok(cupRepo.findAll());
+    }*/
+
+
+    @GetMapping("/getAllCups")
+    public ResponseEntity<List<Cup>> getAllCups() {
+        List<Cup> cups = cupRepo.findAll();
+        return ResponseEntity.ok().body(cups); // Assure que le corps est bien JSON
     }
+
 
 
 
