@@ -1,6 +1,7 @@
 package com.example.pidevbackendproject.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -27,7 +28,8 @@ public class Cup {
     private String name;
 
 
-    @OneToMany(mappedBy = "cup")
+    @JsonIgnore
+    @OneToMany(mappedBy = "cup" , cascade = CascadeType.ALL)
     private List<Matchs> matchs;
 
 

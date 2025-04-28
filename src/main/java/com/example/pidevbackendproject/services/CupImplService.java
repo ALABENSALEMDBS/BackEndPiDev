@@ -262,8 +262,8 @@ public class CupImplService {
 
 
     /// todo badelha
-    public Set<Clubs> ClubsOfCompetition(int idCompetition) {
-        List<Matchs> ListMatchs = matchsRepo.MatchsOfCompetition(idCompetition);
+    public Set<Clubs> ClubsOfCup(int idCup) {
+        List<Matchs> ListMatchs = matchsRepo.matchsOfCup(idCup);
         Set<Clubs> participatedClubs = new HashSet<>();
         for (Matchs match : ListMatchs) {
             Clubs club1 = match.getClub1();
