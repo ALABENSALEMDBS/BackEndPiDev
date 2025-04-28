@@ -11,4 +11,10 @@ public interface IExercicesService {
     Exercices modifyExercices(int idExercice,Exercices exercice);
     List<Exercices> getAllExercices();
     Exercices getExercicesById(int idExercice);
+    List<Exercices> findBySeanceExerciceIdSeance(int seanceId);
+    List<Exercices> findBySeanceExercice_IdSeance(int idSeance);
+    List<Exercices> findExercicesWithNoSeance();
+    List<Exercices> findExercicesAssignedToOtherSeances( int idSeance);
+    List<Exercices> findAvailableExercices( int idSeance);
+    public List<Exercices> getCompatibleExercisesForSeance(int seanceId);
 }

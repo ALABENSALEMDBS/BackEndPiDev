@@ -49,8 +49,20 @@ public class SeancesRestController {
 
     }
     @Operation(description = "affecter un exercice a seance")
-    @PostMapping("/affecter-exerciseaseance/{seances-id}/{Exercice-id}")
-    public void affecterexerciseaseance(@PathVariable("seances-id") int idSeances,@PathVariable("Exercice-id") int idExercice) {
-         seancesService.affecterexerciseaseance(idExercice,idSeances);
+    @PostMapping("/affecter-exerciseaseance/{seances-id}/{exerciceIds}")
+    public void affecterexerciseaseance(@PathVariable("seances-id") int idSeances,@PathVariable("exerciceIds") List<Integer> exerciceIds) {
+        seancesService.affecterMultipleExercisesToSeance(idSeances,exerciceIds);
     }
+    @Operation(description = "Supprimer Sous Groupes by ID")
+    @GetMapping("/findSousGroupesJoueurs/{idExercice}")
+    public List<Seances> findSousGroupesJoueurs(@PathVariable("idExercice") int idExercice) {
+        return  seancesService.findSousGroupesJoueurs(idExercice);
+    }
+
+    @Operation(description = "Supprimer Sous Groupes by ID")
+    @PostMapping("/desafecterMultipleExercisesToSeance/{idExercice}/{idSeance}")
+    public void desafecterMultipleExercisesToSeance(@PathVariable("idExercice") int idExercice,@PathVariable("idSeance") int idSeance) {
+        seancesService.desafecterMultipleExercisesToSeance(idExercice,idSeance);
+    }
+
 }

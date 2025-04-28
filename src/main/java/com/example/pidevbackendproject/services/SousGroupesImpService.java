@@ -90,5 +90,15 @@ public class SousGroupesImpService implements ISousGroupesService {
             e.printStackTrace(); // ou logger proprement
         }
     }
+    public List<SousGroupes> findSousGroupestitleSeance(String titleSeance) {
+        return sousGroupesRepo.findSousGroupestitleSeance(titleSeance);
+    }
 
+
+
+
+
+    public List<SousGroupes> findSousGroupesidExercice(int idExercice) {
+        return sousGroupesRepo.findSousGroupesidExercice(idExercice);
+    }
 }
