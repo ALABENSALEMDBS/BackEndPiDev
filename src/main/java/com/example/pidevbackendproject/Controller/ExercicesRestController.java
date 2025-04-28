@@ -48,4 +48,38 @@ public class ExercicesRestController {
         Exercices exercice= exercicesService.modifyExercices(idExercices,ex);
         return exercice;
     }
+    @Operation(description = "Modifer Exercices")
+    @GetMapping("/findBySeanceExerciceIdSeance/{seanceId}")
+    public List<Exercices> findBySeanceExerciceIdSeance(@PathVariable("seanceId") int seanceId){
+        return exercicesService.findBySeanceExerciceIdSeance(seanceId);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    @Operation(description = "Modifer Exercices")
+    @GetMapping("/findBySeanceExercice_IdSeance/{seanceId}")
+    public List<Exercices> findBySeanceExercice_IdSeance(@PathVariable("seanceId") int seanceId){
+        return exercicesService.findBySeanceExercice_IdSeance(seanceId);
+    }
+    @Operation(description = "Modifer Exercices")
+    @GetMapping("/findExercicesWithNoSeance")
+    public List<Exercices> findExercicesWithNoSeance(){
+        return exercicesService.findExercicesWithNoSeance();
+    }
+    @Operation(description = "Modifer Exercices")
+    @GetMapping("/findExercicesAssignedToOtherSeances/{seanceId}")
+    public List<Exercices> findExercicesAssignedToOtherSeances(@PathVariable("seanceId") int seanceId){
+        return exercicesService.findExercicesAssignedToOtherSeances(seanceId);
+    }
+    @Operation(description = "Modifer Exercices")
+    @GetMapping("/findAvailableExercices/{seanceId}")
+    public List<Exercices> findAvailableExercices(@PathVariable("seanceId") int seanceId){
+        return exercicesService.findAvailableExercices(seanceId);
+    }
+
+
+    @GetMapping("/compatible/{seanceId}")
+    public List<Exercices> getCompatibleExercices(@PathVariable int seanceId) {
+        return exercicesService.getCompatibleExercisesForSeance(seanceId);
+    }
 }

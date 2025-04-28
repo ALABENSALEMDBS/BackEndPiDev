@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -34,12 +35,16 @@ public class Rapports {
     Long balance;       // Stability
     Long coordination;  //Efficient synchronization of body movements.
     Long reactionTime;  // Time to respond
-    Long reactivity;    // Adjusting movements
-    String etatRapport;
-    String blessureRapport;
-    @JsonIgnore
+    Long reactivity;
+    @Enumerated(EnumType.STRING)
+    etatplayer etatRapport;
+    LocalDate dateRapport;
     @ManyToOne
-    Joueurs joueurrapport;
+    SousGroupes sousGroupesrapport;
+    @ManyToOne
+    Seances seancesrapport;
+    @ManyToOne
+    Joueurs joueursrapport;
     @JsonIgnore
     @OneToMany(mappedBy = "rapportExerciceRetablissement")
     Set<ExerciceRetablissements> exerciceRetablissements;
