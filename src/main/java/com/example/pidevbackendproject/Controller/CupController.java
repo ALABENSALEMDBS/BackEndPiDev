@@ -29,6 +29,7 @@ public class CupController {
     private final CupImplService cupService;
     MatchsRepo matchsRepo;
 
+
     @PostMapping("/createCup")
     public ResponseEntity<String> createCup(@RequestBody Map<String, Object> requestData) {
         String name = (String) requestData.get("name");
@@ -36,10 +37,12 @@ public class CupController {
         return cupService.generateInitialMatches(name, clubIds);
     }
 
+
     @PostMapping("/next-round/{cupId}")
     public ResponseEntity<String> generateNextRound(@PathVariable Integer cupId) {
         return cupService.generateNextRoundMatches(cupId);
     }
+
 
     /*@GetMapping("/getParticipatingClubs/{idCup}")
     public ResponseEntity<List<Matchs>> getMatchsOfCup(@PathVariable int idCup) {
@@ -68,7 +71,7 @@ public class CupController {
     @GetMapping("/getAllCups")
     public ResponseEntity<List<Cup>> getAllCups() {
         List<Cup> cups = cupRepo.findAll();
-        return ResponseEntity.ok().body(cups); // Assure que le corps est bien JSON
+        return ResponseEntity.ok().body(cups);
     }
 
 
@@ -84,7 +87,7 @@ public class CupController {
             return ResponseEntity.badRequest().body(null);
         }
 
-        // Group by round name
+
         Map<String, List<Matchs>> grouped = allMatches.stream()
                 .filter(m -> m.getRoundName() != null)
                 .collect(Collectors.groupingBy(Matchs::getRoundName));
@@ -136,20 +139,7 @@ public class CupController {
         //List<String> clubsName = partClubs.stream().map(Clubs::getNameClub).toList();
         return ResponseEntity.ok(partClubs);
     }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 }
 
 

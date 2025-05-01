@@ -176,6 +176,90 @@ public class CupImplService {
 
 
     public ResponseEntity<String> generateNextRoundMatches(Integer cupId) {
+        Cup cup = cupRepo.findById(cupId)
+                .orElseThrow(() -> new RuntimeException("Cup not found"));
+
+        //tchouf completed ones
+        List<Matchs> allMatches = cup.getMatchs();
+        if (allMatches == null || allMatches.isEmpty()) {
+            return ResponseEntity.badRequest().body("No matches found for this cup.");
+        }
+
+        //Group matches by round
+        Map<String, List<Matchs>> roundMap = allMatches.stream()
+                .filter(m -> m.getWinner() != null && m.getRoundName() != null)
+                .collect(Collectors.groupingBy(Matchs::getRoundName));
+
+        // e5er round based on number of matches
+        String latestRound = roundMap.keySet().stream()
+                .sorted(Comparator.comparingInt(name -> roundMap.get(name).size()).reversed())
+                .findFirst()
+                .orElse(null);
+
+        if (latestRound == null) {
+            return ResponseEntity.badRequest().body("Could not determine the latest round.");
+        }
+
+        List<Matchs> latestRoundMatches=roundMap.get(latestRound);
+        if (latestRoundMatches == null || latestRoundMatches.size() == 0) {
+            return ResponseEntity.badRequest().body("No matches found in the latest round.");
+        }
+
+        //3dad l'equipet lezmhom ykounou pow 2
+        int currentRoundSize = latestRoundMatches.size();
+        if ((currentRoundSize & (currentRoundSize - 1)) != 0) {
+            return ResponseEntity.badRequest().body("Current round size is not a power of 2.");
+        }
+
+        //ne5ou ken winners
+        List<Clubs> winners=latestRoundMatches.stream()
+                .map(Matchs::getWinner)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        if (winners.size() <= 1) {
+            return ResponseEntity.badRequest().body("Tournament is already complete.");
+        }
+
+        //5allet lwinners
+        Collections.shuffle(winners);
+
+        //next round aalreday generated wela le
+        if (allMatches.stream().anyMatch(m -> m.getRoundName().equals(getRoundName(winners.size())))) {
+            return ResponseEntity.badRequest().body("Next round has already been generated.");
+        }
+
+        // Step 8: Generate next round matches
+        String nextRound=getRoundName(winners.size());
+
+        for (int i = 0; i < winners.size(); i += 2) {
+            Clubs club1= winners.get(i);
+            Clubs club2 =winners.get(i + 1);
+
+            Matchs match = Matchs.builder()
+                    .club1(club1)
+                    .club2(club2)
+                    .roundName(nextRound)
+                    .cup(cup)
+                    .dateMatch(null)
+                    .goals1(null)
+                    .goals2(null)
+                    .resultatMatch(null)
+                    .arbitre(null)
+                    .typeMatch(null)
+                    .winner(null)
+                    .statusMatch(null) // Add status logic if needed
+                    .lieuMatch(null)
+                    .build();
+            matchsRepo.save(match);
+        }
+        return ResponseEntity.ok("Next round generated: " + nextRound);
+    }
+
+
+
+    /*
+        public ResponseEntity<String> generateNextRoundMatches(Integer cupId) {
         // Step 1: Retrieve the Cup
         Cup cup = cupRepo.findById(cupId)
                 .orElseThrow(() -> new RuntimeException("Cup not found"));
@@ -258,6 +342,11 @@ public class CupImplService {
 
         return ResponseEntity.ok("Next round generated: " + nextRound);
     }
+     */
+
+
+
+
 
 
 

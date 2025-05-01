@@ -1,10 +1,13 @@
 package com.example.pidevbackendproject.services;
 
+import com.example.pidevbackendproject.Config.FileStorageService;
 import com.example.pidevbackendproject.entities.Clubs;
 import com.example.pidevbackendproject.repositories.ClubsRepo;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -12,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ClubsImpService implements IClubsServise {
     ClubsRepo clubsRepo;
+    FileStorageService fileStorageService;
 
     public Clubs addClubs(Clubs club) {
         return clubsRepo.save(club);
@@ -20,6 +24,7 @@ public class ClubsImpService implements IClubsServise {
     public void deleteClubs(int idClub) {
         clubsRepo.deleteById(idClub);
     }
+
 
 
 
@@ -48,5 +53,13 @@ public class ClubsImpService implements IClubsServise {
 
     public Clubs getClubsById(int idClub) {
         return clubsRepo.findById(idClub).get();
+    }
+
+    public void uploadPostPicture(MultipartFile file, Integer postId){
+        Clubs post=clubsRepo.findById(postId)
+                .orElseThrow(()->new EntityNotFoundException("No post found with ID : "+postId));
+        var profilePicture=fileStorageService.saveFile(file);
+        post.setMediaUrl(profilePicture);
+        clubsRepo.save(post);
     }
 }

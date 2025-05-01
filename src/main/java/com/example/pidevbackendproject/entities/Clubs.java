@@ -26,6 +26,7 @@ public class Clubs {
     String adressClub;
     Date dateClub;
     int licenceClub;
+    String mediaUrl;
 
     @Lob
     @Column(length = 100000)
@@ -56,10 +57,6 @@ public class Clubs {
     @JsonIgnore
     @OneToMany (mappedBy = "club")
     Set<Users> users = new HashSet<>();
-
-    /*@JsonIgnore
-    @ManyToOne
-    Matchs matchClub;*/
 
     @JsonIgnore
     @OneToMany(mappedBy = "club1")
