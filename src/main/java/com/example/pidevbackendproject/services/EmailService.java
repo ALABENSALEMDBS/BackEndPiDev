@@ -31,9 +31,9 @@ public class EmailService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-            helper.setFrom("abbessawssen23@gmail.com");
+            helper.setFrom("rifaesprit@gmail.com");
             helper.setTo(to);
-            helper.setSubject("Notification : VOUS AVEZ UN EXERCICE");
+            helper.setSubject("Notification : VOUS AVEZ UNE NOTIFICATION ");
             helper.setText(htmlBody, true); // true = interpréter comme HTML
 
             mailSender.send(message);

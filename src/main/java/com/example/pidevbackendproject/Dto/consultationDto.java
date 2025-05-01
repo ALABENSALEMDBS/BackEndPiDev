@@ -10,16 +10,18 @@ import java.time.LocalDateTime;
 @Setter
 public class consultationDto {
 
-    Integer joueurId;
+    Integer idUser;
     String joueurFullName;
     LocalDateTime dateConsultation;
     Long id;
+    String description;
 
-    public  consultationDto(Long id ,LocalDateTime dateConsultation,String joueurFullName,Integer joueurId){
+    public  consultationDto(Long id ,LocalDateTime dateConsultation,String description,String joueurFullName,Integer joueurId){
         this.joueurFullName = joueurFullName;
         this.dateConsultation=dateConsultation;
         this.id=id;
-        this.joueurId = joueurId;
+        this.idUser = joueurId;
+        this.description=description;
 
     }
 }

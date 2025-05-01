@@ -75,6 +75,8 @@ public class FicheMedicalesImpService implements IFicheMedicalesService {
     }
 
     public FicheMedicales modifyFicheMedicales(FicheMedicales ficheMedicale) {
+
+
         return ficheMedicalesRepo.save(ficheMedicale);
     }
 
@@ -149,6 +151,7 @@ public class FicheMedicalesImpService implements IFicheMedicalesService {
 
         emailService.sendMail(joueur.getEmailUser(), html);
     }
+
 
 
 
