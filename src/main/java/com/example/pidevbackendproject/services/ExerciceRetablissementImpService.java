@@ -2,9 +2,13 @@ package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.ExerciceRetablissements;
 import com.example.pidevbackendproject.repositories.ExerciceRetablissementsRepo;
+
 import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
+
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -31,4 +35,6 @@ public class ExerciceRetablissementImpService implements IExerciceRetablissement
     public ExerciceRetablissements getExerciceRetablissementsById(int idExerciceRetablissement) {
         return exerciceRetablissementsRepo.findById(idExerciceRetablissement).get();
     }
+
+
 }

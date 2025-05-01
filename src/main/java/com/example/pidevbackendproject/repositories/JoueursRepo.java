@@ -1,6 +1,7 @@
 package com.example.pidevbackendproject.repositories;
 
 import com.example.pidevbackendproject.entities.Joueurs;
+import org.apache.catalina.User;
 import com.example.pidevbackendproject.entities.Rapports;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -36,6 +37,13 @@ public interface JoueursRepo extends JpaRepository<Joueurs, Integer>{
 
     @Query("SELECT j FROM Joueurs j WHERE j.ficheMedicale IS NULL")
     List<Joueurs> findJoueursWithoutFicheMedicale();
+    // Joueurs findByRapportIdRapport(int rapportId);
+
+    Optional<Joueurs> getByIdUser(int idUser);
+
+
+    // @Query("SELECT u FROM Users u JOIN u.nameUsers p  WHERE u.club.nameClub = :clubName")
+   // List<User> findUsersWithPlayerByClubName(@Param("clubName") String clubName);
 
     Joueurs findByPosteJoueurAndNumeroJoueur(String poste, int numero);
 

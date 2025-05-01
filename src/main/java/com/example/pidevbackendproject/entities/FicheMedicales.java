@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -31,4 +32,10 @@ public class FicheMedicales {
     @JsonIgnore
 //    @JoinColumn(name = "joueur_id")
     Joueurs joueurficheMedicale;
+
+   // @JsonIgnore
+   @ManyToOne
+    @JsonIgnore
+    ExerciceRetablissements exerciceRetablissements;
+
 }

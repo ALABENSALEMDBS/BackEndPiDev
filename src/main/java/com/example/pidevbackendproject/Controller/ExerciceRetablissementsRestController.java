@@ -4,8 +4,12 @@ import com.example.pidevbackendproject.services.IExerciceRetablissementsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Gestion Exercice de Retablissement")
@@ -50,4 +54,18 @@ public class ExerciceRetablissementsRestController {
         ExerciceRetablissements exerciceRetablissement= exerciceRetablissementsService.modifyExerciceRetablissements(er);
         return exerciceRetablissement;
     }
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResponseEntity.status(400).body("Le fichier est vide.");
+        }
+
+        // Traitez le fichier ici
+        // Par exemple, sauvegardez-le sur le serveur ou analysez-le.
+
+        return ResponseEntity.ok("Fichier téléchargé avec succès : " + file.getOriginalFilename());
+    }
+
+
 }

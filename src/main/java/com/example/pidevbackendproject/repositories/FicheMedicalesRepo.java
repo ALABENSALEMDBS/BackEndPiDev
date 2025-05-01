@@ -12,8 +12,14 @@ import java.util.List;
 public interface FicheMedicalesRepo extends JpaRepository<FicheMedicales, Integer> {
     @Query("SELECT new com.example.pidevbackendproject.Dto.ficheMedicaleDto( " +
             "f.idFicheMedicale, f.poidsFicheMedicale, f.tailleFicheMedicale, f.dateBlessure, " +
-            "f.gravite, f.type, j.idUser, CONCAT(COALESCE(j.prenomUser, ''), ' ', COALESCE(j.nameUsers, ''))) " +
+            "f.gravite, f.type,e.idExerciceRetablissement,e.nomExerciceRetablissement , j.idUser, CONCAT(COALESCE(j.prenomUser, ''), ' ', COALESCE(j.nameUsers, '')))" +
             "FROM FicheMedicales f " +
-            "LEFT JOIN f.joueurficheMedicale j") // Ensure this matches the entity field
+            "LEFT JOIN f.joueurficheMedicale j left join  f.exerciceRetablissements e") // Ensure this matches the entity field
     List<ficheMedicaleDto> findAllWithJoueurFullName();
+
+
+
+    @Query("select gravite,count (*)as Countofinjuredplayres from FicheMedicales group by gravite")
+    List<Object[]> countInjuredPlayersByGravite();
+
 }

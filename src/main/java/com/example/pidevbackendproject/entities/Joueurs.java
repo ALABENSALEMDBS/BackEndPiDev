@@ -47,4 +47,8 @@ public class Joueurs extends Users {
     @ManyToOne
     SousGroupes sousGroupe;
 
+    @OneToMany(mappedBy = "joueur")
+    @JsonIgnore
+    Set<Consultation> consultations=new HashSet<>();
+
 }

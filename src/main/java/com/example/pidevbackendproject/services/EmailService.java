@@ -69,4 +69,20 @@ public class EmailService {
                 </html>
                 """.formatted(name, subgroupName);
     }
+    
+    public void sendMail(String to, String htmlBody) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom("rifaesprit@gmail.com");
+            helper.setTo(to);
+            helper.setSubject("Notification : VOUS AVEZ UNE NOTIFICATION ");
+            helper.setText(htmlBody, true); // true = interpréter comme HTML
+
+            mailSender.send(message);
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'envoi de l'email: " + e.getMessage());
+        }
+    }
 }

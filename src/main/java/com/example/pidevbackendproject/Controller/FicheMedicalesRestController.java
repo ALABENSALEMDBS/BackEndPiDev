@@ -22,19 +22,21 @@ public class FicheMedicalesRestController {
 
 
     //ubdate methode creation :
-    @PostMapping("/{name}/{prenom}")
+    @PostMapping("/{name}/{prenom}/{idexrcice}")
     public ResponseEntity<FicheMedicales> createFicheMedicale(
+            @PathVariable int idexrcice,
             @PathVariable String name,
             @PathVariable String prenom,
             @RequestBody FicheMedicales ficheMedicales) {
-        FicheMedicales createdFiche = ficheMedicalesService.createFicheMedicale(name, prenom, ficheMedicales);
+        FicheMedicales createdFiche = ficheMedicalesService.createFicheMedicale(idexrcice,name, prenom, ficheMedicales);
         return ResponseEntity.ok(createdFiche);
     }
 
     @Operation(description = "Ajouter une Fiche Medicale")
-    @PostMapping("/add-FicheMedicales/{idPlayer}")
-    public FicheMedicales addFicheMedicales(@RequestBody FicheMedicales fm, @PathVariable int idPlayer) {
-        return ficheMedicalesService.addFicheMedicales(fm, idPlayer);
+    @PostMapping("/add-FicheMedicales/{idPlayer}/{idexrcice}")
+    public FicheMedicales addFicheMedicales(@RequestBody FicheMedicales fm, @PathVariable int idPlayer,
+            @PathVariable int idexrcice) {
+        return ficheMedicalesService.addFicheMedicales(fm, idPlayer, idexrcice);
     }
 
    /* @PostMapping("/addfichebyplayer/{idPlayer}")
@@ -91,4 +93,13 @@ public class FicheMedicalesRestController {
         FicheMedicales ficheMedicale= ficheMedicalesService.modifyFicheMedicales(fm);
         return ficheMedicale;
     }
+
+    @GetMapping("/count-by-gravite")
+    public List<Object[]> getCountByGravite() {
+        return ficheMedicalesService.countInjuredPlayersByGravite();
+    }
+
 }
+
+
+
