@@ -4,6 +4,7 @@ import com.example.pidevbackendproject.entities.Joueurs;
 import com.example.pidevbackendproject.entities.SousGroupes;
 import com.example.pidevbackendproject.repositories.JoueursRepo;
 import com.example.pidevbackendproject.repositories.SousGroupesRepo;
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -72,13 +73,32 @@ public class SousGroupesImpService implements ISousGroupesService {
 //            throw new IllegalStateException("Le sous-groupe est déjà complet.");
     }
 
+//    private void sendEmail(Joueurs j, SousGroupes s){
+//        StringBuilder emailBody = new StringBuilder();
+//        emailBody.append("Hello ")
+//                .append(j.getNameUsers())
+//                .append("\nYou have been added to a new subgroup (")
+//                .append(s.getNameSousGroup())
+//                .append(")");
+//        emailService.sendMail(j.getEmailUser(), emailBody.toString());
+//    }
+
     private void sendEmail(Joueurs j, SousGroupes s){
-        StringBuilder emailBody = new StringBuilder();
-        emailBody.append("Hello ")
-                .append(j.getNameUsers())
-                .append("\nYou have been added to a new subgroup (")
-                .append(s.getNameSousGroup())
-                .append(")");
-        emailService.sendMail(j.getEmailUser(), emailBody.toString());
+        try {
+            emailService.sendMail(j.getEmailUser(), j.getNameUsers(), s.getNameSousGroup());
+        } catch (MessagingException e) {
+            e.printStackTrace(); // ou logger proprement
+        }
+    }
+    public List<SousGroupes> findSousGroupestitleSeance(String titleSeance) {
+        return sousGroupesRepo.findSousGroupestitleSeance(titleSeance);
+    }
+
+
+
+
+
+    public List<SousGroupes> findSousGroupesidExercice(int idExercice) {
+        return sousGroupesRepo.findSousGroupesidExercice(idExercice);
     }
 }

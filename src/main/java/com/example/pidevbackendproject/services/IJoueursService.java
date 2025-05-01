@@ -1,6 +1,8 @@
 package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Joueurs;
+import com.example.pidevbackendproject.entities.Rapports;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -11,9 +13,14 @@ public interface IJoueursService {
     List<Joueurs> getAllJoueurs();
     Joueurs getJoueursById(int numeroJoueur);
      List<Joueurs> getJoueurWithoutsousgroups();
+    Joueurs findJoueursByNumeroJoueur(int numeroJoueur);
+    Rapports findJoueursRapports(int idRapport, int numeroJoueur);
+    List<Rapports> findJoueursRapportsnumeroJoueurposteJoueur(int numeroJoueur,String posteJoueur);
+    List<Joueurs> findSousGroupesJoueurs(@Param("idExercice") int idExercice);
+    List<Joueurs> findJoueursBynameSousGroup(String nameSousGroup);
 
-
-    Joueurs getbyrapports(int idRapport );
     List<Joueurs> findJoueursWithoutFicheMedicale();
+
+    void maktitulaire(int joueurid);
 
 }

@@ -86,6 +86,12 @@ public class ClubRestController {
         return ResponseEntity.ok(clubList);
     }
 
+    /*@GetMapping("allClubs")
+    public ResponseEntity<List<Clubs> getClubByID() {
+        clubList = clubsRepo.findById(id);
+        return ResponseEntity.ok(clubList);
+    }*/
+
 
 
     @Operation(description = "Ajouter un Club")
@@ -109,17 +115,26 @@ public class ClubRestController {
         return club;
     }
 
+
     @Operation(description = "Supprimer club by ID")
     @DeleteMapping("/remove-club/{club-id}")
     public void deleteClubs(@PathVariable("club-id") int idClub) {
         clubsServise.deleteClubs(idClub);
     }
 
-    @Operation(description = "Modifer club")
-    @PutMapping("/modify-club")
-    public Clubs modifyClub(@RequestBody Clubs c) {
-        Clubs club= clubsServise.modifyClubs(c);
-        return club;
+
+    @PutMapping("/modify-club/{id}")
+    public ResponseEntity<?> updateClub(
+            @PathVariable Long id,
+            @RequestParam String nameClub,
+            @RequestParam String emailClub,
+            @RequestParam String adressClub,
+            @RequestParam String dateClub,
+            @RequestParam String licenceClub,
+            @RequestParam(required = false) MultipartFile logo
+    ) {
+        // Handle the update logic here
+        return ResponseEntity.ok().build();
     }
 }
 

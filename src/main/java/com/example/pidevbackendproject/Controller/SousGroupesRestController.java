@@ -53,7 +53,18 @@ public class SousGroupesRestController {
     public SousGroupes modifySousGroupes(@PathVariable ("idSousGroupes") int idSousGroupes, @RequestBody SousGroupes sg) {
         return sousGroupesService.modifySousGroupes(idSousGroupes, sg);
     }
+    @Operation(description = "Récupérer les Sous Groupes de la base de données by ID")
+    @GetMapping("/findSousGroupestitleSeance/{titleSeance}")
+    public List<SousGroupes> findSousGroupestitleSeance(@PathVariable("titleSeance") String titleSeance) {
+        return  sousGroupesService.findSousGroupestitleSeance(titleSeance);
 
+    }
+
+    @Operation(description = "Supprimer Sous Groupes by ID")
+    @GetMapping("/findSousGroupesidExercice/{idExercice}")
+    public List<SousGroupes> findSousGroupesidExercice(@PathVariable("idExercice") int idExercice) {
+        return sousGroupesService.findSousGroupesidExercice(idExercice);
+    }
     /*@Operation(description = "Affecter Sous Groupes")
     @PostMapping("/affecter-sousGroupesJoueur/{joueur-id}/{sousGroupes-id}")
     public void affecterJoueurASousGroup(@PathVariable("joueur-id") int numjoueur, @PathVariable("sousGroupes-id") int idSousGroupe) {

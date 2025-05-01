@@ -23,9 +23,9 @@ public class ExerciceRetablissements {
     String descriptionExerciceRetablissement;
     int dureeExercice;
     String niveauDifficulte ;
-    @JsonIgnore
-    @ManyToOne
-    Rapports rapportExerciceRetablissement;
+    // @JsonIgnore
+    // @ManyToOne
+    // Rapports rapportExerciceRetablissement;
 
     @ManyToOne
     Nourriture nourriture;

@@ -22,15 +22,18 @@ public class Joueurs extends Users {
     int numeroJoueur;
     LocalDate debutContratJoueur;
     LocalDate finContratJoueur;
+    boolean isTituliare;
 
 //    @JsonIgnore
 //    @ManyToOne
 //    Formations formation;
       @JsonIgnore
-      @ManyToMany(mappedBy = "joueurs")
-      Set<Formations> formations =new HashSet<>();
+          @ManyToMany(mappedBy = "joueurs")
+          Set<Formations> formations =new HashSet<>();
 
-//    @JsonIgnore
+
+
+    //    @JsonIgnore
 //    @OneToOne
 //    StatistiqueIndiv statistiqueIndiv;
        @JsonIgnore
@@ -43,9 +46,6 @@ public class Joueurs extends Users {
     @JsonIgnore
     @ManyToOne
     SousGroupes sousGroupe;
-    @JsonIgnore
-    @OneToMany(mappedBy = "joueurrapport")
-    Set<Rapports> rapport=new HashSet<>();
 
     @OneToMany(mappedBy = "joueur")
     @JsonIgnore

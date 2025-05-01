@@ -13,12 +13,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
 public class TournoisImpService implements ITournoisService {
+
     TournoisRepo tournoisRepo;
     MatchsRepo matchsRepo;
+
+
     public Tournois addTournois(Tournois tournoi) {
         return tournoisRepo.save(tournoi);
     }
@@ -61,6 +65,7 @@ public class TournoisImpService implements ITournoisService {
         return tournoisRepo.save(existingTournoi);
     }
 
+
     public List<Tournois> getAllTournois() {
         return tournoisRepo.findAll();
     }
@@ -69,10 +74,25 @@ public class TournoisImpService implements ITournoisService {
         return tournoisRepo.findById(idTournoi).get();
     }
 
-    public void affeterMatchATournois(int idMatch, int idTournoi) {
+    /*public void affeterMatchATournois(int idMatch, int idTournoi) {
         Matchs match = matchsRepo.findById(idMatch).get();
         Tournois tournoi = tournoisRepo.findById(idTournoi).get();
         match.setTournoi(tournoi);
         matchsRepo.save(match);
+    }*/
+
+
+    public void affeterMatchATournois(int idMatch, int idTournoi) {
+        Matchs match = matchsRepo.findById(idMatch).get();
+        Tournois tournoi = tournoisRepo.findById(idTournoi).get();
+        tournoi.getMatchesTournoi().add(match);
+
+        //Set<Matchs> listaa = tournoi.getMatchesTournoi();
+
+        tournoisRepo.save(tournoi);
     }
+
+
+
+
 }

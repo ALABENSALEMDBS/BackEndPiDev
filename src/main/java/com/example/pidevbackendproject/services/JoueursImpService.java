@@ -1,6 +1,7 @@
 package com.example.pidevbackendproject.services;
 
 import com.example.pidevbackendproject.entities.Joueurs;
+import com.example.pidevbackendproject.entities.Rapports;
 import com.example.pidevbackendproject.repositories.JoueursRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,10 +33,9 @@ public class JoueursImpService implements IJoueursService {
         return joueursRepo.findById(numeroJoueur).get();
     }
 
-    public Joueurs getbyrapports(int idRapport) {
-        return joueursRepo.findByRapportIdRapport(idRapport);
+    public List<Joueurs> findJoueursBynameSousGroup(String nameSousGroup) {
+        return joueursRepo.findJoueursBynameSousGroup(nameSousGroup);
     }
-
     public List<Joueurs> getJoueurWithoutsousgroups() {
 
         List<Joueurs> allJoueurs = joueursRepo.findAll();
@@ -44,5 +44,30 @@ public class JoueursImpService implements IJoueursService {
 
     public List<Joueurs> findJoueursWithoutFicheMedicale() {
         return joueursRepo.findJoueursWithoutFicheMedicale();
+    }
+
+    public void maktitulaire(int joueurid) {
+        Joueurs joueur = joueursRepo.findById(joueurid)
+                .orElseThrow(() -> new RuntimeException("Joueur not found"));
+        if (joueur.isTituliare()){
+            joueur.setTituliare(false);
+        }
+        else joueur.setTituliare(true);
+        joueursRepo.save(joueur);
+    }
+    public Joueurs findJoueursByNumeroJoueur(int numeroJoueur) {
+        return joueursRepo.findJoueursByNumeroJoueur(numeroJoueur);
+    }
+
+    public Rapports findJoueursRapports(int idRapport, int numeroJoueur ) {
+        return joueursRepo.findJoueursRapports(idRapport,numeroJoueur);
+    }
+
+    public List<Rapports> findJoueursRapportsnumeroJoueurposteJoueur( int numeroJoueur, String posteJoueur) {
+        return joueursRepo.findJoueursRapportsnumeroJoueurposteJoueur(numeroJoueur,posteJoueur);
+    }
+
+    public List<Joueurs> findSousGroupesJoueurs(int idExercice) {
+        return joueursRepo.findSousGroupesJoueurs(idExercice);
     }
 }

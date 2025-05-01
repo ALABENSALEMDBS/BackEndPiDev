@@ -20,6 +20,8 @@ public class Exercices {
     String descriptionExercice;
     String videoExercice;
     //String photoExercice;
+    @Enumerated(EnumType.STRING)
+    ExerciseType typeExercice;
     @ManyToOne
     SousGroupes sousGroupExercice;
     @ManyToOne

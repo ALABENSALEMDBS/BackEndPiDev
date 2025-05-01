@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 @Getter
 @Setter
@@ -37,23 +40,6 @@ public class Matchs {
     }
 
 
-    /*
-    public String winner(){
-        if ((goals1==null) || (goals2 == null)){
-            return "goals are not set yet";
-        }
-
-        if(resultatMatch!=null && resultatMatch.length()>=3){
-            if(  goals1>goals2 || (resultatMatch.charAt(0)>resultatMatch.charAt(2)) ){
-                return getClub1().getNameClub();
-            }
-            else if(  goals1<goals2 || (resultatMatch.charAt(0)<resultatMatch.charAt(2)) ){
-                return getClub2().getNameClub();
-            }
-            return "Draw";
-        }
-        return "result is not set yet";
-    }*/
 
 
     @ManyToOne
@@ -61,6 +47,7 @@ public class Matchs {
     private Clubs winner;
 
     public Clubs theWinner(){
+        winner=null;
         if ((goals1==null) || (goals2 == null)){
             return null;
         }
@@ -99,6 +86,17 @@ public class Matchs {
     @ManyToOne
     Tournois tournoi;
 
+
+
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "competition_id")
+    Competition competition;
+
+
+
+
     @JsonIgnore
     @OneToOne
     StatistiqueMatchs statistiqueMatches;
@@ -120,4 +118,14 @@ public class Matchs {
     @ManyToOne
     @JoinColumn(name = "club2_id")
     private Clubs club2;
+
+
+    @ManyToOne
+    @JoinColumn(name = "id_cup")
+    private Cup cup;
+
+
+    private String roundName;
+
+
 }
