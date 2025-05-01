@@ -95,8 +95,6 @@ public class Matchs {
     Competition competition;
 
 
-
-
     @JsonIgnore
     @OneToOne
     StatistiqueMatchs statistiqueMatches;
