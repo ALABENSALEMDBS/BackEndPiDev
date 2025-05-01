@@ -4,11 +4,16 @@ package com.example.pidevbackendproject.Controller;
 import com.example.pidevbackendproject.entities.Clubs;
 import com.example.pidevbackendproject.entities.Matchs;
 import com.example.pidevbackendproject.repositories.ClubsRepo;
+import com.example.pidevbackendproject.repositories.MatchsRepo;
+import com.example.pidevbackendproject.repositories.StandingsRepo;
+import com.example.pidevbackendproject.services.ClubsImpService;
 import com.example.pidevbackendproject.services.IClubsServise;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Tag(name = "Gestion Clubs")
@@ -23,7 +31,10 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/club")
 public class ClubRestController {
+    private final MatchsRepo matchsRepo;
     IClubsServise clubsServise;
+    ClubsImpService clubsImpService;
+    StandingsRepo standingsRepository;
 
     ClubsRepo clubsRepo;
 
@@ -119,6 +130,7 @@ public class ClubRestController {
     @Operation(description = "Supprimer club by ID")
     @DeleteMapping("/remove-club/{club-id}")
     public void deleteClubs(@PathVariable("club-id") int idClub) {
+        //standingsRepository.deleteByClubId(idClub);
         clubsServise.deleteClubs(idClub);
     }
 
@@ -135,6 +147,94 @@ public class ClubRestController {
     ) {
         // Handle the update logic here
         return ResponseEntity.ok().build();
+    }
+
+
+
+
+
+    /*@PutMapping(value = "updateClub/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Clubs> updateClub(
+            @PathVariable("id") Integer clubId,
+            @RequestPart("club") String clubJson,
+            @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+
+        Clubs existingClub = clubsRepo.findById(clubId)
+                .orElseThrow(() -> new RuntimeException("Club not found with id: " + clubId));
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Clubs updatedData = objectMapper.readValue(clubJson, Clubs.class);
+
+        existingClub.setNameClub(updatedData.getNameClub());
+        existingClub.setEmailClub(updatedData.getEmailClub());
+        existingClub.setAdressClub(updatedData.getAdressClub());
+        existingClub.setDateClub(updatedData.getDateClub());
+        existingClub.setLicenceClub(updatedData.getLicenceClub());
+
+        if (file != null && !file.isEmpty()) {
+            existingClub.setLogo(file.getBytes());
+        }
+
+        Clubs updatedClub = clubsRepo.save(existingClub);
+
+        return ResponseEntity.ok(updatedClub);
+    }*/
+
+
+
+
+    @PutMapping("/updateClub/{id}")
+    public ResponseEntity<Clubs> updateClub(
+            @PathVariable("id") Integer id,
+            @RequestBody Clubs updatedClub) {
+
+        Clubs existingClub = clubsRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Club not found"));
+
+        existingClub.setNameClub(updatedClub.getNameClub());
+        existingClub.setEmailClub(updatedClub.getEmailClub());
+        existingClub.setAdressClub(updatedClub.getAdressClub());
+        existingClub.setDateClub(updatedClub.getDateClub());
+        existingClub.setLicenceClub(updatedClub.getLicenceClub());
+
+        Clubs savedClub = clubsRepo.save(existingClub);
+
+        return ResponseEntity.ok(savedClub);
+    }
+
+
+
+
+
+
+
+
+
+
+
+    @PostMapping(value = "/picture/{post-id}",consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadPostCoverPicture(
+            @PathVariable("post-id") Integer postId,
+            @Parameter()
+            @RequestPart("file") MultipartFile file
+
+    ){
+        clubsImpService.uploadPostPicture(file,postId);
+        return ResponseEntity.accepted().build();
+    }
+    @GetMapping("/uploads/{filename}")
+    public ResponseEntity<byte[]> getImage(@PathVariable("filename") String filename) {
+        try {
+            Path imagePath = Paths.get("uploadss", filename);
+            byte[] imageBytes = Files.readAllBytes(imagePath);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
 

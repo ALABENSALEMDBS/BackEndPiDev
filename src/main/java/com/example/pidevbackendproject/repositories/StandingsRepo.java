@@ -12,4 +12,6 @@ public interface StandingsRepo extends JpaRepository<Standings, Integer> {
     Standings findByClub(Clubs club);
 
     Optional<Standings> findByClubAndCompetition(Clubs club, Competition competition);
+
+    
 }
