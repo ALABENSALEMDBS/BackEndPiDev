@@ -39,7 +39,7 @@ public class CupImplService {
         };
     }*/
 
-    public String getRoundName(int teamNumber) {
+    /*public String getRoundName(int teamNumber) {
         return switch (teamNumber) {
             case 2 -> "Final";
             case 4 -> "Semi-Final";
@@ -47,7 +47,21 @@ public class CupImplService {
             case 16 -> "Round of 16";
             default -> "Round of " + teamNumber;
         };
+    }*/
+
+    private String getRoundName(int numWinners) {
+        switch (numWinners) {
+            case 2: return "Final";
+            case 4: return "Semi-Final";
+            case 8: return "Quarter-Final";
+            case 16: return "Round of 16";
+            case 32: return "Round of 32";
+            // Add more if needed
+            default:
+                throw new IllegalArgumentException("Unsupported number of winners: " + numWinners);
+        }
     }
+
 
 
 
@@ -58,6 +72,91 @@ public class CupImplService {
             "Round of 16", 4
             // Add more rounds here if needed
     );
+
+
+    public ResponseEntity<Map<String, String>> generateNextRoundMatches(Integer cupId) {
+        Cup cup = cupRepo.findById(cupId)
+                .orElseThrow(() -> new RuntimeException("Cup not found"));
+
+        List<Matchs> allMatches = cup.getMatchs();
+        if (allMatches == null || allMatches.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "No matches found for this cup."));
+        }
+
+        // Group matches by round name where result and winner are set
+        Map<String, List<Matchs>> roundMap = allMatches.stream()
+                .filter(m -> m.getResultatMatch() != null && m.getWinner() != null && m.getRoundName() != null)
+                .collect(Collectors.groupingBy(Matchs::getRoundName));
+
+        // Get the latest round by order using ROUND_ORDER map
+        String latestRound = roundMap.keySet().stream()
+                .min(Comparator.comparingInt(r -> ROUND_ORDER.getOrDefault(r, Integer.MAX_VALUE)))
+                .orElse(null);
+
+        if (latestRound == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Could not determine the latest completed round."));
+        }
+
+        List<Matchs> latestRoundMatches = roundMap.get(latestRound);
+        if (latestRoundMatches == null || latestRoundMatches.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "No valid matches in the latest round."));
+        }
+
+        // Collect winners only from the latest completed round
+        List<Clubs> winners = latestRoundMatches.stream()
+                .map(Matchs::getWinner)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        if (winners.size() <= 1) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Tournament is already complete."));
+        }
+
+        // Determine next round name
+        String nextRound;
+        try {
+            nextRound = getRoundName(winners.size());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+
+        // Check if next round already exists
+        boolean nextRoundExists = allMatches.stream()
+                .anyMatch(m -> nextRound.equalsIgnoreCase(m.getRoundName()));
+
+        if (nextRoundExists) {
+            return ResponseEntity.badRequest().body(Map.of("error", nextRound + " has already been generated."));
+        }
+
+        // Shuffle and create matches
+        Collections.shuffle(winners);
+
+        for (int i = 0; i < winners.size(); i += 2) {
+            Matchs match = Matchs.builder()
+                    .club1(winners.get(i))
+                    .club2(winners.get(i + 1))
+                    .roundName(nextRound)
+                    .cup(cup)
+                    .dateMatch(null)
+                    .goals1(null)
+                    .goals2(null)
+                    .resultatMatch(null)
+                    .arbitre(null)
+                    .typeMatch(null)
+                    .winner(null)
+                    .statusMatch(null)
+                    .lieuMatch(null)
+                    .build();
+            matchsRepo.save(match);
+        }
+
+        return ResponseEntity.ok(Map.of("message", "Next round generated: " + nextRound));
+    }
+
+
+
+
+
 
 
 
@@ -143,7 +242,7 @@ public class CupImplService {
     }*/
 
 
-    public ResponseEntity<Map<String, String>> generateNextRoundMatches(Integer cupId) {
+    /*public ResponseEntity<Map<String, String>> generateNextRoundMatches(Integer cupId) {
         Cup cup = cupRepo.findById(cupId)
                 .orElseThrow(() -> new RuntimeException("Cup not found"));
 
@@ -253,11 +352,14 @@ public class CupImplService {
         }
 
         return ResponseEntity.ok(Map.of("message", "Next round generated: " + nextRound));
-    }
+    }*/
 
 
 
 
+
+
+//hedhi arja3
     /*public ResponseEntity<Map<String, String>> generateNextRoundMatches(Integer cupId) {
         Cup cup = cupRepo.findById(cupId)
                 .orElseThrow(() -> new RuntimeException("Cup not found"));
