@@ -28,6 +28,7 @@ public interface ExercicesRepo extends JpaRepository<Exercices, Integer> {
     // Find all exercises except those assigned to other sessions
     @Query("SELECT e FROM Exercices e WHERE e.seanceExercice IS NULL OR e.seanceExercice.idSeance = :idSeance")
     List<Exercices> findAvailableExercices(@Param("idSeance") int idSeance);
+
     List<Exercices> findByTypeExercice(ExerciseType typeExercice);
 
 }
