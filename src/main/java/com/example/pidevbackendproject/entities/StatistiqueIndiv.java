@@ -19,7 +19,7 @@ public class StatistiqueIndiv {
 
     // Vitesse et endurance
     Float vitesseStatistiqueIndiv;
-    String endurenceStatistiqueIndiv;
+    int endurenceStatistiqueIndiv;
 
     // Statistiques offensives
     int buts;

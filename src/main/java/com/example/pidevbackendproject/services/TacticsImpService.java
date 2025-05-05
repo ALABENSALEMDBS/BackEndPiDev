@@ -39,7 +39,7 @@ public class TacticsImpService implements ITacticsService {
     public Tactics addTacticAndAssignTacticToFormation(Tactics tactic, int idFormation) {
         Formations formation = formationsRepo.findById(idFormation).get();
         // Vérifie si la formation contient 11 joueurs
-        if (formation.getJoueurs().size() == 11) {
+        if (formation.getJoueurs().size() >= 11) {
             tactic.setFormation(formation);
             tacticsRepo.save(tactic);
             return tactic;
