@@ -87,20 +87,6 @@ public class CompetitionController {
     }
 
 
-    /*@PostMapping("/{idCompetition}/affecter-match/{idMatch}")
-    public ResponseEntity<String> affecterMatchACompetition(@PathVariable int idCompetition, @PathVariable int idMatch) {
-        competitionServise.assignMatchToCompetition(idMatch, idCompetition);
-        return ResponseEntity.ok("Match assigned to competition " + idCompetition);
-    }*/
-
-
-    /*@GetMapping("/getMatchsOfCompetition/{idCompetition}")
-    public ResponseEntity<List<Matchs>> getMatchsOfCompetition(@PathVariable int idCompetition) {
-        //return matchsRepo.MatchsOfCompetition(idCompetition);
-        return ResponseEntity.ok(matchsRepo.MatchsOfCompetition(idCompetition));
-    }*/
-
-
     @GetMapping("/getMatchsOfCompetition/{idCompetition}")
     public ResponseEntity<List<Matchs>> getMatchsOfCompetition(@PathVariable int idCompetition) {
         //return matchsRepo.MatchsOfCompetition(idCompetition);

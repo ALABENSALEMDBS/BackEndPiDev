@@ -1,10 +1,9 @@
 package com.example.pidevbackendproject.Controller;
 
 import com.example.pidevbackendproject.entities.Clubs;
+import com.example.pidevbackendproject.entities.Competition;
 import com.example.pidevbackendproject.entities.Matchs;
-import com.example.pidevbackendproject.repositories.ClubsRepo;
-import com.example.pidevbackendproject.repositories.MatchsRepo;
-import com.example.pidevbackendproject.repositories.UsersRepo;
+import com.example.pidevbackendproject.repositories.*;
 import com.example.pidevbackendproject.services.IMatchsService;
 import com.example.pidevbackendproject.services.MatchsImpService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +33,9 @@ public class MatchsRestController {
     private final ClubsRepo clubsRepo;
     IMatchsService matchsService;
     private final MatchsImpService matchsImpService;
+    private final CompetitionRepo competitionRepo;
+
+    private final CupRepo cupRepo;
 
 
 
@@ -371,6 +373,106 @@ public class MatchsRestController {
 
 
 
+    @GetMapping("/totalMatchs")
+    public Long totalNumOfMatchs(){
+        return matchsRepo.findAll().stream().count();
+    }
+
+    @GetMapping("/totalCompetition")
+    public Long totalNumOfCompetitions(){
+        return competitionRepo.findAll().stream().count();
+    }
+
+    @GetMapping("/totalCups")
+    public Long totalNumsOfCups(){
+        return cupRepo.findAll().stream().count();
+    }
+
+    private Long numOfTotalMatches(){
+        return matchsRepo.findAll().stream().count();
+    }
+
+
+    /*@GetMapping("/pourcentageOfTotalPlayedMatches")
+    public Long pourcentageOfTotalPlayedMatches(){
+        return matchsRepo.totalPlayedMatchs()/matchsRepo.findAll().stream().count()*100;
+    }*/
+
+
+    @GetMapping("/pourcentageOfTotalNotPlayedMatches")
+    public Long pourcentageOfTotalNotPlayedMatches() {
+        long totalMatches = matchsRepo.findAll().stream().count();
+        long notPlayed = matchsRepo.totalNotPlayedMatchs();
+        if (totalMatches == 0) return 0L; // avoid division by zero
+        double percentage = ((double) notPlayed / totalMatches) * 100;
+        return Math.round(percentage);
+    }
+    @GetMapping("/pourcentageOfTotalPlayedMatches")
+    public Long pourcentageOfTotalPlayedMatches() {
+        long totalMatches = matchsRepo.findAll().stream().count();
+        long notPlayed = matchsRepo.totalPlayedMatchs();
+        if (totalMatches == 0) return 0L; // avoid division by zero
+        double percentage = ((double) notPlayed / totalMatches) * 100;
+        return Math.round(percentage);
+    }
+
+
+    @GetMapping("/pourcentageOfWinsFriendly")
+    public Long pourcentageOfWinsFriendlyMatches() {
+        long totalMatches = matchsRepo.totalFriendlyMatches();
+        long notPlayed = matchsRepo.totalWinsForFriendlyMatches();
+        if (totalMatches == 0) return 0L; // avoid division by zero
+        double percentage = ((double) notPlayed / totalMatches) * 100;
+        return Math.round(percentage);
+    }
+    @GetMapping("/pourcentageOfDrawsFriendly")
+    public Long pourcentageOfDrawFriendlyMatches() {
+        long totalMatches = matchsRepo.totalFriendlyMatches();
+        long notPlayed = matchsRepo.totalDrawsForFriendlyMatches();
+        if (totalMatches == 0) return 0L; // avoid division by zero
+        double percentage = ((double) notPlayed / totalMatches) * 100;
+        return Math.round(percentage);
+    }
+
+
+
+
+    @GetMapping("/pourcentageOfWinsCompetitions")
+    public Long pourcentageOfWinsCompetitions() {
+        long totalMatches = matchsRepo.totalCompetition();
+        long notPlayed = matchsRepo.totalWinsForCompetitions();
+        if (totalMatches == 0) return 0L; // avoid division by zero
+        double percentage = ((double) notPlayed / totalMatches) * 100;
+        return Math.round(percentage);
+    }
+    @GetMapping("/pourcentageOfDrawCompetitions")
+    public Long pourcentageOfDrawCompetitions() {
+        long totalMatches = matchsRepo.totalCompetition();
+        long notPlayed = matchsRepo.totalDrawsForCompetitions();
+        if (totalMatches == 0) return 0L; // avoid division by zero
+        double percentage = ((double) notPlayed / totalMatches) * 100;
+        return Math.round(percentage);
+    }
+
+
+
+
+    @GetMapping("/pourcentageOfWinsCups")
+    public Long pourcentageOfWinsCups() {
+        long totalMatches = matchsRepo.totalCups();
+        long notPlayed = matchsRepo.totalWinsForCups();
+        if (totalMatches == 0) return 0L; // avoid division by zero
+        double percentage = ((double) notPlayed / totalMatches) * 100;
+        return Math.round(percentage);
+    }
+    @GetMapping("/pourcentageOfDrawCups")
+    public Long pourcentageOfDrawCups() {
+        long totalMatches = matchsRepo.totalCups();
+        long notPlayed = matchsRepo.totalDrawsForCups();
+        if (totalMatches == 0) return 0L; // avoid division by zero
+        double percentage = ((double) notPlayed / totalMatches) * 100;
+        return Math.round(percentage);
+    }
 
 
 
