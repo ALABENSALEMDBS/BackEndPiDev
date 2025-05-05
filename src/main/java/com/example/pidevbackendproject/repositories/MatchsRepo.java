@@ -95,16 +95,37 @@ public interface MatchsRepo extends JpaRepository<Matchs, Integer> {
     SELECT COALESCE(COUNT(m), 0)  
     FROM Matchs m
     WHERE (m.club1.idClub = :idClub OR m.club2.idClub = :idClub)
+    and m.resultatMatch is not null
     AND m.competition.idCompetition = :idCompetition
 """)
     Integer playedMatchs(@Param("idCompetition") int idCompetition, @Param("idClub") int idClub);
 
+/*
+    @Query("""
+    SELECT COALESCE(COUNT(m), 0)  
+    FROM Matchs m
+    WHERE (m.club1.idClub = :idClub OR m.club2.idClub = :idClub)
+    AND m.competition.idCompetition = :idCompetition And m.resultatMatch IS NOT NULL
+""")
+    Integer playedMatchs(@Param("idCompetition") int idCompetition, @Param("idClub") int idClub);
+*/
 
+/*
+    @Query("""
+    SELECT COALESCE(COUNT(m), 0) 
+    FROM Matchs m
+    WHERE (m.club1.idClub = :idClub OR m.club2.idClub = :idClub)
+      AND m.winner IS NULL
+      AND m.competition.idCompetition = :idCompetition
+""")
+    Integer totalDraws(@Param("idCompetition") int idCompetition, @Param("idClub") int idClub);
+*/
 
     @Query("""
     SELECT COALESCE(COUNT(m), 0) 
     FROM Matchs m
     WHERE (m.club1.idClub = :idClub OR m.club2.idClub = :idClub)
+        And m.resultatMatch is not null
       AND m.winner IS NULL
       AND m.competition.idCompetition = :idCompetition
 """)

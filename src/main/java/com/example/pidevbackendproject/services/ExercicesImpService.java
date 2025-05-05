@@ -74,11 +74,14 @@ public class ExercicesImpService implements IExercicesService{
         int duration = seance.getDurationMinutes();
 
         return exercicesRepo.findAll().stream()
+                .filter(ex -> ex.getTypeExercice() != null) // ✅ Filtrer les exercices sans type
                 .filter(ex -> isCompatible(ex.getTypeExercice(), intensity, duration))
                 .collect(Collectors.toList());
     }
 
+
     private boolean isCompatible(ExerciseType type, int intensity, int duration) {
+        if (type == null) return false;
         return switch (type) {
             case STRETCHING, MOBILITY, BREATHING -> intensity <= 3;
             case DRIBBLE, PASSING, AGILITY -> intensity > 3 && intensity <= 6 && duration >= 30;
