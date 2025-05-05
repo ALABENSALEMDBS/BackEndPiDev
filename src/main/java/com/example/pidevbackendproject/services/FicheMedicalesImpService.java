@@ -74,11 +74,34 @@ public class FicheMedicalesImpService implements IFicheMedicalesService {
        ficheMedicalesRepo.deleteById(idFicheMedicale);
     }
 
-    public FicheMedicales modifyFicheMedicales(FicheMedicales ficheMedicale) {
+//    public FicheMedicales modifyFicheMedicales(FicheMedicales ficheMedicale) {
+//
+//
+//        return ficheMedicalesRepo.save(ficheMedicale);
+//    }
 
+    public FicheMedicales modifyFicheMedicales(FicheMedicales ficheMedicale, int idexrcice) {
+        // Récupérer l'exercice de rétablissement
+        ExerciceRetablissements exerciceRetablissements = exerciceRetablissementsRepo.findById(idexrcice)
+                .orElseThrow(() -> new RuntimeException("Exercice non trouvé !"));
 
-        return ficheMedicalesRepo.save(ficheMedicale);
+        // Vérifier si la fiche médicale existe avant de la modifier
+        FicheMedicales existingFiche = ficheMedicalesRepo.findById(ficheMedicale.getIdFicheMedicale())
+                .orElseThrow(() -> new RuntimeException("Fiche médicale non trouvée !"));
+
+        // Modifier les propriétés nécessaires de la fiche médicale
+        existingFiche.setExerciceRetablissements(exerciceRetablissements);
+         // Exemple : si d'autres propriétés doivent être mises à jour
+
+        // Enregistrer les changements de la fiche médicale
+        FicheMedicales updatedFicheMedicales = ficheMedicalesRepo.save(existingFiche);
+
+        // Envoi de l'email sans modification du joueur
+      //  sendRecoveryExercisesEmail(existingFiche.getJoueurficheMedicale(), exerciceRetablissements);
+
+        return updatedFicheMedicales;
     }
+
 
     public List<FicheMedicales> getAllFicheMedicales() {
 

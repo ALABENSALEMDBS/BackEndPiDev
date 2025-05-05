@@ -16,7 +16,7 @@ public interface IFicheMedicalesService {
     public FicheMedicales addFicheMedicales(FicheMedicales ficheMedicale, int joueurId, int idexrcice) ;
 
         void deleteFicheMedicales(int idFicheMedicale);
-    FicheMedicales modifyFicheMedicales(FicheMedicales ficheMedicale);
+    FicheMedicales modifyFicheMedicales(FicheMedicales ficheMedicale,int idexrcice);
     List<FicheMedicales> getAllFicheMedicales();
     FicheMedicales getFicheMedicalesById(int idFicheMedicale);
     public FicheMedicales createFicheMedicale(int idexrcice ,String name, String prenom, FicheMedicales ficheMedicales) ;

@@ -74,7 +74,10 @@ public class FicheMedicalesRestController {
                 ficheMedicales.getType(),
                 ficheMedicales.getJoueurficheMedicale() == null
                         ? null
-                        : ficheMedicales.getJoueurficheMedicale().getIdUser()
+                        : ficheMedicales.getJoueurficheMedicale().getIdUser(),
+                ficheMedicales.getExerciceRetablissements() == null
+                        ? 0
+                        : ficheMedicales.getExerciceRetablissements().getIdExerciceRetablissement()
         );
 
         return ficheMedicaleDto;
@@ -87,10 +90,10 @@ public class FicheMedicalesRestController {
     }
 
     @Operation(description = "Modifer Fiche Medicales")
-    @PutMapping("/modify-ficheMedicales")
+    @PutMapping("/modify-ficheMedicales/{idex}")
     public FicheMedicales modifyFicheMedicales(
-                                               @RequestBody FicheMedicales fm) {
-        FicheMedicales ficheMedicale= ficheMedicalesService.modifyFicheMedicales(fm);
+                                               @RequestBody FicheMedicales fm ,@PathVariable int idex) {
+        FicheMedicales ficheMedicale= ficheMedicalesService.modifyFicheMedicales(fm,idex);
         return ficheMedicale;
     }
 

@@ -45,14 +45,19 @@ public class ConsultationImpService implements IConsultationServise {
             throw new RuntimeException("La date " + c.getDateConsultation() + " est déjà prise par un autre joueur.");
         }
 
-        // Modifier la date
+        // Modifier la date de consultation
         existing.setDateConsultation(c.getDateConsultation());
 
+        // Modifier d'autres informations si nécessaire, par exemple la description
+        existing.setDescription(c.getDescription());
+
+        // Récupérer le joueur de la consultation modifiée
         Joueurs joueur = existing.getJoueur();
 
         // Envoyer un email d'information sur la modification
         sendRecoveryconsultationModifierEmail(joueur, existing);
 
+        // Sauvegarder la consultation modifiée
         return consultationRepo.save(existing);
     }
 
@@ -79,27 +84,43 @@ public class ConsultationImpService implements IConsultationServise {
 
 
     private void sendRecoveryconsultationEmail(Joueurs joueur, Consultation consultation) {
-        String html = "<html><body style='font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; padding: 20px;'>"
-                + "<div style='max-width: 600px; margin: auto; background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);'>"
-                + "<img src='https://www.medisport.tn/assets/logo.png' alt='CLUBSPORT Logo' style='width: 180px; display: block; margin: 0 auto 20px;'/>"
-                + "<h1 style='color: #2c3e50; text-align: center;'>CLUBSPORT - Application Médicale Sportive</h1>"
-                + "<h2 style='color: #16a085;'>Bonjour " + joueur.getNameUsers() + ",</h2>"
-                + "<p>Nous avons le plaisir de vous informer qu'une <strong>consultation médicale</strong> a été planifiée pour vous.</p>"
-                + "<p><strong>Détails de votre rendez-vous :</strong></p>"
-                + "<ul style='line-height: 1.6; padding-left: 20px;'>"
-                + "<li><strong>Date :</strong> " + consultation.getDateConsultation() + "</li>"
-                + "<li><strong>Programme :</strong> " + consultation.getDescription() + "</li>"
-                + "</ul>"
-                + "<p>Merci de noter cette date et de vous présenter à l'heure prévue.</p>"
-                + "<p>Pour toute question, notre équipe reste à votre disposition.</p>"
-                + "<p style='margin-top:30px;'>💪 À bientôt,<br><strong>L'équipe CLUBSPORT</strong></p>"
-                + "<hr style='margin:30px 0;'>"
-                + "<p style='font-size: 13px; color: #777;'>"
-                + "📧 Email : <a href='mailto:CLUBSPORTFOOT@medisport.tn'>CLUBSPORTFOOT@medisport.tn</a><br>"
-                + "📞 Téléphone : +216 20 345 678<br>"
-                + "🌐 Site web : <a href='https://www.medisport.tn' style='color:#2c3e50;'>www.medisport.tn</a>"
-                + "</p>"
-                + "</div></body></html>";
+        String html = """
+<html>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+    <div style="max-width: 600px; margin: auto; background-color: white; border-radius: 10px; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <div style="text-align: center;">
+            <img src="https://resize.elle.fr/article/var/oa/content/images/tests/original/1252_test-1670867124.jpg" alt="Tactic Foot Logo" style="width: 120px; margin-bottom: 20px;" />
+            <h2 style="color: #2c3e50;">Hello %s 👋</h2>
+        </div>
+        <p style="font-size: 16px; color: #555;">
+            A <strong>medical consultation</strong> has been scheduled for you via the <strong>Tactic Foot</strong> app.
+        </p>
+        <p style="font-size: 16px; color: #555;">
+            <strong>Details of your appointment:</strong>
+        </p>
+        <ul style="font-size: 16px; color: #555; line-height: 1.6; padding-left: 20px;">
+            <li><strong>Date:</strong> %s</li>
+            <li><strong>Program:</strong> %s</li>
+        </ul>
+        <p style="font-size: 16px; color: #555;">
+            Please note this date and make sure to show up at the scheduled time.
+        </p>
+        <p style="font-size: 14px; color: #777; margin-top: 30px;">
+            If you have any questions, our team is available to assist you.
+        </p>
+        <div style="text-align: right; margin-top: 40px;">
+            <img src="https://i.imgur.com/RK2znLl.png" alt="Signature" style="width: 100px;" />
+        </div>
+        <hr style="margin: 30px 0;">
+        <p style="font-size: 13px; color: #999; text-align: center;">
+            &copy; 2025 Tactic Foot | 📧 <a href='mailto:TACTICFOOT@medisport.tn'>TACTICFOOT@medisport.tn</a> | 📞 +216 20 345 678<br>
+            🌐 <a href='https://www.medisport.tn' style='color:#2c3e50;'>www.medisport.tn</a>
+        </p>
+    </div>
+</body>
+</html>
+""".formatted(joueur.getNameUsers(), consultation.getDateConsultation(), consultation.getDescription());
+
 
 
 
@@ -107,27 +128,42 @@ public class ConsultationImpService implements IConsultationServise {
     }
 
     private void sendRecoveryconsultationModifierEmail(Joueurs joueur, Consultation consultation) {
-        String html = "<html><body style='font-family: Arial, sans-serif; color: #333;'>"
-                + "<h1 style='color: #2c3e50;'>CLUBSPORT - Application Médicale Sportive</h1>"
-                + "<h2>Bonjour " + joueur.getNameUsers() + ",</h2>"
-                + "<p>Nous vous informons qu'une modification a été effectuée concernant votre <strong>date de consultation médicale</strong>.</p>"
-                + "<p><strong>Détails de votre nouveau rendez-vous :</strong></p>"
-                + "<ul style='line-height: 1.6;'>"
-                + "<li><strong>Nouvelle date de la consultation :</strong> " + consultation.getDateConsultation() + "</li>"
-                + "<li><strong>Programme associé :</strong> " + consultation.getDescription() + "</li>"
-                + "</ul>"
-                + "<p>Nous vous prions de bien vouloir prendre note de cette nouvelle date et de vous présenter à l'heure prévue.</p>"
-                + "<p>Pour toute question ou en cas de besoin d'informations supplémentaires, n'hésitez pas à nous contacter.</p>"
-                + "<p style='margin-top:20px;'>💪 À bientôt,<br><strong>L'équipe CLUBSPORT</strong></p>"
-                + "<hr style='margin:30px 0;'>"
-                + "<p style='font-size: 13px; color: #777;'>"
-                + "📧 Contact : CLUBSPORTFOOT@medisport.tn<br>"
-                + "📞 Téléphone : +216 20 345 678<br>"
-                + "🌐 Site web : <a href='https://www.medisport.tn' style='color:#2c3e50;'>www.medisport.tn</a>"
-                + "</p>"
-                + "</body></html>";
-
-
+        String html = """
+<html>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+    <div style="max-width: 600px; margin: auto; background-color: white; border-radius: 10px; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <div style="text-align: center;">
+            <img src="https://resize.elle.fr/article/var/oa/content/images/tests/original/1252_test-1670867124.jpg" alt="Tactic Foot Logo" style="width: 120px; margin-bottom: 20px;" />
+            <h2 style="color: #2c3e50;">Hello %s 👋</h2>
+        </div>
+        <p style="font-size: 16px; color: #555;">
+            We are writing to inform you that there has been a change in your <strong>medical consultation</strong> scheduled via the <strong>Tactic Foot</strong> app.
+        </p>
+        <p style="font-size: 16px; color: #555;">
+            <strong>Updated details of your appointment:</strong>
+        </p>
+        <ul style="font-size: 16px; color: #555; line-height: 1.6; padding-left: 20px;">
+            <li><strong>Date:</strong> %s</li>
+            <li><strong>Program:</strong> %s</li>
+        </ul>
+        <p style="font-size: 16px; color: #555;">
+            Please note this change and ensure that you attend the consultation at the new scheduled time.
+        </p>
+        <p style="font-size: 14px; color: #777; margin-top: 30px;">
+            If you have any questions or need assistance, please don't hesitate to contact our team.
+        </p>
+        <div style="text-align: right; margin-top: 40px;">
+            <img src="https://i.imgur.com/RK2znLl.png" alt="Signature" style="width: 100px;" />
+        </div>
+        <hr style="margin: 30px 0;">
+        <p style="font-size: 13px; color: #999; text-align: center;">
+            &copy; 2025 Tactic Foot | 📧 <a href='mailto:TACTICFOOT@medisport.tn'>TACTICFOOT@medisport.tn</a> | 📞 +216 20 345 678<br>
+            🌐 <a href='https://www.medisport.tn' style='color:#2c3e50;'>www.medisport.tn</a>
+        </p>
+    </div>
+</body>
+</html>
+""".formatted(joueur.getNameUsers(), consultation.getDateConsultation(), consultation.getDescription());
 
         emailService.sendMail(joueur.getEmailUser(), html);
     }
