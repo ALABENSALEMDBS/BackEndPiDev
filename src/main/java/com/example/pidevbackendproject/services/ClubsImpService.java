@@ -22,6 +22,10 @@ public class ClubsImpService implements IClubsServise {
     }
 
     public void deleteClubs(int idClub) {
+
+
+        //standingsRepository.deleteById(standingsRepository.findByClub(clubsRepo.findById(idClub).get()).getId());
+
         clubsRepo.deleteById(idClub);
     }
 
@@ -41,8 +45,6 @@ public class ClubsImpService implements IClubsServise {
                 })
                 .orElseThrow(() -> new EntityNotFoundException("Club not found with id: " + id));
     }
-
-
 
 
 

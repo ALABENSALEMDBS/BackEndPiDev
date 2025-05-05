@@ -2,6 +2,7 @@ package com.example.pidevbackendproject.services;
 
 
 import com.example.pidevbackendproject.entities.Clubs;
+import com.example.pidevbackendproject.entities.Competition;
 import com.example.pidevbackendproject.entities.Cup;
 import com.example.pidevbackendproject.entities.Matchs;
 import com.example.pidevbackendproject.repositories.ClubsRepo;
@@ -151,6 +152,16 @@ public class CupImplService {
         }
 
         return ResponseEntity.ok(Map.of("message", "Next round generated: " + nextRound));
+    }
+
+
+
+    public Cup modifyCup(int idCup, Cup cup) {
+        Cup existingMatchs = cupRepo.findById(idCup)
+                .orElseThrow(() -> new RuntimeException("Cup non trouvé"));
+        existingMatchs.setName(cup.getName());
+
+        return cupRepo.save(existingMatchs);
     }
 
 
@@ -573,7 +584,7 @@ public class CupImplService {
 
 
 
-    public ResponseEntity<String> generateInitialMatches(String cupName, List<Integer> clubIds) {
+    /*public ResponseEntity<String> generateInitialMatches(String cupName, List<Integer> clubIds) {
         List<Clubs> clubs = clubsRepo.findAllByIdClubIn(clubIds);
         Collections.shuffle(clubs);
 
@@ -603,7 +614,47 @@ public class CupImplService {
             matchsRepo.save(match);
         }
         return ResponseEntity.ok("Cup and initial matches created successfully.");
+    }*/
+
+    public ResponseEntity<Map<String, String>> generateInitialMatches(String cupName, List<Integer> clubIds) {
+        List<Clubs> clubs = clubsRepo.findAllByIdClubIn(clubIds);
+        Collections.shuffle(clubs);
+
+        Map<String, String> response = new HashMap<>();
+
+        if ((clubs.size() & (clubs.size() - 1)) != 0) {
+            response.put("message", "Number of teams must be a power of 2");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        Cup cup = createCup(cupName);
+        String round = getRoundName(clubs.size());
+
+        for (int i = 0; i < clubs.size(); i += 2) {
+            Matchs match = Matchs.builder()
+                    .club1(clubs.get(i))
+                    .club2(clubs.get(i + 1))
+                    .roundName(round)
+                    .cup(cup)
+                    .dateMatch(null)
+                    .goals1(null)
+                    .goals2(null)
+                    .resultatMatch(null)
+                    .arbitre(null)
+                    .typeMatch(null)
+                    .winner(null)
+                    .statusMatch(null)
+                    .lieuMatch(null)
+                    .build();
+            matchsRepo.save(match);
+        }
+
+        response.put("message", "Cup and initial matches created successfully.");
+        response.put("cupId", String.valueOf(cup.getIdCup()));
+        return ResponseEntity.ok(response);
     }
+
+
 
 
 

@@ -50,7 +50,6 @@ public class ClubRestController {
         ObjectMapper objectMapper = new ObjectMapper();
         Clubs c = objectMapper.readValue(clubJson, Clubs.class);
 
-
         Clubs clubs = Clubs.builder()
                 .nameClub(c.getNameClub())
                 .emailClub(c.getEmailClub())
@@ -63,6 +62,82 @@ public class ClubRestController {
 
         return new ResponseEntity<>(clubs, HttpStatus.CREATED);
     }
+
+
+
+    @PutMapping("/updateClub/{id}")
+    public ResponseEntity<Clubs> updateClub(@PathVariable("id") Integer id, @RequestBody Clubs updatedClub) {
+        Clubs existingClub = clubsRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Club not found"));
+
+        existingClub.setNameClub(updatedClub.getNameClub());
+        existingClub.setEmailClub(updatedClub.getEmailClub());
+        existingClub.setAdressClub(updatedClub.getAdressClub());
+        existingClub.setDateClub(updatedClub.getDateClub());
+        existingClub.setLicenceClub(updatedClub.getLicenceClub());
+        Clubs savedClub = clubsRepo.save(existingClub);
+        return ResponseEntity.ok(savedClub);
+    }
+
+
+
+
+
+    @Operation(description = "récupérer les club de la base de données by ID")
+    @GetMapping("/retrieve-club/{club-id}")
+    public Clubs retrieveClub(@PathVariable("club-id") int idClub) {
+        Clubs club = clubsServise.getClubsById(idClub);
+        return club;
+    }
+
+
+    @Operation(description = "Supprimer club by ID")
+    @DeleteMapping("/remove-club/{club-id}")
+    public void deleteClubs(@PathVariable("club-id") int idClub) {
+
+        clubsServise.deleteClubs(idClub);
+    }
+
+
+
+
+
+
+    @PostMapping(value = "/picture/{post-id}",consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadPostCoverPicture(
+            @PathVariable("post-id") Integer postId,
+            @Parameter()
+            @RequestPart("file") MultipartFile file
+
+    ){
+        clubsImpService.uploadPostPicture(file,postId);
+        return ResponseEntity.accepted().build();
+    }
+    @GetMapping("/uploads/{filename}")
+    public ResponseEntity<byte[]> getImage(@PathVariable("filename") String filename) {
+        try {
+            Path imagePath = Paths.get("uploadss", filename);
+            byte[] imageBytes = Files.readAllBytes(imagePath);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("allClubs")
+    public ResponseEntity<List<Clubs>> getClubs() {
+        List<Clubs> clubList = clubsRepo.findAll();
+        return ResponseEntity.ok(clubList);
+    }
+
+
+
+
+
 
 
 
@@ -91,20 +166,9 @@ public class ClubRestController {
     }
      */
 
-    @GetMapping("allClubs")
-    public ResponseEntity<List<Clubs>> getClubs() {
-        List<Clubs> clubList = clubsRepo.findAll();
-        return ResponseEntity.ok(clubList);
-    }
-
-    /*@GetMapping("allClubs")
-    public ResponseEntity<List<Clubs> getClubByID() {
-        clubList = clubsRepo.findById(id);
-        return ResponseEntity.ok(clubList);
-    }*/
 
 
-
+/*
     @Operation(description = "Ajouter un Club")
     @PostMapping("/add-club")
     public Clubs addClub(@RequestBody Clubs c) {
@@ -117,25 +181,12 @@ public class ClubRestController {
     public List<Clubs> getAllClubs() {
         List<Clubs> listClub= clubsServise.getAllClubs();
         return listClub;
-    }
-
-    @Operation(description = "récupérer les club de la base de données by ID")
-    @GetMapping("/retrieve-club/{club-id}")
-    public Clubs retrieveClub(@PathVariable("club-id") int idClub) {
-        Clubs club = clubsServise.getClubsById(idClub);
-        return club;
-    }
+    }*/
 
 
-    @Operation(description = "Supprimer club by ID")
-    @DeleteMapping("/remove-club/{club-id}")
-    public void deleteClubs(@PathVariable("club-id") int idClub) {
-        //standingsRepository.deleteByClubId(idClub);
-        clubsServise.deleteClubs(idClub);
-    }
 
 
-    @PutMapping("/modify-club/{id}")
+    /*@PutMapping("/modify-club/{id}")
     public ResponseEntity<?> updateClub(
             @PathVariable Long id,
             @RequestParam String nameClub,
@@ -147,7 +198,7 @@ public class ClubRestController {
     ) {
         // Handle the update logic here
         return ResponseEntity.ok().build();
-    }
+    }*/
 
 
 
@@ -181,60 +232,5 @@ public class ClubRestController {
     }*/
 
 
-
-
-    @PutMapping("/updateClub/{id}")
-    public ResponseEntity<Clubs> updateClub(
-            @PathVariable("id") Integer id,
-            @RequestBody Clubs updatedClub) {
-
-        Clubs existingClub = clubsRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Club not found"));
-
-        existingClub.setNameClub(updatedClub.getNameClub());
-        existingClub.setEmailClub(updatedClub.getEmailClub());
-        existingClub.setAdressClub(updatedClub.getAdressClub());
-        existingClub.setDateClub(updatedClub.getDateClub());
-        existingClub.setLicenceClub(updatedClub.getLicenceClub());
-
-        Clubs savedClub = clubsRepo.save(existingClub);
-
-        return ResponseEntity.ok(savedClub);
-    }
-
-
-
-
-
-
-
-
-
-
-
-    @PostMapping(value = "/picture/{post-id}",consumes = "multipart/form-data")
-    public ResponseEntity<?> uploadPostCoverPicture(
-            @PathVariable("post-id") Integer postId,
-            @Parameter()
-            @RequestPart("file") MultipartFile file
-
-    ){
-        clubsImpService.uploadPostPicture(file,postId);
-        return ResponseEntity.accepted().build();
-    }
-    @GetMapping("/uploads/{filename}")
-    public ResponseEntity<byte[]> getImage(@PathVariable("filename") String filename) {
-        try {
-            Path imagePath = Paths.get("uploadss", filename);
-            byte[] imageBytes = Files.readAllBytes(imagePath);
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.IMAGE_JPEG);
-
-            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
 }
 

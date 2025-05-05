@@ -1,5 +1,6 @@
 package com.example.pidevbackendproject.repositories;
 
+import com.example.pidevbackendproject.entities.Clubs;
 import com.example.pidevbackendproject.entities.Matchs;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -146,6 +147,132 @@ public interface MatchsRepo extends JpaRepository<Matchs, Integer> {
 
     @Query("select m from Matchs m where m.cup.idCup = :idCup AND m.competition.idCompetition is null ")
     List<Matchs> matchsOfCup(@Param("idCup") int idCup);
+
+
+
+
+    @Query("select m from Matchs m where m.roundName = 'Final' and m.cup.idCup = :idCup")
+    Matchs finalMatch(@Param("idCup") int idCup);
+
+
+
+    @Query("""
+    SELECT COUNT(m)
+    FROM Matchs m
+    WHERE m.resultatMatch IS NOT NULL
+""")
+    Integer totalPlayedMatchs();
+
+
+    @Query("""
+    SELECT COALESCE(COUNT(m), 0)  
+    FROM Matchs m
+    WHERE m.resultatMatch is null
+""")
+    Integer totalNotPlayedMatchs();
+
+
+    @Query("""
+    SELECT COALESCE(COUNT(m), 0)  
+    FROM Matchs m
+    WHERE m.resultatMatch is not null
+    and m.winner is not null
+    and m.competition is null
+    and m.cup is null
+""")
+    Integer totalWinsForFriendlyMatches();
+
+    @Query("""
+    SELECT COALESCE(COUNT(m), 0)  
+    FROM Matchs m
+    WHERE m.resultatMatch is not null
+    and m.winner is null
+    and m.competition is null
+    and m.cup is null
+""")
+    Integer totalDrawsForFriendlyMatches();
+
+
+
+
+
+
+
+
+    @Query("""
+    SELECT COALESCE(COUNT(m), 0)  
+    FROM Matchs m
+    WHERE m.resultatMatch is not null
+    and m.winner is not null
+    and m.competition is not null
+    and m.cup is null
+""")
+    Integer totalWinsForCompetitions();
+
+
+
+    @Query("""
+    SELECT COALESCE(COUNT(m), 0)  
+    FROM Matchs m
+    WHERE m.resultatMatch is not null
+    and m.winner is null
+    and m.competition is not null
+    and m.cup is null
+""")
+    Integer totalDrawsForCompetitions();
+
+
+
+    @Query("""
+    SELECT COALESCE(COUNT(m), 0)  
+    FROM Matchs m
+    WHERE m.resultatMatch is not null
+    and m.winner is not null
+    and m.competition is null
+    and m.cup is not null
+""")
+    Integer totalWinsForCups();
+
+    @Query("""
+    SELECT COALESCE(COUNT(m), 0)  
+    FROM Matchs m
+    WHERE m.resultatMatch is not null
+    and m.winner is null
+    and m.competition is null
+    and m.cup is not null
+""")
+    Integer totalDrawsForCups();
+
+
+
+    @Query("""
+    SELECT COALESCE(COUNT(m), 0)  
+    FROM Matchs m
+    WHERE m.competition is null
+    and m.cup is null
+""")
+    Integer totalFriendlyMatches();
+
+
+    @Query("""
+    SELECT COALESCE(COUNT(m), 0)  
+    FROM Matchs m
+    WHERE m.competition is null
+    and m.cup is not null
+""")
+    Integer totalCups();
+
+
+
+    @Query("""
+    SELECT COALESCE(COUNT(m), 0)  
+    FROM Matchs m
+    WHERE m.competition is not null
+    and m.cup is null
+""")
+    Integer totalCompetition();
+
+
 
 
 

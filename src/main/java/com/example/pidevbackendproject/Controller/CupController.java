@@ -2,6 +2,7 @@ package com.example.pidevbackendproject.Controller;
 
 
 import com.example.pidevbackendproject.entities.Clubs;
+import com.example.pidevbackendproject.entities.Competition;
 import com.example.pidevbackendproject.entities.Cup;
 import com.example.pidevbackendproject.entities.Matchs;
 import com.example.pidevbackendproject.repositories.ClubsRepo;
@@ -30,26 +31,18 @@ public class CupController {
     MatchsRepo matchsRepo;
 
 
-    @PostMapping("/createCup")
+    /*@PostMapping("/createCup")
     public ResponseEntity<String> createCup(@RequestBody Map<String, Object> requestData) {
         String name = (String) requestData.get("name");
         List<Integer> clubIds = (List<Integer>) requestData.get("clubIds");
         return cupService.generateInitialMatches(name, clubIds);
+    }*/
+    @PostMapping("/createCup")
+    public ResponseEntity<Map<String, String>> createCup(@RequestBody Map<String, Object> requestData) {
+        String name = (String) requestData.get("name");
+        List<Integer> clubIds = (List<Integer>) requestData.get("clubIds");
+        return cupService.generateInitialMatches(name, clubIds);
     }
-
-
-    /*@PostMapping("/next-round/{cupId}")
-    public ResponseEntity<String> generateNextRound(@PathVariable Integer cupId) {
-        return cupService.generateNextRoundMatches(cupId);
-    }*/
-
-    /*@PostMapping("/next-round/{cupId}")
-    public ResponseEntity<Map<String, String>> generateNextRound(@PathVariable Integer cupId) {
-        String message = cupService.generateNextRoundMatches(cupId); // returns "Next round generated: Semi-Final"
-        Map<String, String> response = new HashMap<>();
-        response.put("message", message);
-        return ResponseEntity.ok(response);
-    }*/
 
     @PostMapping("/next-round/{cupId}")
     public ResponseEntity<Map<String, String>> generateNextRound(@PathVariable Integer cupId) {
@@ -68,6 +61,16 @@ public class CupController {
     @GetMapping("/getCup/{idCup}")
     public ResponseEntity<Cup> getCupById(@PathVariable int idCup) {
         return ResponseEntity.ok(cupRepo.findById(idCup).get());
+    }
+
+    @GetMapping("/getCupWinner/{idCup}")
+    public Integer getCupWinnerId(@PathVariable int idCup) {
+        Matchs finalMatch = matchsRepo.finalMatch(idCup);
+        if (finalMatch != null && finalMatch.getWinner() != null) {
+            return finalMatch.getWinner().getIdClub();
+        }
+        else
+            return null;
     }
 
 
@@ -110,12 +113,17 @@ public class CupController {
         return ResponseEntity.ok(sorted);
     }
 
+    @PutMapping("/modify-cup/{cup-id}")
+    public Cup modifyCompetition(@PathVariable("cup-id") int idCup , @RequestBody Cup cup) {
+        Cup matchs= cupService.modifyCup(idCup, cup);
+        return matchs;
+    }
+
 
     //mrigla
     @DeleteMapping("/deleteCup/{cupId}")
-    public ResponseEntity<String> deleteCup(@PathVariable int cupId) {
+    public void deleteCup(@PathVariable int cupId) {
         cupRepo.deleteById(cupId);
-        return ResponseEntity.ok("Cup deleted.");
     }
     
 }
