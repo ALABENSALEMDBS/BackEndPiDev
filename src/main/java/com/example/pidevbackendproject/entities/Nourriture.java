@@ -10,7 +10,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,6 +28,8 @@ public class Nourriture {
     int idNourriture;
     String nom;
     String categorie;
+    @Lob
+    String imagesN;
     int calories;
     String recommandation;
 
