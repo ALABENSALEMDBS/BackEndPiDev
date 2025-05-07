@@ -1,42 +1,44 @@
-# ⚙️ BackEndPiDev (TacticFoot - Backend)
+# ⚙️ BackEndPiDev — *TacticFoot Backend Service*
 
 ## 📘 Project Overview
 
-**BackEndPiDev** is the **backend** service for **TacticFoot**, a football club management platform that supports multiple roles such as coaches, analysts, doctors, club administrators, and super administrators.
+**BackEndPiDev** is the backend component of **TacticFoot**, a football club management platform tailored to support various roles within a sports organization—such as coaches, analysts, doctors, and club administrators.
 
-This backend application is built using **Spring Boot** and provides RESTful APIs for managing teams, players, matches, and medical records. It serves as the data and business logic layer for the frontend Angular application.
-
----
-
-## 🔐 Core Responsibilities
-
-- CRUD operations for players, clubs, matches, users, and health data
-- Scheduling and assignment of matches and training sessions
-- Secure API exposure for the frontend (FrontEndPiDev)
-- Integration-ready architecture for analytics and reporting tools
+This RESTful API, built with **Spring Boot**, is responsible for handling all business logic and data management, providing secure and efficient services to the Angular-based frontend (**FrontEndPiDev**).
 
 ---
 
-## 👥 Supported Roles
+## 🔐 Core Features
 
-- 👨‍🏫 Coaches
-- 📊 Analysts
-- 🩺 Doctors
-- 🏢 Club Administrators
-
+- ✅ Full CRUD support for players, clubs, matches, users, and medical records  
+- 📅 Scheduling and management of training sessions and matches  
+- 🔐 Secure REST API with role-based access control (RBAC)  
+- 📊 Scalable architecture ready for integration with analytics and reporting tools  
 
 ---
 
-## 🛠️ Technologies Used
+## 👥 Supported User Roles
 
-- [Spring Boot](https://spring.io/projects/spring-boot) – Java-based backend framework
-- [Spring Security](https://spring.io/projects/spring-security) – Authentication and authorization
-- [Spring Data JPA](https://spring.io/projects/spring-data-jpa) – Database persistence
-- [MySQL] – Relational database
-- [Maven](https://maven.apache.org/) – Build and dependency management
-- [Lombok](https://projectlombok.org/) – Cleaner Java code
-- [ModelMapper] – DTO conversion
-- [Swagger ](https://swagger.io/tools/swagger-ui/) – API documentation
+- 👨‍🏫 **Coaches** – Manage player performance and training sessions  
+- 📊 **Analysts** – Track and analyze game data and player stats  
+- 🩺 **Doctors** – Manage player health and medical history  
+- 🏢 **Club Administrators** – Oversee operations and user roles  
+- 🛡️ **Super Administrators** – Platform-wide configuration and security  
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology         | Purpose                             |
+|--------------------|--------------------------------------|
+| **Spring Boot**    | Main framework for backend logic     |
+| **Spring Security**| Authentication and authorization     |
+| **Spring Data JPA**| ORM and database interaction         |
+| **MySQL**          | Relational database                  |
+| **Maven**          | Project build and dependencies       |
+| **Lombok**         | Boilerplate code reduction           |
+| **ModelMapper**    | DTO-Entity mapping                   |
+| **Swagger**        | Interactive API documentation        |
 
 ---
 
