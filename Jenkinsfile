@@ -1,29 +1,48 @@
 pipeline {
-    agent any      
+    agent any
+    
     tools {
-        maven 'M2_HOME'  
+        maven 'M2_HOME'
     }
+
+    environment {
+        SONARQUBE_ENV = 'sq_env' // le nom que tu as déjà configuré dans Jenkins
+    }
+
     stages {
-        
         stage('Hello') {
             steps {
                 echo 'Hello World'
             }
         }
-        
+
         stage('GIT') {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/ALABENSALEMDBS/BackEndPiDev.git'
-                    // credentialsId: ''
             }
-        } 
-        
-        stage('MAVEN') {
+        }
+
+        stage('Build') {
             steps {
-                sh "mvn -version"
+                sh 'mvn clean compile'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sq_env') {
+                    sh 'mvn sonar:sonar'
+                }
             }
         }
     }
 }
+
 
